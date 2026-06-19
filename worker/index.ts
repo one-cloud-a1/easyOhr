@@ -88,7 +88,7 @@ async function handleCreateOrder(request: Request, env: Env) {
       },
       redirectUrl: `${env.SITE_URL}/konto/?bestellung=erfolgreich`,
       webhookUrl: `${env.SITE_URL}/api/order/webhook`,
-      method: ['creditcard', 'klarna'],
+      method: ['creditcard'],
       payment: {
         captureMode: 'manual',
       },
