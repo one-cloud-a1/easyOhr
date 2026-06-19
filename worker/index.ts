@@ -70,6 +70,9 @@ async function handleCreateOrder(request: Request, env: Env) {
     (sum: number, item: any) => sum + item.privatpreis * (item.menge || 1), 0
   )
 
+  // Mollie Orders API: order is created, customer pays via credit card.
+  // Payment stays "authorized" until we create a shipment (= capture).
+  // No money is charged until shipment is created.
   const mollieOrder = await mollieRequest('/orders', env, {
     method: 'POST',
     body: JSON.stringify({
@@ -89,9 +92,6 @@ async function handleCreateOrder(request: Request, env: Env) {
       redirectUrl: `${env.SITE_URL}/konto/?bestellung=erfolgreich`,
       webhookUrl: `${env.SITE_URL}/api/order/webhook`,
       method: ['creditcard'],
-      payment: {
-        captureMode: 'manual',
-      },
       locale: 'de_DE',
     }),
   })
@@ -133,6 +133,7 @@ async function handleWebhook(request: Request, env: Env) {
   return json({ received: true })
 }
 
+// Capture = create a shipment in Mollie, which triggers the payment capture
 async function handleCapture(request: Request, env: Env) {
   const auth = request.headers.get('Authorization')
   if (auth !== `Bearer ${env.ADMIN_SECRET}`) {
@@ -142,13 +143,20 @@ async function handleCapture(request: Request, env: Env) {
   const { orderId } = await request.json() as any
   if (!orderId) return json({ error: 'Missing orderId' }, 400)
 
-  const paymentsRes = await mollieRequest(`/orders/${orderId}/payments`, env)
-  const payment = paymentsRes?._embedded?.payments?.[0]
+  // Get the order to find its lines
+  const mollieOrder = await mollieRequest(`/orders/${orderId}`, env)
+  if (mollieOrder.title) {
+    return json({ error: mollieOrder.detail || 'Order nicht gefunden' }, 404)
+  }
 
-  if (!payment) return json({ error: 'Keine Zahlung gefunden' }, 404)
+  // Create shipment for all lines — this captures the authorized payment
+  const shipment = await mollieRequest(`/orders/${orderId}/shipments`, env, {
+    method: 'POST',
+    body: JSON.stringify({}),
+  })
 
-  if (payment.status === 'authorized') {
-    await mollieRequest(`/payments/${payment.id}/captures`, env, { method: 'POST' })
+  if (shipment.title) {
+    return json({ error: shipment.detail || 'Shipment fehlgeschlagen' }, 500)
   }
 
   await supabaseRequest(`/orders?mollie_order_id=eq.${orderId}`, env, {
