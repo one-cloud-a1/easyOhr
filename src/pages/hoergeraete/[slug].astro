@@ -44,7 +44,7 @@ const related = products
         <div class="detail-info">
           <span class="detail-brand">{product.hersteller}</span>
           <h1>{product.name}</h1>
-          <span class={`detail-badge ${product.technologie === 'Premium' ? 'badge-premium' : product.technologie === 'Advanced' ? 'badge-advanced' : 'badge-standard'}`}>
+          <span class={`detail-badge ${product.technologie === 'Premium' ? 'badge-premium' : product.technologie === 'Advanced' ? 'badge-advanced' : product.technologie === 'Standard' ? 'badge-standard' : 'badge-basis'}`}>
             {product.technologie}
           </span>
 
@@ -206,6 +206,7 @@ const related = products
   .badge-premium { background: var(--color-accent-light); color: var(--color-accent); }
   .badge-advanced { background: var(--color-primary-light); color: var(--color-primary); }
   .badge-standard { background: #F1EFE8; color: var(--color-text-light); }
+  .badge-basis { background: #E8E6E0; color: var(--color-text-muted); }
 
   .detail-desc {
     font-size: 1.05rem;

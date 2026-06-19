@@ -107,6 +107,11 @@
   color: var(--color-text-light);
 }
 
+.badge-basis {
+  background: #E8E6E0;
+  color: var(--color-text-muted);
+}
+
 .pf-card-info {
   padding: 1.25rem;
   display: flex;

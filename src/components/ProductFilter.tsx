@@ -20,7 +20,8 @@ interface Product {
 function ProductCardReact({ product }: { product: Product }) {
   const badgeClass =
     product.technologie === 'Premium' ? 'badge-premium' :
-    product.technologie === 'Advanced' ? 'badge-advanced' : 'badge-standard'
+    product.technologie === 'Advanced' ? 'badge-advanced' :
+    product.technologie === 'Standard' ? 'badge-standard' : 'badge-basis'
 
   return (
     <a href={`${import.meta.env.BASE_URL}hoergeraete/${product.slug}/`} className="pf-card">
