@@ -1,0 +1,186 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import HeroSection from '../components/HeroSection.astro'
+import TrustBar from '../components/TrustBar.astro'
+import ProcessSteps from '../components/ProcessSteps.astro'
+import ProductCard from '../components/ProductCard.astro'
+import products from '../data/products.json'
+
+const topProducts = products.filter(p => p.technologie === 'Premium').slice(0, 3)
+---
+<BaseLayout title="easyOhr">
+  <HeroSection />
+  <TrustBar />
+
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Unsere beliebtesten Hörgeräte</h2>
+        <p>Premium-Modelle der führenden Hersteller — unabhängig beraten, fair bepreist</p>
+      </div>
+      <div class="products-grid">
+        {topProducts.map(product => (
+          <ProductCard {...product} />
+        ))}
+      </div>
+      <div class="section-cta">
+        <a href="/hoergeraete/" class="btn btn-outline">Alle Hörgeräte ansehen</a>
+      </div>
+    </div>
+  </section>
+
+  <ProcessSteps />
+
+  <section class="section">
+    <div class="container">
+      <div class="brands-section">
+        <h2>Unsere Marken</h2>
+        <p>Wir arbeiten ausschliesslich mit den führenden Herstellern der Branche</p>
+        <div class="brands-grid">
+          <div class="brand-card">
+            <div class="brand-logo-placeholder">Phonak</div>
+            <span>Schweizer Präzision seit 1947</span>
+          </div>
+          <div class="brand-card">
+            <div class="brand-logo-placeholder">Oticon</div>
+            <span>Dänische Innovation seit 1904</span>
+          </div>
+          <div class="brand-card">
+            <div class="brand-logo-placeholder">Starkey</div>
+            <span>Amerikanische KI-Technologie</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-box">
+        <h2>Bereit für besseres Hören?</h2>
+        <p>Wählen Sie Ihr Hörgerät und testen Sie es 30 Tage kostenlos. Ohne Risiko.</p>
+        <div class="cta-actions">
+          <a href="/hoergeraete/" class="btn btn-accent btn-lg">Hörgeräte entdecken</a>
+          <a href="tel:+4930123456789" class="btn btn-outline btn-lg">030 1234 56789</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .section-header p {
+    color: var(--color-text-light);
+    font-size: 1.1rem;
+    margin-top: 0.75rem;
+  }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .section-cta {
+    text-align: center;
+    margin-top: 2.5rem;
+  }
+
+  .brands-section {
+    text-align: center;
+  }
+
+  .brands-section p {
+    color: var(--color-text-light);
+    margin-top: 0.75rem;
+    margin-bottom: 2.5rem;
+    font-size: 1.1rem;
+  }
+
+  .brands-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .brand-card {
+    background: var(--color-secondary);
+    border-radius: var(--radius-lg);
+    padding: 2.5rem 1.5rem;
+    text-align: center;
+  }
+
+  .brand-logo-placeholder {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: 0.75rem;
+  }
+
+  .brand-card span {
+    font-size: 0.875rem;
+    color: var(--color-text-light);
+  }
+
+  .cta-section {
+    padding: 5rem 0;
+  }
+
+  .cta-box {
+    background: var(--color-primary);
+    color: white;
+    text-align: center;
+    padding: 4rem 2rem;
+    border-radius: var(--radius-xl);
+  }
+
+  .cta-box h2 {
+    color: white;
+    margin-bottom: 1rem;
+  }
+
+  .cta-box p {
+    font-size: 1.15rem;
+    opacity: 0.9;
+    margin-bottom: 2rem;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .cta-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .cta-actions .btn-outline {
+    color: white;
+    border-color: white;
+  }
+
+  .cta-actions .btn-outline:hover {
+    background: white;
+    color: var(--color-primary);
+  }
+
+  @media (max-width: 768px) {
+    .products-grid {
+      grid-template-columns: 1fr;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    .brands-grid {
+      grid-template-columns: 1fr;
+      max-width: 360px;
+      margin: 0 auto;
+    }
+  }
+</style>

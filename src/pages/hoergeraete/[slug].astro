@@ -1,0 +1,417 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import products from '../../data/products.json'
+
+export function getStaticPaths() {
+  return products.map(product => ({
+    params: { slug: product.slug },
+    props: { product },
+  }))
+}
+
+const { product } = Astro.props
+
+const related = products
+  .filter(p => p.hersteller === product.hersteller && p.slug !== product.slug)
+  .slice(0, 3)
+---
+<BaseLayout title={product.name} description={`${product.name} — ${product.beschreibung.slice(0, 150)}`}>
+  <section class="product-detail">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="/">Start</a>
+        <span>/</span>
+        <a href="/hoergeraete/">Hörgeräte</a>
+        <span>/</span>
+        <span>{product.name}</span>
+      </nav>
+
+      <div class="detail-grid">
+        <div class="detail-image">
+          <div class="detail-image-main">
+            <svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.2">
+              <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+              <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+              <line x1="12" y1="19" x2="12" y2="23"/>
+              <line x1="8" y1="23" x2="16" y2="23"/>
+            </svg>
+            <span class="image-note">Produktbild wird nachgeliefert</span>
+          </div>
+        </div>
+
+        <div class="detail-info">
+          <span class="detail-brand">{product.hersteller}</span>
+          <h1>{product.name}</h1>
+          <span class={`detail-badge ${product.technologie === 'Premium' ? 'badge-premium' : product.technologie === 'Advanced' ? 'badge-advanced' : 'badge-standard'}`}>
+            {product.technologie}
+          </span>
+
+          <p class="detail-desc">{product.beschreibung}</p>
+
+          <div class="detail-pricing">
+            <div class="price-box">
+              <span class="price-label">Privatpreis pro Gerät</span>
+              <span class="price-main">{product.privatpreis.toLocaleString('de-DE')} €</span>
+            </div>
+            <div class="price-box price-box-highlight">
+              <span class="price-label">Mit Krankenkasse ab</span>
+              <span class="price-main price-kasse">{product.kassenpreis.toLocaleString('de-DE')} €</span>
+              <span class="price-hint">Eigenanteil nach Kassenabrechnung</span>
+            </div>
+          </div>
+
+          <div class="detail-colors">
+            <h4>Verfügbare Farben</h4>
+            <div class="color-list">
+              {product.farben.map((farbe: string) => (
+                <span class="color-option">{farbe}</span>
+              ))}
+            </div>
+          </div>
+
+          <div class="detail-actions">
+            <a href="/checkout/" class="btn btn-accent btn-lg detail-cta">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+              Jetzt 30 Tage testen
+            </a>
+            <p class="detail-note">Kein Geld wird jetzt abgebucht — Zahlung erst nach der Testphase</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="detail-specs">
+        <h2>Technische Details</h2>
+        <div class="specs-grid">
+          <div class="spec-item">
+            <span class="spec-label">Hersteller</span>
+            <span class="spec-value">{product.hersteller}</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-label">Familie</span>
+            <span class="spec-value">{product.familie}</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-label">Bauform</span>
+            <span class="spec-value">RIC / Ex-Hörer</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-label">Technologie-Level</span>
+            <span class="spec-value">{product.technologie}</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-label">Akkulaufzeit</span>
+            <span class="spec-value">{product.akkuLaufzeit}</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-label">Schutzklasse</span>
+            <span class="spec-value">{product.schutzklasse}</span>
+          </div>
+        </div>
+
+        <h3>Features</h3>
+        <div class="features-list">
+          {product.features.map((f: string) => (
+            <span class="feature-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              {f}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {related.length > 0 && (
+        <div class="related-section">
+          <h2>Weitere {product.hersteller} Hörgeräte</h2>
+          <div class="related-grid">
+            {related.map(r => (
+              <a href={`/hoergeraete/${r.slug}/`} class="related-card">
+                <div class="related-image">
+                  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.2">
+                    <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                    <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                  </svg>
+                </div>
+                <div>
+                  <h4>{r.name}</h4>
+                  <span class="related-price">ab {r.kassenpreis.toLocaleString('de-DE')} €</span>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .breadcrumb {
+    display: flex;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    padding: 1.5rem 0;
+  }
+
+  .breadcrumb a {
+    color: var(--color-text-muted);
+  }
+
+  .breadcrumb a:hover {
+    color: var(--color-primary);
+  }
+
+  .detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 4rem;
+  }
+
+  .detail-image-main {
+    background: var(--color-secondary);
+    border-radius: var(--radius-xl);
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    color: var(--color-text-muted);
+  }
+
+  .image-note {
+    font-size: 0.85rem;
+  }
+
+  .detail-brand {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+  }
+
+  .detail-info h1 {
+    font-size: 2rem;
+    margin: 0.5rem 0 0.75rem;
+  }
+
+  .detail-badge {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.3rem 1rem;
+    border-radius: 100px;
+    margin-bottom: 1.25rem;
+  }
+
+  .badge-premium { background: var(--color-accent-light); color: var(--color-accent); }
+  .badge-advanced { background: var(--color-primary-light); color: var(--color-primary); }
+  .badge-standard { background: #F1EFE8; color: var(--color-text-light); }
+
+  .detail-desc {
+    font-size: 1.05rem;
+    color: var(--color-text-light);
+    line-height: 1.7;
+    margin-bottom: 1.75rem;
+  }
+
+  .detail-pricing {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .price-box {
+    flex: 1;
+    padding: 1rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border-light);
+  }
+
+  .price-box-highlight {
+    border-color: var(--color-primary);
+    background: var(--color-primary-light);
+  }
+
+  .price-label {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+
+  .price-main {
+    font-size: 1.5rem;
+    font-weight: 700;
+    display: block;
+  }
+
+  .price-kasse { color: var(--color-primary); }
+
+  .price-hint {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    margin-top: 0.25rem;
+    display: block;
+  }
+
+  .detail-colors h4 {
+    font-size: 0.9rem;
+    margin-bottom: 0.625rem;
+  }
+
+  .color-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .color-option {
+    font-size: 0.825rem;
+    padding: 0.375rem 0.875rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+  }
+
+  .detail-cta {
+    width: 100%;
+  }
+
+  .detail-note {
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    margin-top: 0.75rem;
+  }
+
+  .detail-specs {
+    padding: 3rem 0;
+    border-top: 1px solid var(--color-border-light);
+  }
+
+  .detail-specs h2 {
+    margin-bottom: 1.5rem;
+  }
+
+  .detail-specs h3 {
+    margin: 2rem 0 1rem;
+  }
+
+  .specs-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .spec-item {
+    padding: 1rem;
+    background: var(--color-secondary);
+    border-radius: var(--radius-md);
+  }
+
+  .spec-label {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+
+  .spec-value {
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+
+  .features-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .feature-item {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+    background: var(--color-primary-light);
+    border-radius: var(--radius-sm);
+    color: var(--color-primary-dark);
+  }
+
+  .related-section {
+    padding: 3rem 0;
+    border-top: 1px solid var(--color-border-light);
+  }
+
+  .related-section h2 {
+    margin-bottom: 1.5rem;
+  }
+
+  .related-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .related-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    color: var(--color-text);
+    transition: border-color 0.2s;
+  }
+
+  .related-card:hover {
+    border-color: var(--color-primary);
+  }
+
+  .related-image {
+    width: 60px;
+    height: 60px;
+    background: var(--color-secondary);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--color-text-muted);
+  }
+
+  .related-card h4 {
+    font-size: 0.95rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .related-price {
+    font-size: 0.85rem;
+    color: var(--color-primary);
+    font-weight: 600;
+  }
+
+  @media (max-width: 768px) {
+    .detail-grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .detail-pricing {
+      flex-direction: column;
+    }
+
+    .specs-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .related-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

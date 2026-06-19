@@ -1,0 +1,164 @@
+---
+---
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <a href="/" class="footer-logo">
+          <span class="logo-easy">easy</span><span class="logo-ohr">Ohr</span>
+        </a>
+        <p class="footer-desc">Hörgeräte einfach online bestellen. 30 Tage testen, erst zahlen wenn Sie zufrieden sind.</p>
+        <div class="footer-contact">
+          <a href="tel:+4930123456789">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            030 1234 56789
+          </a>
+          <a href="mailto:info@easyohr.de">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            info@easyohr.de
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Hörgeräte</h4>
+        <ul>
+          <li><a href="/hoergeraete/">Alle Hörgeräte</a></li>
+          <li><a href="/hoergeraete/?hersteller=Phonak">Phonak</a></li>
+          <li><a href="/hoergeraete/?hersteller=Oticon">Oticon</a></li>
+          <li><a href="/hoergeraete/?hersteller=Starkey">Starkey</a></li>
+          <li><a href="/vergleich/">Hörgeräte vergleichen</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Service</h4>
+        <ul>
+          <li><a href="/so-funktionierts/">So funktioniert's</a></li>
+          <li><a href="/faq/">Häufige Fragen</a></li>
+          <li><a href="/konto/">Mein Konto</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Rechtliches</h4>
+        <ul>
+          <li><a href="/impressum/">Impressum</a></li>
+          <li><a href="/datenschutz/">Datenschutz</a></li>
+          <li><a href="/agb/">AGB</a></li>
+          <li><a href="/widerruf/">Widerrufsbelehrung</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; {new Date().getFullYear()} easyOhr. Alle Rechte vorbehalten.</p>
+      <p class="footer-note">Alle Preise inkl. gesetzl. MwSt. Versand kostenlos.</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--color-text);
+    color: #B4B2A9;
+    padding: 4rem 0 2rem;
+    margin-top: 5rem;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 3rem;
+  }
+
+  .footer-logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: 1rem;
+  }
+
+  .footer-logo .logo-easy {
+    color: white;
+  }
+
+  .footer-logo .logo-ohr {
+    color: var(--color-primary);
+  }
+
+  .footer-desc {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  .footer-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .footer-contact a {
+    color: #B4B2A9;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  .footer-contact a:hover {
+    color: white;
+  }
+
+  .footer-col h4 {
+    color: white;
+    font-size: 1rem;
+    margin-bottom: 1.25rem;
+    font-weight: 600;
+  }
+
+  .footer-col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+  }
+
+  .footer-col ul a {
+    color: #B4B2A9;
+    font-size: 0.9rem;
+  }
+
+  .footer-col ul a:hover {
+    color: white;
+  }
+
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.825rem;
+  }
+
+  .footer-note {
+    color: #888780;
+  }
+
+  @media (max-width: 768px) {
+    .footer-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .footer-bottom {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

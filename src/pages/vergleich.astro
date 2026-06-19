@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import ProductCompare from '../components/ProductCompare.tsx'
+import products from '../data/products.json'
+---
+<BaseLayout title="Hörgeräte vergleichen" description="Vergleichen Sie bis zu 3 Hörgeräte direkt miteinander. Finden Sie das perfekte Modell für Ihre Bedürfnisse.">
+  <section class="page-header">
+    <div class="container">
+      <h1>Hörgeräte vergleichen</h1>
+      <p>Wählen Sie bis zu 3 Modelle und vergleichen Sie Features, Preise und Technologie</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 2rem;">
+    <div class="container">
+      <ProductCompare client:load products={products} />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-header {
+    background: var(--color-secondary);
+    padding: 3rem 0;
+    text-align: center;
+  }
+
+  .page-header p {
+    color: var(--color-text-light);
+    font-size: 1.1rem;
+    margin-top: 0.75rem;
+  }
+</style>

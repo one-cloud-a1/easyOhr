@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import AuthForm from '../components/AuthForm.tsx'
+---
+<BaseLayout title="Mein Konto" description="Melden Sie sich an oder erstellen Sie ein Konto bei easyOhr.">
+  <section class="section">
+    <div class="container auth-container">
+      <AuthForm client:load />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .auth-container {
+    max-width: 480px;
+  }
+</style>

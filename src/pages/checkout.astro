@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import CheckoutForm from '../components/CheckoutForm.tsx'
+---
+<BaseLayout title="Checkout" description="Schliessen Sie Ihre Bestellung ab. 30 Tage kostenlos testen — Zahlung erst bei Zufriedenheit.">
+  <section class="section">
+    <div class="container checkout-container">
+      <h1>Ihre Bestellung</h1>
+      <CheckoutForm client:load />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .checkout-container {
+    max-width: 720px;
+  }
+
+  .checkout-container h1 {
+    margin-bottom: 2rem;
+  }
+</style>

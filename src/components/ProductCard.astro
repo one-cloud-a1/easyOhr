@@ -1,0 +1,212 @@
+---
+interface Props {
+  slug: string
+  name: string
+  hersteller: string
+  technologie: string
+  privatpreis: number
+  kassenpreis: number
+  features: string[]
+  bild: string
+  farben: string[]
+}
+
+const { slug, name, hersteller, technologie, privatpreis, kassenpreis, features, bild, farben } = Astro.props
+
+const badgeColor = technologie === 'Premium' ? 'badge-premium' : technologie === 'Advanced' ? 'badge-advanced' : 'badge-standard'
+---
+<a href={`/hoergeraete/${slug}/`} class="product-card">
+  <div class="product-image">
+    <div class="product-image-placeholder">
+      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.25"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+    </div>
+    <span class={`product-badge ${badgeColor}`}>{technologie}</span>
+  </div>
+  <div class="product-info">
+    <span class="product-brand">{hersteller}</span>
+    <h3 class="product-name">{name}</h3>
+    <div class="product-features">
+      {features.slice(0, 3).map(f => (
+        <span class="feature-tag">{f}</span>
+      ))}
+      {features.length > 3 && <span class="feature-more">+{features.length - 3}</span>}
+    </div>
+    <div class="product-colors">
+      {farben.slice(0, 4).map(() => (
+        <span class="color-dot"></span>
+      ))}
+      {farben.length > 4 && <span class="color-more">+{farben.length - 4}</span>}
+    </div>
+    <div class="product-pricing">
+      <div class="price-private">
+        <span class="price-label">Privatpreis</span>
+        <span class="price-value">{privatpreis.toLocaleString('de-DE')} &euro;</span>
+      </div>
+      <div class="price-kasse">
+        <span class="price-label">Mit Kasse ab</span>
+        <span class="price-value price-kasse-value">{kassenpreis.toLocaleString('de-DE')} &euro;</span>
+      </div>
+    </div>
+    <div class="product-cta">
+      <span class="btn btn-primary">Jetzt 30 Tage testen</span>
+    </div>
+  </div>
+</a>
+
+<style>
+  .product-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border-light);
+    overflow: hidden;
+    transition: all 0.25s ease;
+    text-decoration: none;
+    color: var(--color-text);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .product-card:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+    color: var(--color-text);
+  }
+
+  .product-image {
+    background: var(--color-secondary);
+    padding: 2rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+  }
+
+  .product-image-placeholder {
+    color: var(--color-text-muted);
+  }
+
+  .product-badge {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.25rem 0.75rem;
+    border-radius: 100px;
+  }
+
+  .badge-premium {
+    background: var(--color-accent-light);
+    color: var(--color-accent);
+  }
+
+  .badge-advanced {
+    background: var(--color-primary-light);
+    color: var(--color-primary);
+  }
+
+  .badge-standard {
+    background: #F1EFE8;
+    color: var(--color-text-light);
+  }
+
+  .product-info {
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .product-brand {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+  }
+
+  .product-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0.375rem 0 0.75rem;
+    line-height: 1.3;
+  }
+
+  .product-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .feature-tag {
+    font-size: 0.7rem;
+    background: var(--color-secondary);
+    color: var(--color-text-light);
+    padding: 0.2rem 0.5rem;
+    border-radius: var(--radius-sm);
+  }
+
+  .feature-more {
+    font-size: 0.7rem;
+    color: var(--color-text-muted);
+    padding: 0.2rem 0;
+  }
+
+  .product-colors {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    margin-bottom: 1rem;
+  }
+
+  .color-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--color-border);
+    border: 1px solid var(--color-border-light);
+  }
+
+  .color-more {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+  }
+
+  .product-pricing {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--color-border-light);
+    margin-bottom: 1rem;
+    margin-top: auto;
+  }
+
+  .price-label {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    display: block;
+    margin-bottom: 0.125rem;
+  }
+
+  .price-value {
+    font-size: 1.15rem;
+    font-weight: 700;
+  }
+
+  .price-kasse-value {
+    color: var(--color-primary);
+  }
+
+  .product-cta {
+    margin-top: auto;
+  }
+
+  .product-cta .btn {
+    width: 100%;
+    font-size: 0.9rem;
+    padding: 0.75rem;
+  }
+</style>

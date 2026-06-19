@@ -1,0 +1,217 @@
+.pf-filters {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: var(--color-secondary);
+  border-radius: var(--radius-lg);
+}
+
+.pf-filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.pf-filter-group label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.pf-filter-group select {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  padding: 0.625rem 2rem 0.625rem 0.75rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: white;
+  color: var(--color-text);
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235F5E5A' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+}
+
+.pf-count {
+  margin-left: auto;
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  font-weight: 500;
+  align-self: flex-end;
+  padding-bottom: 0.625rem;
+}
+
+.pf-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.pf-card {
+  background: white;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border-light);
+  overflow: hidden;
+  transition: all 0.25s ease;
+  text-decoration: none;
+  color: var(--color-text);
+  display: flex;
+  flex-direction: column;
+}
+
+.pf-card:hover {
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.pf-card-image {
+  background: var(--color-secondary);
+  padding: 2rem;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 180px;
+  color: var(--color-text-muted);
+}
+
+.pf-badge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.75rem;
+  border-radius: 100px;
+}
+
+.badge-premium {
+  background: var(--color-accent-light);
+  color: var(--color-accent);
+}
+
+.badge-advanced {
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+}
+
+.badge-standard {
+  background: #F1EFE8;
+  color: var(--color-text-light);
+}
+
+.pf-card-info {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.pf-brand {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+}
+
+.pf-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0.375rem 0 0.75rem;
+  line-height: 1.3;
+}
+
+.pf-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+  margin-bottom: 1rem;
+}
+
+.pf-tag {
+  font-size: 0.7rem;
+  background: var(--color-secondary);
+  color: var(--color-text-light);
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--radius-sm);
+}
+
+.pf-more {
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+  padding: 0.2rem 0;
+}
+
+.pf-pricing {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--color-border-light);
+  margin-bottom: 1rem;
+  margin-top: auto;
+}
+
+.pf-price-label {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  display: block;
+  margin-bottom: 0.125rem;
+}
+
+.pf-price {
+  font-size: 1.15rem;
+  font-weight: 700;
+  display: block;
+}
+
+.pf-price-kasse {
+  color: var(--color-primary);
+}
+
+.pf-cta {
+  display: block;
+  text-align: center;
+  background: var(--color-primary);
+  color: white;
+  padding: 0.75rem;
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.pf-card:hover .pf-cta {
+  background: var(--color-primary-dark);
+}
+
+.pf-empty {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--color-text-muted);
+}
+
+@media (max-width: 768px) {
+  .pf-grid {
+    grid-template-columns: 1fr;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .pf-filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .pf-count {
+    margin-left: 0;
+    text-align: center;
+  }
+}
