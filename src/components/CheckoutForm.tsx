@@ -1,13 +1,6 @@
 import { useState, useEffect } from 'react'
-
-interface CartItem {
-  slug: string
-  name: string
-  hersteller: string
-  farbe: string
-  privatpreis: number
-  menge: number
-}
+import { getCart, removeFromCart, onCartUpdate, type CartItem } from '../lib/cart'
+import { supabase } from '../lib/supabase'
 
 export default function CheckoutForm() {
   const [cart, setCart] = useState<CartItem[]>([])
@@ -23,10 +16,23 @@ export default function CheckoutForm() {
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    const stored = localStorage.getItem('easyohr-cart')
-    if (stored) {
-      try { setCart(JSON.parse(stored)) } catch {}
-    }
+    setCart(getCart())
+    return onCartUpdate(setCart)
+  }, [])
+
+  useEffect(() => {
+    if (!supabase) return
+    supabase.auth.getUser().then(({ data }) => {
+      if (data.user) {
+        const meta = data.user.user_metadata
+        setFormData(prev => ({
+          ...prev,
+          email: data.user!.email || prev.email,
+          vorname: meta?.vorname || prev.vorname,
+          nachname: meta?.nachname || prev.nachname,
+        }))
+      }
+    })
   }, [])
 
   const total = cart.reduce((sum, item) => sum + item.privatpreis * item.menge, 0)
@@ -35,12 +41,23 @@ export default function CheckoutForm() {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }))
   }
 
+  const handleRemove = (slug: string, farbe: string) => {
+    removeFromCart(slug, farbe)
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
 
+    const apiUrl = import.meta.env.PUBLIC_API_URL
+    if (!apiUrl) {
+      alert('API ist noch nicht konfiguriert. Bitte PUBLIC_API_URL in .env setzen (Cloudflare Worker URL).')
+      setLoading(false)
+      return
+    }
+
     try {
-      const response = await fetch(`${import.meta.env.PUBLIC_API_URL || ''}/api/order/create`, {
+      const response = await fetch(`${apiUrl}/api/order/create`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ customer: formData, items: cart }),
@@ -52,19 +69,14 @@ export default function CheckoutForm() {
           window.location.href = data.checkoutUrl
         }
       } else {
-        alert('Fehler bei der Bestellung. Bitte versuchen Sie es erneut oder kontaktieren Sie uns.')
+        const errData = await response.json().catch(() => null)
+        alert(errData?.error || 'Fehler bei der Bestellung. Bitte versuchen Sie es erneut.')
       }
     } catch {
       alert('Verbindungsfehler. Bitte prüfen Sie Ihre Internetverbindung.')
     } finally {
       setLoading(false)
     }
-  }
-
-  const removeItem = (slug: string) => {
-    const updated = cart.filter(item => item.slug !== slug)
-    setCart(updated)
-    localStorage.setItem('easyohr-cart', JSON.stringify(updated))
   }
 
   if (cart.length === 0) {
@@ -86,15 +98,16 @@ export default function CheckoutForm() {
       <div className="checkout-cart">
         <h2>Warenkorb</h2>
         {cart.map(item => (
-          <div key={item.slug} className="cart-item">
+          <div key={`${item.slug}-${item.farbe}`} className="cart-item">
             <div className="cart-item-info">
               <span className="cart-brand">{item.hersteller}</span>
               <h4>{item.name}</h4>
               <span className="cart-color">Farbe: {item.farbe}</span>
+              {item.menge > 1 && <span className="cart-color">Menge: {item.menge}</span>}
             </div>
             <div className="cart-item-price">
-              <span>{item.privatpreis.toLocaleString('de-DE')} €</span>
-              <button className="cart-remove" onClick={() => removeItem(item.slug)}>Entfernen</button>
+              <span>{(item.privatpreis * item.menge).toLocaleString('de-DE')} €</span>
+              <button className="cart-remove" onClick={() => handleRemove(item.slug, item.farbe)}>Entfernen</button>
             </div>
           </div>
         ))}

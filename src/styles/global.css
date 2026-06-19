@@ -282,6 +282,148 @@ label {
   cursor: pointer;
 }
 
+/* Auth success */
+.auth-success {
+  background: var(--color-success-light);
+  color: var(--color-success);
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-sm);
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+/* Order history */
+.order-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.order-item {
+  padding: 1rem;
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-md);
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.order-date {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+.order-status {
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.2rem 0.625rem;
+  border-radius: 100px;
+}
+
+.order-status-authorized {
+  background: var(--color-accent-light);
+  color: var(--color-accent);
+}
+
+.order-status-captured {
+  background: var(--color-success-light);
+  color: var(--color-success);
+}
+
+.order-status-cancelled {
+  background: var(--color-danger-light);
+  color: var(--color-danger);
+}
+
+.order-total {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+/* Add to Cart */
+.atc-colors {
+  margin-bottom: 1.75rem;
+}
+
+.atc-colors h4 {
+  font-size: 0.9rem;
+  margin-bottom: 0.625rem;
+}
+
+.atc-color-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.atc-color-btn {
+  font-family: var(--font-sans);
+  font-size: 0.825rem;
+  padding: 0.375rem 0.875rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--color-text);
+}
+
+.atc-color-btn:hover {
+  border-color: var(--color-primary);
+}
+
+.atc-color-active {
+  border-color: var(--color-primary);
+  background: var(--color-primary-light);
+  color: var(--color-primary-dark);
+  font-weight: 600;
+}
+
+.atc-button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  background: var(--color-accent);
+  color: white;
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: var(--font-sans);
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.atc-button:hover {
+  background: #9A6013;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.atc-added {
+  background: var(--color-success);
+}
+
+.atc-added:hover {
+  background: var(--color-success);
+  transform: none;
+  box-shadow: none;
+}
+
+.atc-note {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin-top: 0.75rem;
+}
+
 /* Checkout */
 .checkout-empty {
   text-align: center;

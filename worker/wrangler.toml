@@ -1,0 +1,12 @@
+name = "easyohr-api"
+main = "index.ts"
+compatibility_date = "2024-01-01"
+
+[vars]
+SITE_URL = "https://easyohr.de"
+
+# Secrets (set via `wrangler secret put`):
+# MOLLIE_API_KEY
+# SUPABASE_URL
+# SUPABASE_SERVICE_KEY
+# ADMIN_SECRET

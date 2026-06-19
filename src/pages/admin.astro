@@ -1,0 +1,159 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import AdminDashboard from '../components/AdminDashboard.tsx'
+---
+<BaseLayout title="Admin" description="easyOhr Admin-Dashboard">
+  <section class="section">
+    <div class="container">
+      <AdminDashboard client:load />
+    </div>
+  </section>
+</BaseLayout>
+
+<style is:global>
+  .admin-login {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 2rem 0;
+  }
+
+  .admin-login h1 {
+    margin-bottom: 0.5rem;
+  }
+
+  .admin-login p {
+    color: var(--color-text-light);
+    margin-bottom: 1.5rem;
+  }
+
+  .admin-dashboard {
+    padding: 1rem 0;
+  }
+
+  .admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+
+  .admin-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .admin-stat {
+    background: var(--color-secondary);
+    padding: 1.25rem;
+    border-radius: var(--radius-md);
+    text-align: center;
+  }
+
+  .admin-stat-label {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    margin-bottom: 0.25rem;
+  }
+
+  .admin-stat-value {
+    font-size: 1.75rem;
+    font-weight: 700;
+  }
+
+  .admin-orders {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .admin-order {
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem;
+  }
+
+  .admin-order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .admin-order-header > div {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .admin-order-id {
+    font-family: monospace;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+  }
+
+  .admin-order-date {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+  }
+
+  .admin-order-customer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--color-border-light);
+  }
+
+  .admin-order-customer span {
+    color: var(--color-text-light);
+  }
+
+  .admin-order-items {
+    margin-bottom: 1rem;
+  }
+
+  .admin-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.375rem 0;
+    font-size: 0.9rem;
+  }
+
+  .admin-order-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-border-light);
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .admin-order-total {
+    font-size: 1.1rem;
+    font-weight: 700;
+  }
+
+  .admin-order-actions {
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .admin-order-actions .btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  @media (max-width: 768px) {
+    .admin-stats {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>

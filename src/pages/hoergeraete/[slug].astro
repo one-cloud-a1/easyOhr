@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro'
+import AddToCart from '../../components/AddToCart.tsx'
 import products from '../../data/products.json'
 
 export function getStaticPaths() {
@@ -60,21 +61,16 @@ const related = products
             </div>
           </div>
 
-          <div class="detail-colors">
-            <h4>Verfügbare Farben</h4>
-            <div class="color-list">
-              {product.farben.map((farbe: string) => (
-                <span class="color-option">{farbe}</span>
-              ))}
-            </div>
-          </div>
-
           <div class="detail-actions">
-            <a href="/checkout/" class="btn btn-accent btn-lg detail-cta">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-              Jetzt 30 Tage testen
-            </a>
-            <p class="detail-note">Kein Geld wird jetzt abgebucht — Zahlung erst nach der Testphase</p>
+            <AddToCart
+              client:load
+              slug={product.slug}
+              name={product.name}
+              hersteller={product.hersteller}
+              privatpreis={product.privatpreis}
+              kassenpreis={product.kassenpreis}
+              farben={product.farben}
+            />
           </div>
         </div>
       </div>
