@@ -89,7 +89,7 @@ const related = products
           </div>
           <div class="spec-item">
             <span class="spec-label">Bauform</span>
-            <span class="spec-value">RIC / Ex-Hörer</span>
+            <span class="spec-value">{product.typ === 'CIC' ? 'CIC / Im-Ohr' : 'RIC / Ex-Hörer'}</span>
           </div>
           <div class="spec-item">
             <span class="spec-label">Technologie-Level</span>
