@@ -23,7 +23,7 @@ function ProductCardReact({ product }: { product: Product }) {
     product.technologie === 'Advanced' ? 'badge-advanced' : 'badge-standard'
 
   return (
-    <a href={`/hoergeraete/${product.slug}/`} className="pf-card">
+    <a href={`${import.meta.env.BASE_URL}hoergeraete/${product.slug}/`} className="pf-card">
       <div className="pf-card-image">
         <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.25">
           <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>

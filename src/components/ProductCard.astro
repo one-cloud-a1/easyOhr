@@ -1,4 +1,5 @@
 ---
+import { url } from '../lib/links'
 interface Props {
   slug: string
   name: string
@@ -15,7 +16,7 @@ const { slug, name, hersteller, technologie, privatpreis, kassenpreis, features,
 
 const badgeColor = technologie === 'Premium' ? 'badge-premium' : technologie === 'Advanced' ? 'badge-advanced' : 'badge-standard'
 ---
-<a href={`/hoergeraete/${slug}/`} class="product-card">
+<a href={url(`/hoergeraete/${slug}/`)} class="product-card">
   <div class="product-image">
     <div class="product-image-placeholder">
       <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.25"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>

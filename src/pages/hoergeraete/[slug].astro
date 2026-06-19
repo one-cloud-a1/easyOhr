@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro'
 import AddToCart from '../../components/AddToCart.tsx'
 import products from '../../data/products.json'
+import { url } from '../../lib/links'
 
 export function getStaticPaths() {
   return products.map(product => ({
@@ -20,9 +21,9 @@ const related = products
   <section class="product-detail">
     <div class="container">
       <nav class="breadcrumb">
-        <a href="/">Start</a>
+        <a href={url('/')}>Start</a>
         <span>/</span>
-        <a href="/hoergeraete/">Hörgeräte</a>
+        <a href={url('/hoergeraete/')}>Hörgeräte</a>
         <span>/</span>
         <span>{product.name}</span>
       </nav>
@@ -120,7 +121,7 @@ const related = products
           <h2>Weitere {product.hersteller} Hörgeräte</h2>
           <div class="related-grid">
             {related.map(r => (
-              <a href={`/hoergeraete/${r.slug}/`} class="related-card">
+              <a href={url(`/hoergeraete/${r.slug}/`)} class="related-card">
                 <div class="related-image">
                   <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.2">
                     <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>

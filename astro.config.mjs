@@ -5,5 +5,6 @@ import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
   integrations: [react(), sitemap()],
-  site: 'https://easyohr.de',
+  site: 'https://one-cloud-a1.github.io',
+  base: '/easyOhr',
 });

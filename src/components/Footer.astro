@@ -1,10 +1,11 @@
 ---
+import { url } from '../lib/links'
 ---
 <footer class="footer">
   <div class="container">
     <div class="footer-grid">
       <div class="footer-col">
-        <a href="/" class="footer-logo">
+        <a href={url('/')} class="footer-logo">
           <span class="logo-easy">easy</span><span class="logo-ohr">Ohr</span>
         </a>
         <p class="footer-desc">Hörgeräte einfach online bestellen. 30 Tage testen, erst zahlen wenn Sie zufrieden sind.</p>
@@ -22,28 +23,28 @@
       <div class="footer-col">
         <h4>Hörgeräte</h4>
         <ul>
-          <li><a href="/hoergeraete/">Alle Hörgeräte</a></li>
-          <li><a href="/hoergeraete/?hersteller=Phonak">Phonak</a></li>
-          <li><a href="/hoergeraete/?hersteller=Oticon">Oticon</a></li>
-          <li><a href="/hoergeraete/?hersteller=Starkey">Starkey</a></li>
-          <li><a href="/vergleich/">Hörgeräte vergleichen</a></li>
+          <li><a href={url('/hoergeraete/')}>Alle Hörgeräte</a></li>
+          <li><a href={url('/hoergeraete/?hersteller=Phonak')}>Phonak</a></li>
+          <li><a href={url('/hoergeraete/?hersteller=Oticon')}>Oticon</a></li>
+          <li><a href={url('/hoergeraete/?hersteller=Starkey')}>Starkey</a></li>
+          <li><a href={url('/vergleich/')}>Hörgeräte vergleichen</a></li>
         </ul>
       </div>
       <div class="footer-col">
         <h4>Service</h4>
         <ul>
-          <li><a href="/so-funktionierts/">So funktioniert's</a></li>
-          <li><a href="/faq/">Häufige Fragen</a></li>
-          <li><a href="/konto/">Mein Konto</a></li>
+          <li><a href={url('/so-funktionierts/')}>So funktioniert's</a></li>
+          <li><a href={url('/faq/')}>Häufige Fragen</a></li>
+          <li><a href={url('/konto/')}>Mein Konto</a></li>
         </ul>
       </div>
       <div class="footer-col">
         <h4>Rechtliches</h4>
         <ul>
-          <li><a href="/impressum/">Impressum</a></li>
-          <li><a href="/datenschutz/">Datenschutz</a></li>
-          <li><a href="/agb/">AGB</a></li>
-          <li><a href="/widerruf/">Widerrufsbelehrung</a></li>
+          <li><a href={url('/impressum/')}>Impressum</a></li>
+          <li><a href={url('/datenschutz/')}>Datenschutz</a></li>
+          <li><a href={url('/agb/')}>AGB</a></li>
+          <li><a href={url('/widerruf/')}>Widerrufsbelehrung</a></li>
         </ul>
       </div>
     </div>

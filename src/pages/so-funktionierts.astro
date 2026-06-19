@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
 import ProcessSteps from '../components/ProcessSteps.astro'
+import { url } from '../lib/links'
 ---
 <BaseLayout title="So funktioniert's" description="In 4 einfachen Schritten zu Ihrem Hörgerät. Online bestellen, 30 Tage testen, erst zahlen wenn Sie zufrieden sind.">
   <section class="page-header">
@@ -49,7 +50,7 @@ import ProcessSteps from '../components/ProcessSteps.astro'
       <p style="color: var(--color-text-light); margin: 1rem 0 2rem; font-size: 1.1rem;">Wir beraten Sie gerne persönlich — kostenlos und unverbindlich.</p>
       <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
         <a href="tel:+4930123456789" class="btn btn-primary btn-lg">030 1234 56789</a>
-        <a href="/faq/" class="btn btn-outline btn-lg">Häufige Fragen</a>
+        <a href={url('/faq/')} class="btn btn-outline btn-lg">Häufige Fragen</a>
       </div>
     </div>
   </section>

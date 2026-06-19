@@ -5,6 +5,7 @@ import TrustBar from '../components/TrustBar.astro'
 import ProcessSteps from '../components/ProcessSteps.astro'
 import ProductCard from '../components/ProductCard.astro'
 import products from '../data/products.json'
+import { url } from '../lib/links'
 
 const topProducts = products.filter(p => p.technologie === 'Premium').slice(0, 3)
 ---
@@ -49,7 +50,7 @@ const topProducts = products.filter(p => p.technologie === 'Premium').slice(0, 3
         ))}
       </div>
       <div class="section-cta">
-        <a href="/hoergeraete/" class="btn btn-outline">Alle Hörgeräte ansehen</a>
+        <a href={url('/hoergeraete/')} class="btn btn-outline">Alle Hörgeräte ansehen</a>
       </div>
     </div>
   </section>
@@ -85,7 +86,7 @@ const topProducts = products.filter(p => p.technologie === 'Premium').slice(0, 3
         <h2>Bereit für besseres Hören?</h2>
         <p>Wählen Sie Ihr Hörgerät und testen Sie es 30 Tage kostenlos. Ohne Risiko.</p>
         <div class="cta-actions">
-          <a href="/hoergeraete/" class="btn btn-accent btn-lg">Hörgeräte entdecken</a>
+          <a href={url('/hoergeraete/')} class="btn btn-accent btn-lg">Hörgeräte entdecken</a>
           <a href="tel:+4930123456789" class="btn btn-outline btn-lg">030 1234 56789</a>
         </div>
       </div>

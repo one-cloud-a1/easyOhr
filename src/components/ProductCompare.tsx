@@ -107,7 +107,7 @@ export default function ProductCompare({ products }: { products: Product[] }) {
                 <td></td>
                 {selectedProducts.map(p => (
                   <td key={p.slug}>
-                    <a href={`/hoergeraete/${p.slug}/`} className="ct-cta">Details ansehen</a>
+                    <a href={`${import.meta.env.BASE_URL}hoergeraete/${p.slug}/`} className="ct-cta">Details ansehen</a>
                   </td>
                 ))}
               </tr>

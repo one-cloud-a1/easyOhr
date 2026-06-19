@@ -88,7 +88,7 @@ export default function CheckoutForm() {
         </svg>
         <h2>Ihr Warenkorb ist leer</h2>
         <p>Stöbern Sie durch unsere Hörgeräte und finden Sie Ihr Wunschmodell.</p>
-        <a href="/hoergeraete/" className="co-btn-primary">Hörgeräte entdecken</a>
+        <a href={`${import.meta.env.BASE_URL}hoergeraete/`} className="co-btn-primary">Hörgeräte entdecken</a>
       </div>
     )
   }
@@ -164,7 +164,7 @@ export default function CheckoutForm() {
           {loading ? 'Wird verarbeitet...' : 'Kostenpflichtig bestellen'}
         </button>
         <p className="checkout-legal">
-          Mit Klick auf "Kostenpflichtig bestellen" akzeptieren Sie unsere <a href="/agb/">AGB</a> und <a href="/datenschutz/">Datenschutzerklärung</a>. Die Zahlung wird erst nach der 30-tägigen Testphase eingezogen.
+          Mit Klick auf "Kostenpflichtig bestellen" akzeptieren Sie unsere <a href={`${import.meta.env.BASE_URL}agb/`}>AGB</a> und <a href={`${import.meta.env.BASE_URL}datenschutz/`}>Datenschutzerklärung</a>. Die Zahlung wird erst nach der 30-tägigen Testphase eingezogen.
         </p>
       </form>
     </div>

@@ -1,8 +1,9 @@
 ---
+import { url } from '../lib/links'
 ---
 <div class="cookie-banner" id="cookieBanner" style="display:none">
   <div class="cookie-content">
-    <p>Wir verwenden technisch notwendige Cookies, um die Grundfunktionen der Website sicherzustellen. Weitere Informationen finden Sie in unserer <a href="/datenschutz/">Datenschutzerklärung</a>.</p>
+    <p>Wir verwenden technisch notwendige Cookies, um die Grundfunktionen der Website sicherzustellen. Weitere Informationen finden Sie in unserer <a href={url('/datenschutz/')}>Datenschutzerklärung</a>.</p>
     <div class="cookie-actions">
       <button class="cookie-btn cookie-accept" id="cookieAccept">Akzeptieren</button>
       <button class="cookie-btn cookie-decline" id="cookieDecline">Nur notwendige</button>

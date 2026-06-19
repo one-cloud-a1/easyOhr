@@ -1,4 +1,5 @@
 ---
+import { url } from '../lib/links'
 ---
 <section class="hero">
   <div class="container hero-inner">
@@ -7,8 +8,8 @@
       <h1>Hörgeräte einfach online bestellen — erst zahlen wenn's passt</h1>
       <p class="hero-sub">Wählen Sie Ihr Wunsch-Hörgerät, testen Sie es 30 Tage kostenlos zu Hause und zahlen erst, wenn Sie wirklich zufrieden sind.</p>
       <div class="hero-actions">
-        <a href="/hoergeraete/" class="btn btn-accent btn-lg">Hörgeräte entdecken</a>
-        <a href="/so-funktionierts/" class="btn btn-outline btn-lg">So funktioniert's</a>
+        <a href={url('/hoergeraete/')} class="btn btn-accent btn-lg">Hörgeräte entdecken</a>
+        <a href={url('/so-funktionierts/')} class="btn btn-outline btn-lg">So funktioniert's</a>
       </div>
       <div class="hero-trust">
         <div class="hero-trust-item">
