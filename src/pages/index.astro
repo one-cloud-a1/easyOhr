@@ -9,6 +9,31 @@ import products from '../data/products.json'
 const topProducts = products.filter(p => p.technologie === 'Premium').slice(0, 3)
 ---
 <BaseLayout title="easyOhr">
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Store",
+    "name": "easyOhr",
+    "description": "Hörgeräte online bestellen und 30 Tage kostenlos testen. Erst zahlen wenn Sie zufrieden sind.",
+    "url": "https://easyohr.de",
+    "telephone": "+4930123456789",
+    "email": "info@easyohr.de",
+    "priceRange": "€€",
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Hörgeräte",
+      "itemListElement": topProducts.map(p => ({
+        "@type": "Product",
+        "name": p.name,
+        "brand": { "@type": "Brand", "name": p.hersteller },
+        "offers": {
+          "@type": "Offer",
+          "priceCurrency": "EUR",
+          "price": p.privatpreis,
+          "availability": "https://schema.org/InStock"
+        }
+      }))
+    }
+  })} />
   <HeroSection />
   <TrustBar />
 

@@ -1,0 +1,105 @@
+---
+---
+<div class="cookie-banner" id="cookieBanner" style="display:none">
+  <div class="cookie-content">
+    <p>Wir verwenden technisch notwendige Cookies, um die Grundfunktionen der Website sicherzustellen. Weitere Informationen finden Sie in unserer <a href="/datenschutz/">Datenschutzerklärung</a>.</p>
+    <div class="cookie-actions">
+      <button class="cookie-btn cookie-accept" id="cookieAccept">Akzeptieren</button>
+      <button class="cookie-btn cookie-decline" id="cookieDecline">Nur notwendige</button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .cookie-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--color-text);
+    color: #B4B2A9;
+    padding: 1.25rem;
+    z-index: 1000;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
+  }
+
+  .cookie-content {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  .cookie-content p {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .cookie-content a {
+    color: white;
+    text-decoration: underline;
+  }
+
+  .cookie-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  .cookie-btn {
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.625rem 1.25rem;
+    border-radius: var(--radius-sm);
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+
+  .cookie-btn:hover {
+    opacity: 0.9;
+  }
+
+  .cookie-accept {
+    background: var(--color-primary);
+    color: white;
+  }
+
+  .cookie-decline {
+    background: transparent;
+    color: #B4B2A9;
+    border: 1px solid #5F5E5A;
+  }
+
+  @media (max-width: 768px) {
+    .cookie-content {
+      flex-direction: column;
+      text-align: center;
+      gap: 1rem;
+    }
+  }
+</style>
+
+<script>
+  const banner = document.getElementById('cookieBanner')
+  const acceptBtn = document.getElementById('cookieAccept')
+  const declineBtn = document.getElementById('cookieDecline')
+
+  if (!localStorage.getItem('easyohr-cookies')) {
+    banner!.style.display = 'block'
+  }
+
+  acceptBtn?.addEventListener('click', () => {
+    localStorage.setItem('easyohr-cookies', 'accepted')
+    banner!.style.display = 'none'
+  })
+
+  declineBtn?.addEventListener('click', () => {
+    localStorage.setItem('easyohr-cookies', 'necessary')
+    banner!.style.display = 'none'
+  })
+</script>
