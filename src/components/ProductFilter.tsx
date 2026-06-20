@@ -27,7 +27,7 @@ function ProductCardReact({ product }: { product: Product }) {
     <a href={`${import.meta.env.BASE_URL}hoergeraete/${product.slug}/`} className="pf-card">
       <div className="pf-card-image">
         <img
-          src={`${import.meta.env.BASE_URL}${product.bild.replace(/^\//, '')}`}
+          src={`${(import.meta.env.BASE_URL || '/').replace(/\/$/, '')}${product.bild}`}
           alt={product.name}
           className="pf-card-img"
           loading="lazy"

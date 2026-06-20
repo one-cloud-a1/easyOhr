@@ -43,7 +43,7 @@ const bauformLang = product.typ === 'CIC'
               <span class="detail-badge-type">{bauform}</span>
             </div>
             <img
-              src={`${import.meta.env.BASE_URL}${product.bild.replace(/^\//, '')}`}
+              src={url(product.bild)}
               alt={product.name}
               class="detail-product-img"
               loading="eager"

@@ -18,7 +18,7 @@ const badgeColor = technologie === 'Premium' ? 'badge-premium' : technologie ===
 ---
 <a href={url(`/hoergeraete/${slug}/`)} class="product-card">
   <div class="product-image">
-    <img src={`${import.meta.env.BASE_URL}${bild.replace(/^\//, '')}`} alt={name} class="product-img" loading="lazy" />
+    <img src={url(bild)} alt={name} class="product-img" loading="lazy" />
     <span class={`product-badge ${badgeColor}`}>{technologie}</span>
   </div>
   <div class="product-info">
