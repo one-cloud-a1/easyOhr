@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react'
+import { BASE } from '../lib/base-url'
 
 interface Product {
   slug: string
@@ -24,10 +25,10 @@ function ProductCardReact({ product }: { product: Product }) {
     product.technologie === 'Standard' ? 'badge-standard' : 'badge-basis'
 
   return (
-    <a href={`${import.meta.env.BASE_URL}hoergeraete/${product.slug}/`} className="pf-card">
+    <a href={`${BASE}hoergeraete/${product.slug}/`} className="pf-card">
       <div className="pf-card-image">
         <img
-          src={`${(import.meta.env.BASE_URL || '/').replace(/\/$/, '')}${product.bild}`}
+          src={`${BASE}${product.bild.replace(/^\//, '')}`}
           alt={product.name}
           className="pf-card-img"
           loading="lazy"

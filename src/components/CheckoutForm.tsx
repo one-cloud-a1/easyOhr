@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { getCart, removeFromCart, onCartUpdate, type CartItem } from '../lib/cart'
 import { supabase } from '../lib/supabase'
+import { BASE } from '../lib/base-url'
 
 export default function CheckoutForm() {
   const [cart, setCart] = useState<CartItem[]>([])
@@ -88,7 +89,7 @@ export default function CheckoutForm() {
         </svg>
         <h2>Ihr Warenkorb ist leer</h2>
         <p>Stöbern Sie durch unsere Hörgeräte und finden Sie Ihr Wunschmodell.</p>
-        <a href={`${import.meta.env.BASE_URL}hoergeraete/`} className="co-btn-primary">Hörgeräte entdecken</a>
+        <a href={`${BASE}hoergeraete/`} className="co-btn-primary">Hörgeräte entdecken</a>
       </div>
     )
   }
@@ -164,7 +165,7 @@ export default function CheckoutForm() {
           {loading ? 'Wird verarbeitet...' : 'Kostenpflichtig bestellen'}
         </button>
         <p className="checkout-legal">
-          Mit Klick auf "Kostenpflichtig bestellen" akzeptieren Sie unsere <a href={`${import.meta.env.BASE_URL}agb/`}>AGB</a> und <a href={`${import.meta.env.BASE_URL}datenschutz/`}>Datenschutzerklärung</a>. Die Zahlung wird erst nach der 30-tägigen Testphase eingezogen.
+          Mit Klick auf "Kostenpflichtig bestellen" akzeptieren Sie unsere <a href={`${BASE}agb/`}>AGB</a> und <a href={`${BASE}datenschutz/`}>Datenschutzerklärung</a>. Die Zahlung wird erst nach der 30-tägigen Testphase eingezogen.
         </p>
       </form>
     </div>
