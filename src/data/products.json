@@ -14,7 +14,7 @@
     "akkuLaufzeit": "24 Stunden",
     "schutzklasse": "IP68",
     "gewicht": "2,4g",
-    "bild": "/images/products/phonak-audeo-infinio-90.webp"
+    "bild": "/images/products/phonak-audeo-infinio-90.png"
   },
   {
     "slug": "phonak-audeo-infinio-70",
@@ -31,7 +31,7 @@
     "akkuLaufzeit": "24 Stunden",
     "schutzklasse": "IP68",
     "gewicht": "2,4g",
-    "bild": "/images/products/phonak-audeo-infinio-70.webp"
+    "bild": "/images/products/phonak-audeo-infinio-70.png"
   },
   {
     "slug": "phonak-audeo-infinio-50",
@@ -48,7 +48,7 @@
     "akkuLaufzeit": "24 Stunden",
     "schutzklasse": "IP68",
     "gewicht": "2,4g",
-    "bild": "/images/products/phonak-audeo-infinio-50.webp"
+    "bild": "/images/products/phonak-audeo-infinio-50.png"
   },
   {
     "slug": "phonak-audeo-infinio-30",
@@ -65,7 +65,7 @@
     "akkuLaufzeit": "24 Stunden",
     "schutzklasse": "IP68",
     "gewicht": "2,4g",
-    "bild": "/images/products/phonak-audeo-infinio-30.webp"
+    "bild": "/images/products/phonak-audeo-infinio-30.png"
   },
   {
     "slug": "phonak-audeo-infinio-sphere-90",
@@ -82,7 +82,7 @@
     "akkuLaufzeit": "24 Stunden",
     "schutzklasse": "IP68",
     "gewicht": "3g",
-    "bild": "/images/products/phonak-audeo-infinio-sphere-90.webp"
+    "bild": "/images/products/phonak-audeo-infinio-sphere-90.png"
   },
   {
     "slug": "phonak-audeo-infinio-sphere-70",
@@ -99,7 +99,7 @@
     "akkuLaufzeit": "24 Stunden",
     "schutzklasse": "IP68",
     "gewicht": "3g",
-    "bild": "/images/products/phonak-audeo-infinio-sphere-70.webp"
+    "bild": "/images/products/phonak-audeo-infinio-sphere-70.png"
   },
   {
     "slug": "oticon-intent-1",
@@ -116,7 +116,7 @@
     "akkuLaufzeit": "24 Stunden",
     "schutzklasse": "IP68",
     "gewicht": "3,03g",
-    "bild": "/images/products/oticon-intent-1.webp"
+    "bild": "/images/products/oticon-intent-1.jpg"
   },
   {
     "slug": "oticon-intent-2",
@@ -133,7 +133,7 @@
     "akkuLaufzeit": "24 Stunden",
     "schutzklasse": "IP68",
     "gewicht": "3,03g",
-    "bild": "/images/products/oticon-intent-2.webp"
+    "bild": "/images/products/oticon-intent-2.jpg"
   },
   {
     "slug": "oticon-intent-3",
@@ -150,7 +150,7 @@
     "akkuLaufzeit": "24 Stunden",
     "schutzklasse": "IP68",
     "gewicht": "3,03g",
-    "bild": "/images/products/oticon-intent-3.webp"
+    "bild": "/images/products/oticon-intent-3.jpg"
   },
   {
     "slug": "oticon-intent-4",
@@ -167,7 +167,7 @@
     "akkuLaufzeit": "24 Stunden",
     "schutzklasse": "IP68",
     "gewicht": "3,03g",
-    "bild": "/images/products/oticon-intent-4.webp"
+    "bild": "/images/products/oticon-intent-4.jpg"
   },
   {
     "slug": "oticon-zeal-1",
@@ -184,7 +184,7 @@
     "akkuLaufzeit": "20 Stunden",
     "schutzklasse": "IP68",
     "gewicht": "2,5g",
-    "bild": "/images/products/oticon-zeal-1.webp"
+    "bild": "/images/products/oticon-zeal-1.jpg"
   },
   {
     "slug": "oticon-zeal-2",
@@ -201,7 +201,7 @@
     "akkuLaufzeit": "20 Stunden",
     "schutzklasse": "IP68",
     "gewicht": "2,5g",
-    "bild": "/images/products/oticon-zeal-2.webp"
+    "bild": "/images/products/oticon-zeal-2.jpg"
   },
   {
     "slug": "oticon-zeal-3",
@@ -218,7 +218,7 @@
     "akkuLaufzeit": "20 Stunden",
     "schutzklasse": "IP68",
     "gewicht": "2,5g",
-    "bild": "/images/products/oticon-zeal-3.webp"
+    "bild": "/images/products/oticon-zeal-3.jpg"
   },
   {
     "slug": "oticon-jet-px",
@@ -235,7 +235,7 @@
     "akkuLaufzeit": "24 Stunden",
     "schutzklasse": "IP68",
     "gewicht": "3g",
-    "bild": "/images/products/oticon-jet-px.webp"
+    "bild": "/images/products/oticon-jet-px.jpg"
   },
   {
     "slug": "starkey-genesis-ai-24",
@@ -252,7 +252,7 @@
     "akkuLaufzeit": "23 Stunden",
     "schutzklasse": "IP68",
     "gewicht": "2,5g",
-    "bild": "/images/products/starkey-genesis-ai-24.webp"
+    "bild": "/images/products/starkey-genesis-ai-24.png"
   },
   {
     "slug": "starkey-genesis-ai-20",
@@ -269,7 +269,7 @@
     "akkuLaufzeit": "23 Stunden",
     "schutzklasse": "IP68",
     "gewicht": "2,5g",
-    "bild": "/images/products/starkey-genesis-ai-20.webp"
+    "bild": "/images/products/starkey-genesis-ai-20.png"
   },
   {
     "slug": "starkey-genesis-ai-16",
@@ -286,7 +286,7 @@
     "akkuLaufzeit": "23 Stunden",
     "schutzklasse": "IP68",
     "gewicht": "2,5g",
-    "bild": "/images/products/starkey-genesis-ai-16.webp"
+    "bild": "/images/products/starkey-genesis-ai-16.png"
   },
   {
     "slug": "starkey-genesis-ai-12",
@@ -303,6 +303,6 @@
     "akkuLaufzeit": "23 Stunden",
     "schutzklasse": "IP68",
     "gewicht": "2,5g",
-    "bild": "/images/products/starkey-genesis-ai-12.webp"
+    "bild": "/images/products/starkey-genesis-ai-12.png"
   }
 ]

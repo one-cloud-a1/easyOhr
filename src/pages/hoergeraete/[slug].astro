@@ -42,26 +42,12 @@ const bauformLang = product.typ === 'CIC'
               </span>
               <span class="detail-badge-type">{bauform}</span>
             </div>
-            <svg class="detail-product-svg" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-              {product.typ === 'CIC' ? (
-                <g>
-                  <ellipse cx="100" cy="100" rx="55" ry="60" fill="#e8e6e0" stroke="#ccc" stroke-width="1"/>
-                  <ellipse cx="100" cy="95" rx="35" ry="38" fill="#d3d1c7" stroke="#bbb" stroke-width="0.5"/>
-                  <circle cx="100" cy="85" r="8" fill="#0F6E56" opacity="0.6"/>
-                  <rect x="92" y="110" width="16" height="4" rx="2" fill="#aaa"/>
-                  <text x="100" y="170" text-anchor="middle" fill="#888" font-size="11" font-family="Inter, sans-serif">Im-Ohr (CIC)</text>
-                </g>
-              ) : (
-                <g>
-                  <rect x="75" y="30" width="50" height="80" rx="12" fill="#e8e6e0" stroke="#ccc" stroke-width="1"/>
-                  <rect x="85" y="40" width="30" height="15" rx="4" fill="#d3d1c7"/>
-                  <circle cx="100" cy="45" r="3" fill="#0F6E56" opacity="0.6"/>
-                  <rect x="95" y="110" width="10" height="40" rx="2" fill="#d3d1c7" stroke="#ccc" stroke-width="0.5"/>
-                  <ellipse cx="100" cy="155" rx="14" ry="10" fill="#e8e6e0" stroke="#ccc" stroke-width="0.5"/>
-                  <text x="100" y="185" text-anchor="middle" fill="#888" font-size="11" font-family="Inter, sans-serif">RIC / Ex-Hörer</text>
-                </g>
-              )}
-            </svg>
+            <img
+              src={`${import.meta.env.BASE_URL}${product.bild.replace(/^\//, '')}`}
+              alt={product.name}
+              class="detail-product-img"
+              loading="eager"
+            />
           </div>
           <div class="detail-image-info">
             <div class="detail-image-info-item">
@@ -293,9 +279,10 @@ const bauformLang = product.typ === 'CIC'
   .badge-standard { background: #F1EFE8; color: var(--color-text-light); }
   .badge-basis { background: #E8E6E0; color: var(--color-text-muted); }
 
-  .detail-product-svg {
-    width: 180px;
-    height: 180px;
+  .detail-product-img {
+    max-width: 85%;
+    max-height: 300px;
+    object-fit: contain;
   }
 
   .detail-image-info {
