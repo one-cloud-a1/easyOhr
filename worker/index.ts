@@ -1,9 +1,12 @@
+import { scrapeAndUpdatePrices } from './price-scraper'
+
 interface Env {
   MOLLIE_API_KEY: string
   SUPABASE_URL: string
   SUPABASE_SERVICE_KEY: string
   ADMIN_SECRET: string
   SITE_URL: string
+  GITHUB_TOKEN: string
 }
 
 const MOLLIE_API = 'https://api.mollie.com/v2'
@@ -221,10 +224,22 @@ export default {
       if (path === '/api/orders' && request.method === 'GET') {
         return handleGetOrders(request, env)
       }
+      if (path === '/api/prices/update' && request.method === 'POST') {
+        const auth = request.headers.get('Authorization')
+        if (auth !== `Bearer ${env.ADMIN_SECRET}`) {
+          return json({ error: 'Unauthorized' }, 401)
+        }
+        const log = await scrapeAndUpdatePrices(env)
+        return json({ log })
+      }
 
       return json({ error: 'Not found' }, 404)
     } catch (err) {
       return json({ error: 'Internal server error' }, 500)
     }
+  },
+
+  async scheduled(event: ScheduledEvent, env: Env, ctx: ExecutionContext) {
+    ctx.waitUntil(scrapeAndUpdatePrices(env))
   },
 }
