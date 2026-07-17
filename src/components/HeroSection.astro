@@ -1,5 +1,8 @@
 ---
 import { url } from '../lib/links'
+import products from '../data/products.json'
+
+const heroProduct = products.find(p => p.slug === 'oticon-intent-1')!
 ---
 <section class="hero">
   <div class="container hero-inner">
@@ -27,10 +30,21 @@ import { url } from '../lib/links'
       </div>
     </div>
     <div class="hero-visual">
-      <div class="hero-image-placeholder">
-        <svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.3"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
-        <span>Produktbild</span>
-      </div>
+      <a href={url(`/hoergeraete/${heroProduct.slug}/`)} class="hero-image-card">
+        <img
+          src={url('/images/products/oticon-intent.jpg')}
+          alt={`${heroProduct.name} Hörgerät`}
+          class="hero-image"
+          width="768"
+          height="1024"
+          loading="eager"
+        />
+        <div class="hero-image-label">
+          <span class="hero-image-brand">{heroProduct.hersteller}</span>
+          <span class="hero-image-name">{heroProduct.name.replace(`${heroProduct.hersteller} `, '')}</span>
+          <span class="hero-image-price">mit Kasse ab {heroProduct.kassenpreis.toLocaleString('de-DE')} €</span>
+        </div>
+      </a>
     </div>
   </div>
 </section>
@@ -103,20 +117,65 @@ import { url } from '../lib/links'
     align-items: center;
   }
 
-  .hero-image-placeholder {
+  .hero-image-card {
+    position: relative;
+    display: block;
     width: 100%;
     max-width: 420px;
-    aspect-ratio: 1;
     background: white;
     border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    text-decoration: none;
+  }
+
+  .hero-image-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .hero-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    object-position: center 42%;
+  }
+
+  .hero-image-label {
+    position: absolute;
+    left: 1.25rem;
+    bottom: 1.25rem;
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(8px);
+    border-radius: var(--radius-md);
+    padding: 0.75rem 1rem;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    border: 2px dashed var(--color-border);
+    gap: 0.125rem;
+  }
+
+  .hero-image-brand {
+    font-size: 0.7rem;
+    font-weight: 500;
     color: var(--color-text-muted);
-    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .hero-image-name {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-text);
+  }
+
+  .hero-image-price {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    margin-top: 0.125rem;
   }
 
   @media (max-width: 768px) {
@@ -133,10 +192,19 @@ import { url } from '../lib/links'
       order: -1;
     }
 
-    .hero-image-placeholder {
-      max-width: 280px;
-      aspect-ratio: auto;
-      height: 200px;
+    .hero-image-card {
+      max-width: 300px;
+    }
+
+    .hero-image {
+      aspect-ratio: 1 / 1;
+      object-position: center 30%;
+    }
+
+    .hero-image-label {
+      left: 0.875rem;
+      bottom: 0.875rem;
+      padding: 0.5rem 0.75rem;
     }
 
     .hero-trust {
