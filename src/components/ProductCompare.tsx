@@ -75,7 +75,7 @@ export default function ProductCompare({ products }: { products: Product[] }) {
                 {selectedProducts.map(p => <td key={p.slug} className="ct-price">{p.privatpreis.toLocaleString('de-DE')} €</td>)}
               </tr>
               <tr>
-                <td className="ct-label">Mit Kasse ab</td>
+                <td className="ct-label">Mit Kasse ab ca.</td>
                 {selectedProducts.map(p => <td key={p.slug} className="ct-price ct-price-kasse">{p.kassenpreis.toLocaleString('de-DE')} €</td>)}
               </tr>
               <tr>

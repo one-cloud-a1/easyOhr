@@ -156,10 +156,15 @@ const bauformLang = product.typ === 'CIC'
             <span class="spec-value">{product.privatpreis.toLocaleString('de-DE')} €</span>
           </div>
           <div class="spec-row">
-            <span class="spec-label">Mit Krankenkasse ab</span>
+            <span class="spec-label">Eigenanteil mit Kasse ab ca.</span>
             <span class="spec-value spec-value-highlight">{product.kassenpreis.toLocaleString('de-DE')} €</span>
           </div>
         </div>
+        <p class="spec-kassenhinweis">
+          Der ausgewiesene Kassen-Eigenanteil ist ein vorsichtig kalkulierter Richtwert. Der endgültige
+          Betrag steht erst nach Genehmigung Ihrer Krankenkasse fest — zahlt sie mehr, sinkt Ihr
+          Eigenanteil. <a href={url('/kassenrechner/')}>Jetzt genau berechnen</a>
+        </p>
       </div>
 
       <div class="detail-trust">
@@ -410,6 +415,20 @@ const bauformLang = product.typ === 'CIC'
 
   .spec-value-highlight {
     color: var(--color-primary);
+  }
+
+  .spec-kassenhinweis {
+    font-size: 0.825rem;
+    line-height: 1.6;
+    color: var(--color-text-muted);
+    margin-top: 1rem;
+    max-width: 640px;
+  }
+
+  .spec-kassenhinweis a {
+    color: var(--color-primary);
+    font-weight: 600;
+    white-space: nowrap;
   }
 
   .detail-trust {

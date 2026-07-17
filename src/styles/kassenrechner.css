@@ -126,6 +126,19 @@
   line-height: 1.1;
 }
 
+.kr-result-ca {
+  font-size: 1.25rem;
+  font-weight: 500;
+  opacity: 0.75;
+  margin-right: 0.375rem;
+  vertical-align: 0.35em;
+}
+
+.kr-ca {
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+
 .kr-result-sub {
   display: block;
   font-size: 0.85rem;
@@ -198,6 +211,26 @@
   background: var(--color-secondary);
   color: var(--color-text-light);
   font-weight: 400;
+}
+
+.kr-vorbehalt {
+  display: flex;
+  gap: 0.625rem;
+  padding: 1rem 1.5rem;
+  background: var(--color-accent-light);
+  color: var(--color-accent);
+  align-items: flex-start;
+}
+
+.kr-vorbehalt svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.kr-vorbehalt p {
+  font-size: 0.825rem;
+  line-height: 1.6;
+  margin: 0;
 }
 
 .kr-actions {

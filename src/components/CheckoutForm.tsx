@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { getCart, removeFromCart, onCartUpdate, type CartItem } from '../lib/cart'
 import { supabase } from '../lib/supabase'
 import { BASE } from '../lib/base-url'
+import { HINWEIS_LANG } from '../lib/kasse-hinweis'
 
 export default function CheckoutForm() {
   const [cart, setCart] = useState<CartItem[]>([])
@@ -113,10 +114,13 @@ export default function CheckoutForm() {
           </div>
         ))}
         <div className="cart-total">
-          <span>Gesamtbetrag</span>
+          <span>Gerätepreis gesamt</span>
           <span className="cart-total-price">{total.toLocaleString('de-DE')} €</span>
         </div>
-        <p className="cart-note">Dieser Betrag wird erst nach der 30-tägigen Testphase abgebucht, wenn Sie das Hörgerät behalten.</p>
+        <p className="cart-note">Dieser Betrag wird erst nach der 30-tägigen Testphase abgebucht, wenn Sie das Hörgerät behalten. Bei gesetzlich Versicherten rechnen wir den Kassenanteil ab — Ihr Eigenanteil ist dann entsprechend geringer.</p>
+        <div className="cart-kassenhinweis">
+          <p>{HINWEIS_LANG}</p>
+        </div>
       </div>
 
       <form className="checkout-form" onSubmit={handleSubmit}>
@@ -165,7 +169,7 @@ export default function CheckoutForm() {
           {loading ? 'Wird verarbeitet...' : 'Kostenpflichtig bestellen'}
         </button>
         <p className="checkout-legal">
-          Mit Klick auf "Kostenpflichtig bestellen" akzeptieren Sie unsere <a href={`${BASE}agb/`}>AGB</a> und <a href={`${BASE}datenschutz/`}>Datenschutzerklärung</a>. Die Zahlung wird erst nach der 30-tägigen Testphase eingezogen.
+          Mit Klick auf "Kostenpflichtig bestellen" akzeptieren Sie unsere <a href={`${BASE}agb/`}>AGB</a> und <a href={`${BASE}datenschutz/`}>Datenschutzerklärung</a>. Die Zahlung wird erst nach der 30-tägigen Testphase eingezogen. Bei gesetzlich Versicherten gilt der Eigenanteil vorbehaltlich der Kassengenehmigung (§ 7 AGB).
         </p>
       </form>
     </div>

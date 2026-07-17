@@ -50,7 +50,7 @@ function ProductCardReact({ product }: { product: Product }) {
             <span className="pf-price">{product.privatpreis.toLocaleString('de-DE')} €</span>
           </div>
           <div>
-            <span className="pf-price-label">Mit Kasse ab</span>
+            <span className="pf-price-label">Mit Kasse ab ca.</span>
             <span className="pf-price pf-price-kasse">{product.kassenpreis.toLocaleString('de-DE')} €</span>
           </div>
         </div>

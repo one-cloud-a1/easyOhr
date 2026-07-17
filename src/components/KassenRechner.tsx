@@ -4,13 +4,14 @@ import {
   berechne,
   euro,
   euroRund,
-  FESTBETRAG_ERSTES_OHR,
-  FESTBETRAG_ZWEITES_OHR,
-  FESTBETRAG_HOCHGRADIG,
+  KALKULATION_ERSTES_OHR,
+  KALKULATION_ZWEITES_OHR,
+  KALKULATION_HOCHGRADIG,
   ZUZAHLUNG_PRO_GERAET,
   type Anzahl,
   type Versicherung,
 } from '../lib/kasse'
+import { HINWEIS_MITTEL } from '../lib/kasse-hinweis'
 
 interface Product {
   slug: string
@@ -126,8 +127,13 @@ export default function KassenRechner({ products }: { products: Product[] }) {
 
       <div className="kr-result">
         <div className="kr-result-head">
-          <span className="kr-result-label">Ihr Eigenanteil</span>
-          <span className="kr-result-sum">{euroRund(r.gesamt)}</span>
+          <span className="kr-result-label">
+            {gesetzlich ? 'Ihr voraussichtlicher Eigenanteil' : 'Ihr Preis'}
+          </span>
+          <span className="kr-result-sum">
+            {gesetzlich && <span className="kr-result-ca">ca.</span>}
+            {euroRund(r.gesamt)}
+          </span>
           <span className="kr-result-sub">
             {anzahl === 2 ? 'für beide Ohren' : 'für ein Ohr'} — {product.name}
           </span>
@@ -143,19 +149,20 @@ export default function KassenRechner({ products }: { products: Product[] }) {
             <>
               <div className="kr-row kr-row-minus">
                 <span>
-                  Festbetrag Ihrer Krankenkasse
+                  Leistung Ihrer Krankenkasse
                   {anzahl === 2 && !hochgradig && (
                     <span className="kr-row-hint">
-                      {euro(FESTBETRAG_ERSTES_OHR)} + {euro(FESTBETRAG_ZWEITES_OHR)} für das zweite Gerät
+                      mind. {euro(KALKULATION_ERSTES_OHR)} + {euro(KALKULATION_ZWEITES_OHR)} für das zweite Gerät
                     </span>
+                  )}
+                  {anzahl === 1 && !hochgradig && (
+                    <span className="kr-row-hint">vorsichtig kalkuliert — meist zahlt die Kasse mehr</span>
                   )}
                   {hochgradig && (
-                    <span className="kr-row-hint">
-                      {euro(FESTBETRAG_HOCHGRADIG)} pro Ohr bei WHO-Grad 4
-                    </span>
+                    <span className="kr-row-hint">mind. {euro(KALKULATION_HOCHGRADIG)} pro Ohr bei WHO-Grad 4</span>
                   )}
                 </span>
-                <span className="kr-num">− {euro(r.festbetrag)}</span>
+                <span className="kr-num">− {euro(r.kassenleistung)}</span>
               </div>
               <div className="kr-row">
                 <span>
@@ -168,15 +175,19 @@ export default function KassenRechner({ products }: { products: Product[] }) {
           )}
 
           <div className="kr-row kr-row-total">
-            <span>Sie zahlen</span>
-            <span className="kr-num">{euro(r.gesamt)}</span>
+            <span>{gesetzlich ? 'Sie zahlen voraussichtlich' : 'Sie zahlen'}</span>
+            <span className="kr-num">
+              {gesetzlich && <span className="kr-ca">ca. </span>}
+              {euro(r.gesamt)}
+            </span>
           </div>
         </div>
 
-        {gesetzlich && r.festbetrag > 0 && (
+        {gesetzlich && r.moeglicheEntlastung > 0 && (
           <div className="kr-saving">
-            Ihre Krankenkasse übernimmt {euroRund(r.festbetrag)} — das sind{' '}
-            {Math.round((r.festbetrag / r.listenpreis) * 100)} % des Gerätepreises.
+            <strong>Gute Chance auf {euroRund(r.moeglicheEntlastung)} weniger.</strong> Schöpft Ihre Kasse
+            den vollen gesetzlichen Festbetrag aus, zahlen Sie nur {euroRund(r.gesamtBeiFestbetrag)}. Wir
+            rechnen bewusst vorsichtig — die Differenz bekommen Sie erstattet.
           </div>
         )}
 
@@ -184,6 +195,15 @@ export default function KassenRechner({ products }: { products: Product[] }) {
           <div className="kr-saving kr-saving-neutral">
             Private Krankenversicherungen erstatten je nach Tarif — häufig den vollen Betrag.
             Reichen Sie unsere Rechnung einfach bei Ihrer Versicherung ein.
+          </div>
+        )}
+
+        {gesetzlich && (
+          <div className="kr-vorbehalt">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+              <circle cx="12" cy="12" r="10" /><line x1="12" y1="16" x2="12" y2="12" /><line x1="12" y1="8" x2="12.01" y2="8" />
+            </svg>
+            <p>{HINWEIS_MITTEL}</p>
           </div>
         )}
 
@@ -198,10 +218,11 @@ export default function KassenRechner({ products }: { products: Product[] }) {
       </div>
 
       <p className="kr-disclaimer">
-        Die Festbeträge werden bundeseinheitlich vom GKV-Spitzenverband festgelegt und gelten bei allen
-        gesetzlichen Krankenkassen gleichermaßen. Für die Kostenübernahme benötigen Sie eine Verordnung
-        Ihres HNO-Arztes. Einzelne Kassen erstatten über den Festbetrag hinaus — die Berechnung ist ein
-        Richtwert, keine verbindliche Zusage.
+        Für die Kostenübernahme benötigen Sie eine Verordnung Ihres HNO-Arztes. Die Höhe der
+        Kassenleistung hängt von Ihrer individuellen Genehmigung ab — etwa davon, ob die
+        Wiederbeschaffungsfrist von sechs Jahren seit Ihrer letzten Versorgung abgelaufen ist. Diese
+        Berechnung ist ein Richtwert und keine verbindliche Zusage. Es gelten die Regelungen aus § 7
+        unserer AGB.
       </p>
     </div>
   )

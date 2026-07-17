@@ -179,7 +179,11 @@ function findBestMySEPrice(prices: number[], variant: string): number | null {
   return prices[0]
 }
 
-const KASSENABZUG = 840
+// Konservative Kalkulationsbasis für den ausgewiesenen "ab"-Kassenpreis.
+// Muss mit KALKULATION_ERSTES_OHR in src/lib/kasse.ts übereinstimmen —
+// bewusst unter dem gesetzlichen Festbetrag von 784,94 €, damit der Betrag
+// nach Kassengenehmigung eher sinkt als steigt (siehe AGB § 7).
+const KASSENABZUG = 700
 
 export async function scrapeAndUpdatePrices(env: Env): Promise<string> {
   const results: ProductPrice[] = []

@@ -1,5 +1,8 @@
 import { useState } from 'react'
 import { addToCart } from '../lib/cart'
+import { berechne, euro, euroRund, ZUZAHLUNG_PRO_GERAET } from '../lib/kasse'
+import { HINWEIS_MITTEL } from '../lib/kasse-hinweis'
+import { BASE } from '../lib/base-url'
 
 const FARB_MAP: Record<string, string> = {
   'Samt Schwarz': '#1a1a1a',
@@ -42,8 +45,9 @@ export default function AddToCart({ slug, name, hersteller, privatpreis, kassenp
   const [versicherung, setVersicherung] = useState<'privat' | 'gesetzlich'>('gesetzlich')
   const [added, setAdded] = useState(false)
 
-  const einzelpreis = versicherung === 'gesetzlich' ? kassenpreis : privatpreis
-  const gesamtpreis = einzelpreis * anzahl
+  const gesetzlich = versicherung === 'gesetzlich'
+  const r = berechne(privatpreis, anzahl, versicherung)
+  const gesamtpreis = r.gesamt
 
   const handleAdd = () => {
     for (let i = 0; i < anzahl; i++) {
@@ -111,30 +115,39 @@ export default function AddToCart({ slug, name, hersteller, privatpreis, kassenp
             Privat / Selbstzahler
           </button>
         </div>
-        {versicherung === 'gesetzlich' && (
-          <p className="atc-hint">Eigenanteil nach Abzug des Krankenkassen-Festbetrags. Der genaue Betrag kann je nach Kasse variieren.</p>
-        )}
       </div>
 
       <div className="atc-price-summary">
         <div className="atc-price-row">
           <span className="atc-price-label">
-            {anzahl === 1 ? 'Preis pro Gerät' : 'Preis für 2 Geräte'}
+            {gesetzlich
+              ? `Voraussichtlicher Eigenanteil ${anzahl === 2 ? 'für beide Ohren' : 'für ein Ohr'}`
+              : anzahl === 1 ? 'Preis pro Gerät' : 'Preis für 2 Geräte'}
           </span>
-          <span className="atc-price-value">{gesamtpreis.toLocaleString('de-DE')} €</span>
+          <span className="atc-price-value">
+            {gesetzlich && <span className="atc-ca">ca. </span>}
+            {euroRund(gesamtpreis)}
+          </span>
         </div>
-        {versicherung === 'gesetzlich' && (
+        {gesetzlich && (
           <div className="atc-price-row atc-price-detail">
-            <span>Privatpreis: {(privatpreis * anzahl).toLocaleString('de-DE')} €</span>
-            <span>Kassenanteil: -{((privatpreis - kassenpreis) * anzahl).toLocaleString('de-DE')} €</span>
+            <span>Gerätepreis: {euroRund(r.listenpreis)}</span>
+            <span>Kasse: −{euroRund(r.kassenleistung)} · Zuzahlung: +{euroRund(r.zuzahlung)}</span>
           </div>
         )}
-        {anzahl === 2 && (
+        {!gesetzlich && anzahl === 2 && (
           <div className="atc-price-row atc-price-detail">
-            <span>Einzelpreis: {einzelpreis.toLocaleString('de-DE')} € pro Ohr</span>
+            <span>Einzelpreis: {euroRund(privatpreis)} pro Ohr</span>
           </div>
         )}
       </div>
+
+      {gesetzlich && (
+        <div className="atc-vorbehalt">
+          <p>{HINWEIS_MITTEL}</p>
+          <a href={`${BASE}kassenrechner/`}>Eigenanteil genauer berechnen</a>
+        </div>
+      )}
 
       <button className={`atc-button ${added ? 'atc-added' : ''}`} onClick={handleAdd}>
         {added ? (
@@ -150,7 +163,7 @@ export default function AddToCart({ slug, name, hersteller, privatpreis, kassenp
               <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
               <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
             </svg>
-            Jetzt 30 Tage testen — {gesamtpreis.toLocaleString('de-DE')} €
+            Jetzt 30 Tage testen — {gesetzlich ? 'ca. ' : ''}{euroRund(gesamtpreis)}
           </>
         )}
       </button>
