@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
+import company from '../data/company.json'
 ---
 <BaseLayout title="Widerrufsbelehrung">
   <section class="section legal-page">
@@ -7,21 +8,57 @@ import BaseLayout from '../layouts/BaseLayout.astro'
       <h1>Widerrufsbelehrung</h1>
 
       <h2>Widerrufsrecht</h2>
-      <p>Sie haben das Recht, binnen vierzehn Tagen ohne Angabe von Gründen diesen Vertrag zu widerrufen. Die Widerrufsfrist beträgt vierzehn Tage ab dem Tag, an dem Sie oder ein von Ihnen benannter Dritter die Waren in Besitz genommen haben.</p>
-
-      <p>Darüber hinaus räumen wir Ihnen eine erweiterte Testphase von 30 Tagen ab Erhalt der Ware ein. Innerhalb dieser 30 Tage können Sie das Hörgerät kostenlos zurücksenden.</p>
+      <p>Sie haben das Recht, binnen vierzehn Tagen ohne Angabe von Gründen diesen Vertrag zu widerrufen.</p>
+      <p>Die Widerrufsfrist beträgt vierzehn Tage ab dem Tag, an dem Sie oder ein von Ihnen benannter Dritter, der nicht der Beförderer ist, die Waren in Besitz genommen haben bzw. hat.</p>
+      <p>Um Ihr Widerrufsrecht auszuüben, müssen Sie uns</p>
+      <p class="legal-address">
+        {company.firma}<br>
+        {company.strasse}<br>
+        {company.plz} {company.ort}<br>
+        Telefon: {company.telefon}<br>
+        E-Mail: {company.email}
+      </p>
+      <p>mittels einer eindeutigen Erklärung (z. B. ein mit der Post versandter Brief oder eine E-Mail) über Ihren Entschluss, diesen Vertrag zu widerrufen, informieren. Sie können dafür das beigefügte Muster-Widerrufsformular verwenden, das jedoch nicht vorgeschrieben ist.</p>
+      <p>Zur Wahrung der Widerrufsfrist reicht es aus, dass Sie die Mitteilung über die Ausübung des Widerrufsrechts vor Ablauf der Widerrufsfrist absenden.</p>
 
       <h2>Folgen des Widerrufs</h2>
-      <p>Wenn Sie diesen Vertrag widerrufen, haben wir Ihnen alle Zahlungen, die wir von Ihnen erhalten haben, unverzüglich und spätestens binnen vierzehn Tagen ab dem Tag zurückzuzahlen, an dem die Mitteilung über Ihren Widerruf dieses Vertrags bei uns eingegangen ist.</p>
+      <p>Wenn Sie diesen Vertrag widerrufen, haben wir Ihnen alle Zahlungen, die wir von Ihnen erhalten haben, einschließlich der Lieferkosten (mit Ausnahme der zusätzlichen Kosten, die sich daraus ergeben, dass Sie eine andere Art der Lieferung als die von uns angebotene, günstigste Standardlieferung gewählt haben), unverzüglich und spätestens binnen vierzehn Tagen ab dem Tag zurückzuzahlen, an dem die Mitteilung über Ihren Widerruf dieses Vertrags bei uns eingegangen ist.</p>
+      <p>Für diese Rückzahlung verwenden wir dasselbe Zahlungsmittel, das Sie bei der ursprünglichen Transaktion eingesetzt haben, es sei denn, mit Ihnen wurde ausdrücklich etwas anderes vereinbart; in keinem Fall werden Ihnen wegen dieser Rückzahlung Entgelte berechnet.</p>
+      <p>Wir können die Rückzahlung verweigern, bis wir die Waren wieder zurückerhalten haben oder bis Sie den Nachweis erbracht haben, dass Sie die Waren zurückgesandt haben, je nachdem, welches der frühere Zeitpunkt ist.</p>
+      <p>Sie haben die Waren unverzüglich und in jedem Fall spätestens binnen vierzehn Tagen ab dem Tag, an dem Sie uns über den Widerruf dieses Vertrags unterrichten, an uns zurückzusenden oder zu übergeben. Die Frist ist gewahrt, wenn Sie die Waren vor Ablauf der Frist von vierzehn Tagen absenden.</p>
+      <p><strong>Wir tragen die Kosten der Rücksendung der Waren.</strong></p>
+      <p>Sie müssen für einen etwaigen Wertverlust der Waren nur aufkommen, wenn dieser Wertverlust auf einen zur Prüfung der Beschaffenheit, Eigenschaften und Funktionsweise der Waren nicht notwendigen Umgang mit ihnen zurückzuführen ist.</p>
 
-      <p>Da bei easyOhr die Zahlung erst nach der Testphase eingezogen wird, entfällt in der Regel eine Rückerstattung, wenn Sie innerhalb der 30-tägigen Testphase zurücksenden.</p>
+      <h2>Besonderer Hinweis zur Zahlung</h2>
+      <p>Da bei easyOhr die Zahlung erst nach Ablauf der Testphase eingezogen wird, wurde zum Zeitpunkt Ihres Widerrufs in der Regel noch kein Betrag von Ihrem Konto abgebucht. In diesem Fall heben wir lediglich die Zahlungsautorisierung auf — eine Rückerstattung ist dann nicht erforderlich.</p>
 
-      <h2>Rücksendung</h2>
-      <p>Bitte senden Sie das Hörgerät an folgende Adresse zurück:</p>
-      <p>[Retouradresse eintragen]</p>
-      <p>Die Kosten der Rücksendung übernehmen wir.</p>
+      <h2>Erweiterte Testphase</h2>
+      <p>Über das gesetzliche Widerrufsrecht hinaus räumen wir Ihnen eine freiwillige Testphase von 30 Tagen ab Erhalt der Ware ein. Innerhalb dieser 30 Tage können Sie das Hörgerät ebenfalls kostenfrei zurücksenden. Ihre gesetzlichen Rechte bleiben davon unberührt.</p>
 
-      <p><em>Hinweis: Diese Widerrufsbelehrung ist ein Platzhalter und muss vor dem Live-Gang von einem Rechtsanwalt geprüft und angepasst werden.</em></p>
+      <h2>Muster-Widerrufsformular</h2>
+      <p class="legal-note">Wenn Sie den Vertrag widerrufen wollen, füllen Sie bitte dieses Formular aus und senden Sie es zurück.</p>
+
+      <div class="widerruf-form">
+        <p>An<br>
+        {company.firma}<br>
+        {company.strasse}<br>
+        {company.plz} {company.ort}<br>
+        E-Mail: {company.email}</p>
+
+        <p>Hiermit widerrufe(n) ich/wir (*) den von mir/uns (*) abgeschlossenen Vertrag über den Kauf der folgenden Waren (*)/die Erbringung der folgenden Dienstleistung (*)</p>
+
+        <p class="form-line">_______________________________________________</p>
+
+        <p>Bestellt am (*)/erhalten am (*): _____________________</p>
+        <p>Name des/der Verbraucher(s): _____________________</p>
+        <p>Anschrift des/der Verbraucher(s):</p>
+        <p class="form-line">_______________________________________________</p>
+        <p>Unterschrift des/der Verbraucher(s) (nur bei Mitteilung auf Papier):</p>
+        <p class="form-line">_______________________________________________</p>
+        <p>Datum: _____________________</p>
+
+        <p class="form-hint">(*) Unzutreffendes streichen.</p>
+      </div>
     </div>
   </section>
 </BaseLayout>
@@ -31,4 +68,20 @@ import BaseLayout from '../layouts/BaseLayout.astro'
   .legal-container { max-width: 720px; }
   .legal-page h2 { font-size: 1.25rem; margin: 2rem 0 0.75rem; }
   .legal-page p { color: var(--color-text-light); line-height: 1.8; margin-bottom: 0.75rem; }
+  .legal-page a { color: var(--color-primary); }
+  .legal-address {
+    background: var(--color-secondary);
+    padding: 1rem 1.25rem;
+    border-radius: var(--radius-md);
+  }
+  .legal-note { font-size: 0.85rem; color: var(--color-text-muted) !important; font-style: italic; }
+  .widerruf-form {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    margin-top: 1rem;
+  }
+  .widerruf-form p { margin-bottom: 1rem; }
+  .form-line { color: var(--color-border) !important; letter-spacing: 1px; }
+  .form-hint { font-size: 0.85rem; color: var(--color-text-muted) !important; margin-bottom: 0 !important; }
 </style>

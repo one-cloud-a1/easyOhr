@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro'
 import FAQAccordion from '../components/FAQAccordion.tsx'
 import faqData from '../data/faq.json'
+import company from '../data/company.json'
 ---
 <BaseLayout title="Häufige Fragen" description="Antworten auf die häufigsten Fragen zu Bestellung, Testphase, Zahlung und Rückgabe bei easyOhr.">
   <section class="page-header">
@@ -17,8 +18,8 @@ import faqData from '../data/faq.json'
       <div class="faq-contact">
         <h3>Ihre Frage nicht dabei?</h3>
         <p>Rufen Sie uns an — wir helfen Ihnen gerne persönlich weiter.</p>
-        <a href="tel:+4930123456789" class="btn btn-primary">030 1234 56789</a>
-        <a href="mailto:info@easyohr.de" class="btn btn-outline">E-Mail schreiben</a>
+        <a href={`tel:${company.telefonLink}`} class="btn btn-primary">{company.telefon}</a>
+        <a href={`mailto:${company.email}`} class="btn btn-outline">E-Mail schreiben</a>
       </div>
     </div>
   </section>
