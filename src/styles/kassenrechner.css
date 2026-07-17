@@ -1,0 +1,261 @@
+.kr {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.kr-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  background: var(--color-secondary);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+}
+
+.kr-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.kr-label {
+  font-size: 0.9rem !important;
+  font-weight: 600 !important;
+  color: var(--color-text) !important;
+  margin-bottom: 0 !important;
+}
+
+.kr-toggle-group {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.kr-toggle {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: 1.5px solid var(--color-border-light);
+  border-radius: var(--radius-md);
+  background: white;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--color-text-light);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.kr-toggle:hover {
+  border-color: var(--color-primary);
+  color: var(--color-text);
+}
+
+.kr-toggle-active {
+  border-color: var(--color-primary);
+  background: var(--color-primary-light);
+  color: var(--color-primary-dark);
+  font-weight: 600;
+}
+
+.kr-select {
+  font-size: 0.95rem !important;
+  background: white;
+  cursor: pointer;
+}
+
+.kr-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.625rem;
+  cursor: pointer;
+  font-size: 0.9rem !important;
+  font-weight: 400 !important;
+  margin-bottom: 0 !important;
+}
+
+.kr-check input {
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  accent-color: var(--color-primary);
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.kr-check > span {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.kr-check strong {
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.kr-check-hint {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+.kr-result {
+  border: 2px solid var(--color-primary);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.kr-result-head {
+  background: var(--color-primary);
+  color: white;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.kr-result-label {
+  display: block;
+  font-size: 0.85rem;
+  opacity: 0.85;
+  margin-bottom: 0.25rem;
+}
+
+.kr-result-sum {
+  display: block;
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.kr-result-sub {
+  display: block;
+  font-size: 0.85rem;
+  opacity: 0.85;
+  margin-top: 0.375rem;
+}
+
+.kr-rows {
+  padding: 1.25rem 1.5rem;
+}
+
+.kr-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--color-border-light);
+  font-size: 0.9rem;
+}
+
+.kr-row > span:first-child {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  color: var(--color-text-light);
+}
+
+.kr-row-hint {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+.kr-num {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.kr-row-minus .kr-num {
+  color: var(--color-primary);
+}
+
+.kr-row-total {
+  border-bottom: none;
+  padding-top: 1rem;
+  font-size: 1rem;
+}
+
+.kr-row-total > span:first-child {
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.kr-row-total .kr-num {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.kr-saving {
+  background: var(--color-primary-light);
+  color: var(--color-primary-dark);
+  padding: 0.875rem 1.5rem;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+.kr-saving-neutral {
+  background: var(--color-secondary);
+  color: var(--color-text-light);
+  font-weight: 400;
+}
+
+.kr-actions {
+  display: flex;
+  gap: 0.75rem;
+  padding: 1.25rem 1.5rem;
+  border-top: 1px solid var(--color-border-light);
+  flex-wrap: wrap;
+}
+
+.kr-btn {
+  flex: 1;
+  text-align: center;
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.kr-btn-primary {
+  background: var(--color-accent);
+  color: white;
+}
+
+.kr-btn-primary:hover {
+  background: #9A6013;
+  color: white;
+}
+
+.kr-btn-ghost {
+  border: 1.5px solid var(--color-border);
+  color: var(--color-text-light);
+}
+
+.kr-btn-ghost:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.kr-disclaimer {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+@media (max-width: 560px) {
+  .kr-toggle-group {
+    flex-direction: column;
+  }
+
+  .kr-result-sum {
+    font-size: 2rem;
+  }
+
+  .kr-actions {
+    flex-direction: column;
+  }
+}
