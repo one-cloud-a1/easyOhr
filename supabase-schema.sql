@@ -29,6 +29,10 @@ create table if not exists angebote (
   artikel jsonb not null default '[]',
   geraetepreis numeric(10,2) not null default 0,
 
+  -- "ok", wenn beide Benachrichtigungen rausgingen. Steht hier etwas anderes,
+  -- wurde die Anfrage gespeichert, aber niemand benachrichtigt.
+  mail_status text,
+
   -- Wird gesetzt, sobald die Verordnung vorliegt.
   unterlagen_erhalten_am timestamptz,
   -- Tatsächlicher Kassenanteil nach Genehmigung (siehe AGB § 7).
@@ -65,3 +69,7 @@ create trigger angebote_updated_at
   before update on angebote
   for each row
   execute function update_updated_at();
+
+-- Nachträglich ergänzte Spalten. Gefahrlos wiederholt ausführbar, damit eine
+-- bereits angelegte Tabelle mit diesem Skript aktualisiert werden kann.
+alter table angebote add column if not exists mail_status text;

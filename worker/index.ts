@@ -52,26 +52,37 @@ async function supabaseRequest(path: string, env: Env, options: RequestInit = {}
   return res.json() as Promise<any>
 }
 
+/**
+ * Versendet eine Mail über Resend. Wirft nie — der Aufrufer bekommt das
+ * Ergebnis als Text zurück, damit ein Fehlschlag in der Datenbank landet
+ * statt still verloren zu gehen.
+ */
 async function sendMail(
   env: Env,
   opts: { to: string; subject: string; html: string; replyTo?: string }
-) {
-  if (!env.RESEND_API_KEY) return { skipped: true }
-  const res = await fetch('https://api.resend.com/emails', {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${env.RESEND_API_KEY}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      from: env.ABSENDER_EMAIL || 'easyOhr <noreply@easyohr.de>',
-      to: [opts.to],
-      subject: opts.subject,
-      html: opts.html,
-      ...(opts.replyTo ? { reply_to: opts.replyTo } : {}),
-    }),
-  })
-  return res.json() as Promise<any>
+): Promise<string> {
+  if (!env.RESEND_API_KEY) return 'kein API-Key hinterlegt'
+  try {
+    const res = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${env.RESEND_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        from: env.ABSENDER_EMAIL || 'easyOhr <noreply@easyohr.de>',
+        to: [opts.to],
+        subject: opts.subject,
+        html: opts.html,
+        ...(opts.replyTo ? { reply_to: opts.replyTo } : {}),
+      }),
+    })
+    const data = (await res.json().catch(() => null)) as any
+    if (res.ok && data?.id) return 'ok'
+    return `Fehler ${res.status}: ${data?.message || data?.name || 'unbekannt'}`
+  } catch (e) {
+    return `Netzwerkfehler: ${e instanceof Error ? e.message : 'unbekannt'}`
+  }
 }
 
 function escapeHtml(wert: unknown): string {
@@ -234,7 +245,7 @@ async function handleAngebot(request: Request, env: Env) {
 
   const betrieb = env.BETRIEB_EMAIL || 'hi@hoffnungsohr.de'
 
-  await Promise.allSettled([
+  const [anBetrieb, anKunde] = await Promise.all([
     sendMail(env, {
       to: betrieb,
       subject: `Neue Anfrage ${nr} — ${k.vorname} ${k.nachname}`,
@@ -248,6 +259,18 @@ async function handleAngebot(request: Request, env: Env) {
       replyTo: betrieb,
     }),
   ])
+
+  // Ergebnis nachtragen. Steht hier etwas anderes als "ok", wurde die Anfrage
+  // gespeichert, aber niemand benachrichtigt — im Table Editor sofort sichtbar.
+  const mailStatus =
+    anBetrieb === 'ok' && anKunde === 'ok'
+      ? 'ok'
+      : `Betrieb: ${anBetrieb} | Kunde: ${anKunde}`
+
+  await supabaseRequest(`/angebote?angebotsnummer=eq.${nr}`, env, {
+    method: 'PATCH',
+    body: JSON.stringify({ mail_status: mailStatus }),
+  }).catch(() => null)
 
   return json({ angebotsnummer: nr })
 }
