@@ -18,7 +18,6 @@ const topProducts = products.filter(p => p.technologie === 'Premium').slice(0, 3
     "legalName": company.firma,
     "description": "Hörgeräte online bestellen und 30 Tage kostenlos testen. Erst zahlen wenn Sie zufrieden sind.",
     "url": "https://easyohr.de",
-    "telephone": company.telefonLink,
     "email": company.email,
     "vatID": company.ustId,
     "address": {
@@ -97,7 +96,7 @@ const topProducts = products.filter(p => p.technologie === 'Premium').slice(0, 3
         <p>Wählen Sie Ihr Hörgerät und testen Sie es 30 Tage kostenlos. Ohne Risiko.</p>
         <div class="cta-actions">
           <a href={url('/hoergeraete/')} class="btn btn-accent btn-lg">Hörgeräte entdecken</a>
-          <a href={`tel:${company.telefonLink}`} class="btn btn-outline btn-lg">{company.telefon}</a>
+          <a href={url('/kassenrechner/')} class="btn btn-outline btn-lg">Eigenanteil berechnen</a>
         </div>
       </div>
     </div>

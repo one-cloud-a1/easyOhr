@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro'
 import FAQAccordion from '../components/FAQAccordion.tsx'
 import faqData from '../data/faq.json'
 import company from '../data/company.json'
+import { url } from '../lib/links'
 ---
 <BaseLayout title="Häufige Fragen" description="Antworten auf die häufigsten Fragen zu Bestellung, Testphase, Zahlung und Rückgabe bei easyOhr.">
   <section class="page-header">
@@ -17,9 +18,9 @@ import company from '../data/company.json'
       <FAQAccordion client:load items={faqData} />
       <div class="faq-contact">
         <h3>Ihre Frage nicht dabei?</h3>
-        <p>Rufen Sie uns an — wir helfen Ihnen gerne persönlich weiter.</p>
-        <a href={`tel:${company.telefonLink}`} class="btn btn-primary">{company.telefon}</a>
-        <a href={`mailto:${company.email}`} class="btn btn-outline">E-Mail schreiben</a>
+        <p>Schreiben Sie uns — wir antworten in der Regel noch am selben Tag.</p>
+        <a href={`mailto:${company.email}`} class="btn btn-primary">E-Mail schreiben</a>
+        <a href={url('/anfrage/')} class="btn btn-outline">Angebot anfordern</a>
       </div>
     </div>
   </section>

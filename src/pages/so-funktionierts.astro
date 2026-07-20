@@ -50,7 +50,7 @@ import company from '../data/company.json'
       <h2>Noch Fragen?</h2>
       <p style="color: var(--color-text-light); margin: 1rem 0 2rem; font-size: 1.1rem;">Wir beraten Sie gerne persönlich — kostenlos und unverbindlich.</p>
       <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-        <a href={`tel:${company.telefonLink}`} class="btn btn-primary btn-lg">{company.telefon}</a>
+        <a href={`mailto:${company.email}`} class="btn btn-primary btn-lg">Schreiben Sie uns</a>
         <a href={url('/faq/')} class="btn btn-outline btn-lg">Häufige Fragen</a>
       </div>
     </div>

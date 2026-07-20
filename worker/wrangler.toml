@@ -9,7 +9,7 @@ crons = ["0 6 * * 1"]
 SITE_URL = "https://one-cloud-a1.github.io/easyOhr"
 BETRIEB_EMAIL = "hi@hoffnungsohr.de"
 ABSENDER_EMAIL = "easyOhr <noreply@easyohr.de>"
-BETRIEB_TELEFON = "0214 1234567"
+BETRIEB_TELEFON = "0156 78669304"
 
 # Secrets (Cloudflare Dashboard → Worker → Settings → Variables, als Secret):
 # RESEND_API_KEY      — für den Mailversand, zwingend erforderlich
