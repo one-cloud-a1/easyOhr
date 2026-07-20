@@ -1,15 +1,17 @@
 import { scrapeAndUpdatePrices } from './price-scraper'
 
 interface Env {
-  MOLLIE_API_KEY: string
   SUPABASE_URL: string
   SUPABASE_SERVICE_KEY: string
   ADMIN_SECRET: string
   SITE_URL: string
   GITHUB_TOKEN: string
+  RESEND_API_KEY: string
+  /** Postfach des anpassenden Akustikers. */
+  BETRIEB_EMAIL: string
+  /** Absenderadresse, muss bei Resend als Domain verifiziert sein. */
+  ABSENDER_EMAIL: string
 }
-
-const MOLLIE_API = 'https://api.mollie.com/v2'
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -24,179 +26,237 @@ function json(data: unknown, status = 200) {
   })
 }
 
-async function mollieRequest(path: string, env: Env, options: RequestInit = {}) {
-  const res = await fetch(`${MOLLIE_API}${path}`, {
-    ...options,
-    headers: {
-      'Authorization': `Bearer ${env.MOLLIE_API_KEY}`,
-      'Content-Type': 'application/json',
-      ...options.headers,
-    },
-  })
-  return res.json() as Promise<any>
+// Zeichensatz ohne verwechselbare Zeichen — die Nummer wird abgetippt,
+// vorgelesen und handschriftlich notiert. Muss mit src/lib/referenz.ts
+// übereinstimmen.
+const ALPHABET = '23479ACDEFGHJKMNPQRTUVWXYZ'
+
+function angebotsnummer(): string {
+  const bytes = new Uint8Array(6)
+  crypto.getRandomValues(bytes)
+  const z = [...bytes].map(b => ALPHABET[b % ALPHABET.length])
+  return `EO-${z.slice(0, 3).join('')}-${z.slice(3).join('')}`
 }
 
 async function supabaseRequest(path: string, env: Env, options: RequestInit = {}) {
   const res = await fetch(`${env.SUPABASE_URL}/rest/v1${path}`, {
     ...options,
     headers: {
-      'apikey': env.SUPABASE_SERVICE_KEY,
-      'Authorization': `Bearer ${env.SUPABASE_SERVICE_KEY}`,
+      apikey: env.SUPABASE_SERVICE_KEY,
+      Authorization: `Bearer ${env.SUPABASE_SERVICE_KEY}`,
       'Content-Type': 'application/json',
-      'Prefer': 'return=representation',
+      Prefer: 'return=representation',
       ...options.headers,
     },
   })
   return res.json() as Promise<any>
 }
 
-async function handleCreateOrder(request: Request, env: Env) {
-  const { customer, items } = await request.json() as any
-
-  if (!customer?.email || !items?.length) {
-    return json({ error: 'Fehlende Pflichtfelder' }, 400)
-  }
-
-  const orderLines = items.map((item: any) => ({
-    name: `${item.name} (${item.farbe})`,
-    quantity: item.menge || 1,
-    unitPrice: { currency: 'EUR', value: item.privatpreis.toFixed(2) },
-    totalAmount: { currency: 'EUR', value: (item.privatpreis * (item.menge || 1)).toFixed(2) },
-    vatRate: '19.00',
-    vatAmount: {
-      currency: 'EUR',
-      value: (item.privatpreis * (item.menge || 1) * 19 / 119).toFixed(2),
+async function sendMail(
+  env: Env,
+  opts: { to: string; subject: string; html: string; replyTo?: string }
+) {
+  if (!env.RESEND_API_KEY) return { skipped: true }
+  const res = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${env.RESEND_API_KEY}`,
+      'Content-Type': 'application/json',
     },
-  }))
-
-  const totalAmount = items.reduce(
-    (sum: number, item: any) => sum + item.privatpreis * (item.menge || 1), 0
-  )
-
-  // Mollie Orders API: order is created, customer pays via credit card.
-  // Payment stays "authorized" until we create a shipment (= capture).
-  // No money is charged until shipment is created.
-  const mollieOrder = await mollieRequest('/orders', env, {
-    method: 'POST',
     body: JSON.stringify({
-      amount: { currency: 'EUR', value: totalAmount.toFixed(2) },
-      orderNumber: `EO-${Date.now()}`,
-      lines: orderLines,
-      billingAddress: {
-        givenName: customer.vorname,
-        familyName: customer.nachname,
-        email: customer.email,
-        phone: customer.telefon,
-        streetAndNumber: customer.strasse,
-        postalCode: customer.plz,
-        city: customer.ort,
-        country: 'DE',
-      },
-      redirectUrl: `${env.SITE_URL}/konto/?bestellung=erfolgreich`,
-      webhookUrl: `${env.SITE_URL}/api/order/webhook`,
-      method: ['creditcard'],
-      locale: 'de_DE',
+      from: env.ABSENDER_EMAIL || 'easyOhr <noreply@easyohr.de>',
+      to: [opts.to],
+      subject: opts.subject,
+      html: opts.html,
+      ...(opts.replyTo ? { reply_to: opts.replyTo } : {}),
     }),
   })
+  return res.json() as Promise<any>
+}
 
-  if (mollieOrder.status === 'error' || mollieOrder.title) {
-    return json({ error: mollieOrder.detail || 'Mollie-Fehler' }, 500)
+function escapeHtml(wert: unknown): string {
+  return String(wert ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+}
+
+const MAX_GERAETE = 2
+
+const VERSICHERUNG_TEXT: Record<string, string> = {
+  gesetzlich: 'Gesetzlich versichert',
+  privat: 'Privat versichert / Selbstzahler',
+}
+
+const REZEPT_TEXT: Record<string, string> = {
+  'noch-nicht': 'Noch keine Verordnung — Beratung gewünscht',
+  ja: 'Verordnung liegt vor',
+  termin: 'HNO-Termin steht bevor',
+}
+
+function betriebsMail(nr: string, k: any, artikel: any[], summe: number): string {
+  const zeilen = artikel
+    .map(
+      a =>
+        `<tr><td style="padding:6px 12px 6px 0">${escapeHtml(a.hersteller)} ${escapeHtml(a.name)}<br>
+         <span style="color:#666;font-size:13px">Farbe: ${escapeHtml(a.farbe)}${a.menge > 1 ? ` · ${a.menge} Geräte` : ''}</span></td>
+         <td style="padding:6px 0;text-align:right;white-space:nowrap">${(a.privatpreis * a.menge).toLocaleString('de-DE')} €</td></tr>`
+    )
+    .join('')
+
+  const feld = (label: string, wert: unknown) =>
+    wert ? `<tr><td style="padding:4px 16px 4px 0;color:#666">${label}</td><td style="padding:4px 0">${escapeHtml(wert)}</td></tr>` : ''
+
+  return `<div style="font-family:system-ui,sans-serif;max-width:640px;color:#2C2C2A">
+    <p style="font-size:13px;color:#666;margin:0 0 4px">Neue Angebotsanfrage über easyOhr</p>
+    <h1 style="font-size:22px;margin:0 0 20px">${nr}</h1>
+
+    <h2 style="font-size:15px;margin:24px 0 8px">Kunde</h2>
+    <table style="font-size:14px;border-collapse:collapse">
+      ${feld('Name', [k.anrede, k.vorname, k.nachname].filter(Boolean).join(' '))}
+      ${feld('E-Mail', k.email)}
+      ${feld('Telefon', k.telefon)}
+      ${feld('Adresse', `${k.strasse}, ${k.plz} ${k.ort}`)}
+    </table>
+
+    <h2 style="font-size:15px;margin:24px 0 8px">Kostenübernahme</h2>
+    <table style="font-size:14px;border-collapse:collapse">
+      ${feld('Versicherung', VERSICHERUNG_TEXT[k.versicherung] || k.versicherung)}
+      ${feld('Krankenkasse', k.krankenkasse)}
+      ${feld('Verordnung', REZEPT_TEXT[k.rezept] || k.rezept)}
+    </table>
+
+    <h2 style="font-size:15px;margin:24px 0 8px">Auswahl</h2>
+    <table style="font-size:14px;border-collapse:collapse;width:100%">
+      ${zeilen}
+      <tr><td style="padding:10px 12px 0 0;border-top:1px solid #ddd;font-weight:600">Gerätepreis gesamt</td>
+      <td style="padding:10px 0 0;border-top:1px solid #ddd;text-align:right;font-weight:600">${summe.toLocaleString('de-DE')} €</td></tr>
+    </table>
+
+    ${
+      k.nachricht
+        ? `<h2 style="font-size:15px;margin:24px 0 8px">Nachricht</h2>
+           <p style="font-size:14px;background:#F5F3EF;padding:12px;border-radius:8px;white-space:pre-wrap">${escapeHtml(k.nachricht)}</p>`
+        : ''
+    }
+
+    <p style="font-size:13px;color:#666;margin-top:28px;padding-top:16px;border-top:1px solid #eee">
+      Antwort an den Kunden geht direkt an ${escapeHtml(k.email)} — diese E-Mail kann beantwortet werden.
+    </p>
+  </div>`
+}
+
+function kundenMail(nr: string, k: any, artikel: any[], env: Env): string {
+  const liste = artikel
+    .map(a => `<li style="margin-bottom:4px">${escapeHtml(a.hersteller)} ${escapeHtml(a.name)} — ${escapeHtml(a.farbe)}${a.menge > 1 ? ` (${a.menge} Geräte)` : ''}</li>`)
+    .join('')
+
+  return `<div style="font-family:system-ui,sans-serif;max-width:600px;color:#2C2C2A;line-height:1.6">
+    <p style="font-size:20px;font-weight:600;margin:0 0 16px">
+      <span style="color:#2C2C2A">easy</span><span style="color:#0F6E56">Ohr</span>
+    </p>
+
+    <p>Guten Tag ${escapeHtml([k.anrede, k.nachname].filter(Boolean).join(' ') || k.vorname)},</p>
+    <p>vielen Dank für Ihre Anfrage. Wir erstellen Ihr persönliches Angebot und melden uns
+    innerhalb von 24 Stunden bei Ihnen.</p>
+
+    <div style="background:#F5F3EF;border-radius:12px;padding:20px;margin:24px 0;text-align:center">
+      <p style="font-size:12px;color:#666;text-transform:uppercase;letter-spacing:1px;margin:0 0 6px">Ihre Angebotsnummer</p>
+      <p style="font-size:26px;font-weight:700;letter-spacing:2px;color:#0F6E56;margin:0">${nr}</p>
+    </div>
+
+    <p style="font-weight:600;margin-bottom:6px">Ihre Auswahl</p>
+    <ul style="padding-left:20px;margin-top:0">${liste}</ul>
+
+    <p style="font-weight:600;margin:28px 0 6px">Unterlagen nachreichen</p>
+    <p style="margin-top:0">Für die Abrechnung mit Ihrer Krankenkasse benötigen wir die Verordnung
+    Ihres HNO-Arztes. Sie haben zwei Möglichkeiten:</p>
+    <ul style="padding-left:20px">
+      <li style="margin-bottom:8px"><strong>Foto per E-Mail:</strong> Antworten Sie einfach auf diese
+      E-Mail und hängen Sie ein Foto der Verordnung an. Ihre Angebotsnummer ist dann automatisch dabei.</li>
+      <li><strong>Original per Post:</strong> Für die endgültige Abrechnung benötigen wir das Original.
+      Bitte notieren Sie <strong>${nr}</strong> auf dem Umschlag.</li>
+    </ul>
+
+    <p style="font-size:13px;color:#666;margin-top:28px;padding-top:16px;border-top:1px solid #eee">
+      Dies ist ein unverbindliches Angebot. Es entsteht kein Kaufvertrag und keine Zahlungspflicht.
+      Bei Fragen erreichen Sie uns unter ${escapeHtml(env.BETRIEB_EMAIL || 'hi@hoffnungsohr.de')}.
+    </p>
+  </div>`
+}
+
+async function handleAngebot(request: Request, env: Env) {
+  const body = (await request.json().catch(() => null)) as any
+  const k = body?.kunde
+  const artikel = body?.artikel
+
+  if (!k?.email || !k?.vorname || !k?.nachname || !k?.telefon || !k?.strasse || !k?.plz || !k?.ort) {
+    return json({ error: 'Bitte füllen Sie alle Pflichtfelder aus.' }, 400)
+  }
+  if (!k?.datenschutz) {
+    return json({ error: 'Bitte stimmen Sie der Datenschutzerklärung zu.' }, 400)
+  }
+  if (!Array.isArray(artikel) || artikel.length === 0) {
+    return json({ error: 'Ihre Auswahl ist leer.' }, 400)
   }
 
-  await supabaseRequest('/orders', env, {
+  const anzahl = artikel.reduce((s: number, a: any) => s + (a.menge || 1), 0)
+  if (anzahl > MAX_GERAETE) {
+    return json({ error: `Es sind maximal ${MAX_GERAETE} Geräte pro Anfrage möglich.` }, 400)
+  }
+
+  const nr = angebotsnummer()
+  const summe = artikel.reduce((s: number, a: any) => s + a.privatpreis * (a.menge || 1), 0)
+
+  // Zuerst speichern — geht der Mailversand schief, ist die Anfrage nicht verloren.
+  await supabaseRequest('/angebote', env, {
     method: 'POST',
     body: JSON.stringify({
-      mollie_order_id: mollieOrder.id,
-      status: mollieOrder.status,
-      customer_email: customer.email,
-      customer_name: `${customer.vorname} ${customer.nachname}`,
-      customer_phone: customer.telefon,
-      customer_address: `${customer.strasse}, ${customer.plz} ${customer.ort}`,
-      items: JSON.stringify(items),
-      total: totalAmount,
+      angebotsnummer: nr,
+      status: 'neu',
+      anrede: k.anrede || null,
+      vorname: k.vorname,
+      nachname: k.nachname,
+      email: k.email,
+      telefon: k.telefon,
+      strasse: k.strasse,
+      plz: k.plz,
+      ort: k.ort,
+      versicherung: k.versicherung || null,
+      krankenkasse: k.krankenkasse || null,
+      rezept_status: k.rezept || null,
+      nachricht: k.nachricht || null,
+      artikel: JSON.stringify(artikel),
+      geraetepreis: summe,
     }),
-  })
+  }).catch(() => null)
 
-  const checkoutUrl = mollieOrder._links?.checkout?.href
-  return json({ checkoutUrl, orderId: mollieOrder.id })
+  const betrieb = env.BETRIEB_EMAIL || 'hi@hoffnungsohr.de'
+
+  await Promise.allSettled([
+    sendMail(env, {
+      to: betrieb,
+      subject: `Neue Anfrage ${nr} — ${k.vorname} ${k.nachname}`,
+      html: betriebsMail(nr, k, artikel, summe),
+      replyTo: k.email,
+    }),
+    sendMail(env, {
+      to: k.email,
+      subject: `Ihre Anfrage bei easyOhr — ${nr}`,
+      html: kundenMail(nr, k, artikel, env),
+      replyTo: betrieb,
+    }),
+  ])
+
+  return json({ angebotsnummer: nr })
 }
 
-async function handleWebhook(request: Request, env: Env) {
-  const formData = await request.formData()
-  const id = formData.get('id') as string
-  if (!id) return json({ error: 'Missing id' }, 400)
-
-  const mollieOrder = await mollieRequest(`/orders/${id}`, env)
-
-  await supabaseRequest(`/orders?mollie_order_id=eq.${id}`, env, {
-    method: 'PATCH',
-    body: JSON.stringify({ status: mollieOrder.status }),
-  })
-
-  return json({ received: true })
-}
-
-// Capture = create a shipment in Mollie, which triggers the payment capture
-async function handleCapture(request: Request, env: Env) {
-  const auth = request.headers.get('Authorization')
-  if (auth !== `Bearer ${env.ADMIN_SECRET}`) {
+async function handleGetAngebote(request: Request, env: Env) {
+  if (request.headers.get('Authorization') !== `Bearer ${env.ADMIN_SECRET}`) {
     return json({ error: 'Unauthorized' }, 401)
   }
-
-  const { orderId } = await request.json() as any
-  if (!orderId) return json({ error: 'Missing orderId' }, 400)
-
-  // Get the order to find its lines
-  const mollieOrder = await mollieRequest(`/orders/${orderId}`, env)
-  if (mollieOrder.title) {
-    return json({ error: mollieOrder.detail || 'Order nicht gefunden' }, 404)
-  }
-
-  // Create shipment for all lines — this captures the authorized payment
-  const shipment = await mollieRequest(`/orders/${orderId}/shipments`, env, {
-    method: 'POST',
-    body: JSON.stringify({}),
-  })
-
-  if (shipment.title) {
-    return json({ error: shipment.detail || 'Shipment fehlgeschlagen' }, 500)
-  }
-
-  await supabaseRequest(`/orders?mollie_order_id=eq.${orderId}`, env, {
-    method: 'PATCH',
-    body: JSON.stringify({ status: 'captured' }),
-  })
-
-  return json({ success: true })
-}
-
-async function handleCancel(request: Request, env: Env) {
-  const auth = request.headers.get('Authorization')
-  if (auth !== `Bearer ${env.ADMIN_SECRET}`) {
-    return json({ error: 'Unauthorized' }, 401)
-  }
-
-  const { orderId } = await request.json() as any
-  if (!orderId) return json({ error: 'Missing orderId' }, 400)
-
-  await mollieRequest(`/orders/${orderId}`, env, { method: 'DELETE' })
-
-  await supabaseRequest(`/orders?mollie_order_id=eq.${orderId}`, env, {
-    method: 'PATCH',
-    body: JSON.stringify({ status: 'cancelled' }),
-  })
-
-  return json({ success: true })
-}
-
-async function handleGetOrders(request: Request, env: Env) {
-  const auth = request.headers.get('Authorization')
-  if (auth !== `Bearer ${env.ADMIN_SECRET}`) {
-    return json({ error: 'Unauthorized' }, 401)
-  }
-
-  const orders = await supabaseRequest('/orders?order=created_at.desc', env)
-  return json(orders)
+  return json(await supabaseRequest('/angebote?order=created_at.desc', env))
 }
 
 export default {
@@ -205,41 +265,29 @@ export default {
       return new Response(null, { headers: corsHeaders })
     }
 
-    const url = new URL(request.url)
-    const path = url.pathname
+    const path = new URL(request.url).pathname
 
     try {
-      if (path === '/api/order/create' && request.method === 'POST') {
-        return handleCreateOrder(request, env)
+      if (path === '/api/angebot' && request.method === 'POST') {
+        return await handleAngebot(request, env)
       }
-      if (path === '/api/order/webhook' && request.method === 'POST') {
-        return handleWebhook(request, env)
-      }
-      if (path === '/api/order/capture' && request.method === 'POST') {
-        return handleCapture(request, env)
-      }
-      if (path === '/api/order/cancel' && request.method === 'POST') {
-        return handleCancel(request, env)
-      }
-      if (path === '/api/orders' && request.method === 'GET') {
-        return handleGetOrders(request, env)
+      if (path === '/api/angebote' && request.method === 'GET') {
+        return await handleGetAngebote(request, env)
       }
       if (path === '/api/prices/update' && request.method === 'POST') {
-        const auth = request.headers.get('Authorization')
-        if (auth !== `Bearer ${env.ADMIN_SECRET}`) {
+        if (request.headers.get('Authorization') !== `Bearer ${env.ADMIN_SECRET}`) {
           return json({ error: 'Unauthorized' }, 401)
         }
-        const log = await scrapeAndUpdatePrices(env)
-        return json({ log })
+        return json({ log: await scrapeAndUpdatePrices(env as any) })
       }
 
       return json({ error: 'Not found' }, 404)
-    } catch (err) {
+    } catch {
       return json({ error: 'Internal server error' }, 500)
     }
   },
 
-  async scheduled(event: ScheduledEvent, env: Env, ctx: ExecutionContext) {
-    ctx.waitUntil(scrapeAndUpdatePrices(env))
+  async scheduled(_event: ScheduledEvent, env: Env, ctx: ExecutionContext) {
+    ctx.waitUntil(scrapeAndUpdatePrices(env as any))
   },
 }

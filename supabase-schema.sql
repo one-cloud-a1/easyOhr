@@ -1,39 +1,57 @@
--- easyOhr Supabase Schema
--- Run this in the Supabase SQL Editor
+-- easyOhr — Schema für Angebotsanfragen
+-- Im Supabase SQL Editor ausführen.
+--
+-- Der Table Editor von Supabase dient gleichzeitig als Dashboard: Anfragen
+-- ansehen, nach Status filtern und den Status direkt in der Zeile ändern.
 
-create table if not exists orders (
+create table if not exists angebote (
   id bigint generated always as identity primary key,
-  mollie_order_id text unique not null,
-  status text not null default 'created',
-  customer_email text not null,
-  customer_name text not null,
-  customer_phone text,
-  customer_address text,
-  items jsonb not null default '[]',
-  total decimal(10,2) not null default 0,
+  angebotsnummer text unique not null,
+
+  -- neu → angebot_gesendet → unterlagen_offen → kasse_beantragt
+  -- → geraet_versendet → testphase → abgeschlossen | storniert
+  status text not null default 'neu',
+
+  anrede text,
+  vorname text not null,
+  nachname text not null,
+  email text not null,
+  telefon text not null,
+  strasse text not null,
+  plz text not null,
+  ort text not null,
+
+  versicherung text,
+  krankenkasse text,
+  rezept_status text,
+  nachricht text,
+
+  artikel jsonb not null default '[]',
+  geraetepreis numeric(10,2) not null default 0,
+
+  -- Wird gesetzt, sobald die Verordnung vorliegt.
+  unterlagen_erhalten_am timestamptz,
+  -- Tatsächlicher Kassenanteil nach Genehmigung (siehe AGB § 7).
+  kassenleistung numeric(10,2),
+  notiz text,
+
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
 
--- Index for faster lookups
-create index if not exists idx_orders_mollie_id on orders(mollie_order_id);
-create index if not exists idx_orders_status on orders(status);
-create index if not exists idx_orders_email on orders(customer_email);
+create index if not exists idx_angebote_nummer on angebote(angebotsnummer);
+create index if not exists idx_angebote_status on angebote(status);
+create index if not exists idx_angebote_email on angebote(email);
 
--- RLS policies
-alter table orders enable row level security;
+-- Anfragen enthalten Gesundheitsbezug (Art. 9 DSGVO): keinerlei Zugriff über
+-- den öffentlichen anon-Key. Nur der Service-Role-Key des Workers und der
+-- Table Editor im Dashboard kommen an die Daten.
+alter table angebote enable row level security;
 
--- Users can read their own orders (matched by email from auth)
-create policy "Users can read own orders"
-  on orders for select
-  using (auth.jwt() ->> 'email' = customer_email);
-
--- Service role can do everything (used by Cloudflare Worker)
-create policy "Service role full access"
-  on orders for all
+create policy "Nur Service Role"
+  on angebote for all
   using (auth.role() = 'service_role');
 
--- Auto-update updated_at
 create or replace function update_updated_at()
 returns trigger as $$
 begin
@@ -42,7 +60,8 @@ begin
 end;
 $$ language plpgsql;
 
-create trigger orders_updated_at
-  before update on orders
+drop trigger if exists angebote_updated_at on angebote;
+create trigger angebote_updated_at
+  before update on angebote
   for each row
   execute function update_updated_at();

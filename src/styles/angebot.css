@@ -1,0 +1,326 @@
+.ang-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+/* Auswahl */
+.ang-auswahl {
+  background: var(--color-secondary);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+}
+
+.ang-auswahl h2 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.ang-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.ang-item-marke {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.ang-item h3 {
+  font-size: 1rem;
+  margin: 0.125rem 0;
+}
+
+.ang-item-detail {
+  font-size: 0.85rem;
+  color: var(--color-text-light);
+}
+
+.ang-item-remove {
+  background: none;
+  border: none;
+  color: var(--color-danger);
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.ang-item-remove:hover { text-decoration: underline; }
+
+.ang-summe {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-top: 1rem;
+  font-weight: 600;
+}
+
+.ang-summe-wert {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.ang-schaetzung {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: white;
+  border-radius: var(--radius-md);
+}
+
+.ang-schaetzung-zeile {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.ang-schaetzung-zeile strong {
+  font-size: 1.15rem;
+  color: var(--color-primary);
+  white-space: nowrap;
+}
+
+.ang-schaetzung p {
+  font-size: 0.775rem;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+}
+
+.ang-add-more {
+  display: inline-block;
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+/* Formular */
+.ang-form h2 {
+  font-size: 1.25rem;
+  margin-bottom: 0.375rem;
+}
+
+.ang-h2-zweit {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--color-border-light);
+}
+
+.ang-form-intro {
+  font-size: 0.9rem;
+  color: var(--color-text-light);
+  margin-bottom: 1.25rem;
+}
+
+.ang-row {
+  display: flex;
+  gap: 1rem;
+}
+
+.ang-field {
+  flex: 1;
+  margin-bottom: 1rem;
+  min-width: 0;
+}
+
+.ang-field-anrede { flex: 0 0 110px; }
+.ang-field-plz { flex: 0 0 120px; }
+
+.ang-hint {
+  font-size: 0.775rem;
+  line-height: 1.5;
+  color: var(--color-text-muted);
+  margin-top: 0.375rem;
+}
+
+.ang-check {
+  display: flex;
+  gap: 0.625rem;
+  align-items: flex-start;
+  font-size: 0.825rem !important;
+  font-weight: 400 !important;
+  line-height: 1.6;
+  color: var(--color-text-light) !important;
+  margin: 1rem 0 1.25rem !important;
+  cursor: pointer;
+}
+
+.ang-check input {
+  width: auto;
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+
+.ang-check a {
+  color: var(--color-primary);
+  text-decoration: underline;
+}
+
+.ang-fehler {
+  background: var(--color-danger-light);
+  color: var(--color-danger);
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+}
+
+.ang-submit {
+  width: 100%;
+  padding: 1rem;
+  background: var(--color-accent);
+  color: white;
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: var(--font-sans);
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.ang-submit:hover:not(:disabled) { background: #9A6013; }
+.ang-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.ang-legal {
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+  text-align: center;
+  margin-top: 0.875rem;
+}
+
+/* Leerer Zustand */
+.ang-leer {
+  text-align: center;
+  padding: 3rem 2rem;
+  color: var(--color-text-muted);
+}
+
+.ang-leer h2 { margin: 1.25rem 0 0.5rem; color: var(--color-text); }
+.ang-leer p { color: var(--color-text-light); margin-bottom: 1.75rem; }
+
+.ang-btn-primary,
+.ang-btn-ghost {
+  display: inline-block;
+  padding: 0.875rem 1.75rem;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+}
+
+.ang-btn-primary { background: var(--color-primary); color: white; }
+.ang-btn-primary:hover { background: var(--color-primary-dark); color: white; }
+
+.ang-btn-ghost {
+  border: 2px solid var(--color-primary);
+  color: var(--color-primary);
+}
+
+.ang-btn-ghost:hover { background: var(--color-primary); color: white; }
+
+/* Erfolg */
+.ang-erfolg {
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.ang-erfolg-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--color-success-light);
+  color: var(--color-success);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.25rem;
+}
+
+.ang-erfolg h2 { margin-bottom: 0.75rem; }
+
+.ang-erfolg > p {
+  color: var(--color-text-light);
+  line-height: 1.7;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.ang-nummer {
+  background: var(--color-secondary);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin: 2rem auto;
+  max-width: 420px;
+}
+
+.ang-nummer-label {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.5rem;
+}
+
+.ang-nummer-wert {
+  display: block;
+  font-size: 1.75rem;
+  font-weight: 700;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  letter-spacing: 2px;
+  color: var(--color-primary);
+  margin-bottom: 0.625rem;
+}
+
+.ang-nummer-hint {
+  display: block;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--color-text-muted);
+}
+
+.ang-naechste {
+  text-align: left;
+  max-width: 520px;
+  margin: 0 auto 2rem;
+  padding: 1.5rem;
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-lg);
+}
+
+.ang-naechste h3 {
+  font-size: 1rem;
+  margin-bottom: 0.875rem;
+}
+
+.ang-naechste ol {
+  margin: 0;
+  padding-left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+.ang-naechste li {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--color-text-light);
+}
+
+@media (max-width: 600px) {
+  .ang-row { flex-direction: column; gap: 0; }
+  .ang-field-anrede,
+  .ang-field-plz { flex: 1; }
+  .ang-nummer-wert { font-size: 1.5rem; }
+}

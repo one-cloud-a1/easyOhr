@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { addToCart } from '../lib/cart'
+import { useState, useEffect } from 'react'
+import { addToCart, getCartCount, onCartUpdate, MAX_GERAETE } from '../lib/cart'
 import { berechne, euro, euroRund, ZUZAHLUNG_PRO_GERAET } from '../lib/kasse'
 import { HINWEIS_MITTEL } from '../lib/kasse-hinweis'
 import { BASE } from '../lib/base-url'
@@ -44,14 +44,23 @@ export default function AddToCart({ slug, name, hersteller, privatpreis, kassenp
   const [anzahl, setAnzahl] = useState<1 | 2>(1)
   const [versicherung, setVersicherung] = useState<'privat' | 'gesetzlich'>('gesetzlich')
   const [added, setAdded] = useState(false)
+  const [imWarenkorb, setImWarenkorb] = useState(0)
+
+  useEffect(() => {
+    setImWarenkorb(getCartCount())
+    return onCartUpdate(() => setImWarenkorb(getCartCount()))
+  }, [])
 
   const gesetzlich = versicherung === 'gesetzlich'
   const r = berechne(privatpreis, anzahl, versicherung)
   const gesamtpreis = r.gesamt
 
+  const frei = MAX_GERAETE - imWarenkorb
+  const passtNicht = anzahl > frei
+
   const handleAdd = () => {
-    for (let i = 0; i < anzahl; i++) {
-      addToCart({ slug, name, hersteller, farbe: selectedFarbe, privatpreis, kassenpreis })
+    if (!addToCart({ slug, name, hersteller, farbe: selectedFarbe, privatpreis, kassenpreis }, anzahl)) {
+      return
     }
     setAdded(true)
     setTimeout(() => setAdded(false), 2500)
@@ -149,25 +158,41 @@ export default function AddToCart({ slug, name, hersteller, privatpreis, kassenp
         </div>
       )}
 
-      <button className={`atc-button ${added ? 'atc-added' : ''}`} onClick={handleAdd}>
+      <button
+        className={`atc-button ${added ? 'atc-added' : ''}`}
+        onClick={handleAdd}
+        disabled={passtNicht}
+      >
         {added ? (
           <>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <polyline points="20 6 9 17 4 12"/>
             </svg>
-            In den Warenkorb gelegt!
+            Zur Anfrage hinzugefügt!
           </>
         ) : (
           <>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
-              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
             </svg>
-            Jetzt 30 Tage testen — {gesetzlich ? 'ca. ' : ''}{euroRund(gesamtpreis)}
+            Kostenloses Angebot anfordern
           </>
         )}
       </button>
-      <p className="atc-note">Kein Geld wird jetzt abgebucht — Zahlung erst nach der Testphase</p>
+
+      {passtNicht ? (
+        <p className="atc-note atc-note-warn">
+          {frei === 0
+            ? `Sie haben bereits ${MAX_GERAETE} Geräte in Ihrer Anfrage. `
+            : `Es ist noch Platz für ein Gerät. `}
+          <a href={`${BASE}anfrage/`}>Anfrage ansehen</a>
+        </p>
+      ) : (
+        <p className="atc-note">
+          Unverbindlich und kostenlos — Sie erhalten ein persönliches Angebot, keine Rechnung.
+        </p>
+      )}
     </div>
   )
 }

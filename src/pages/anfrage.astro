@@ -1,0 +1,34 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import AngebotForm from '../components/AngebotForm.tsx'
+import '../styles/angebot.css'
+---
+<BaseLayout
+  title="Angebot anfordern"
+  description="Fordern Sie ein kostenloses, unverbindliches Angebot für Ihr Wunsch-Hörgerät an. Mit genauem Eigenanteil nach Abrechnung mit Ihrer Krankenkasse."
+>
+  <section class="section">
+    <div class="container ang-container">
+      <h1>Angebot anfordern</h1>
+      <p class="ang-intro">
+        Kostenlos und unverbindlich. Sie erhalten innerhalb von 24 Stunden ein persönliches Angebot
+        mit Ihrem genauen Eigenanteil.
+      </p>
+      <AngebotForm client:load />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .ang-container { max-width: 720px; }
+
+  .ang-container h1 { margin-bottom: 0.5rem; }
+
+  .ang-intro {
+    color: var(--color-text-light);
+    font-size: 1.05rem;
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+    max-width: 560px;
+  }
+</style>

@@ -11,6 +11,12 @@ export interface CartItem {
 const CART_KEY = 'easyohr-cart'
 const CART_EVENT = 'easyohr-cart-update'
 
+/**
+ * Höchstzahl Geräte pro Anfrage. Zwei Ohren sind die maximale Versorgung —
+ * mehr ist immer ein Eingabefehler.
+ */
+export const MAX_GERAETE = 2
+
 export function getCart(): CartItem[] {
   if (typeof window === 'undefined') return []
   try {
@@ -26,15 +32,27 @@ function saveCart(cart: CartItem[]) {
   window.dispatchEvent(new CustomEvent(CART_EVENT, { detail: cart }))
 }
 
-export function addToCart(item: Omit<CartItem, 'menge'>) {
+/**
+ * Legt ein Gerät in den Warenkorb. Gibt `false` zurück, wenn dadurch
+ * {@link MAX_GERAETE} überschritten würde — der Warenkorb bleibt dann unverändert.
+ */
+export function addToCart(item: Omit<CartItem, 'menge'>, menge = 1): boolean {
   const cart = getCart()
+  if (getCartCount() + menge > MAX_GERAETE) return false
+
   const existing = cart.find(i => i.slug === item.slug && i.farbe === item.farbe)
   if (existing) {
-    existing.menge += 1
+    existing.menge += menge
   } else {
-    cart.push({ ...item, menge: 1 })
+    cart.push({ ...item, menge })
   }
   saveCart(cart)
+  return true
+}
+
+/** Wie viele Geräte noch hinzugefügt werden dürfen. */
+export function getRestplaetze(): number {
+  return Math.max(0, MAX_GERAETE - getCartCount())
 }
 
 export function removeFromCart(slug: string, farbe?: string) {
