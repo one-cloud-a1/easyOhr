@@ -9,10 +9,12 @@ crons = ["0 6 * * 1"]
 SITE_URL = "https://one-cloud-a1.github.io/easyOhr"
 BETRIEB_EMAIL = "hi@hoffnungsohr.de"
 ABSENDER_EMAIL = "easyOhr <noreply@easyohr.de>"
+BETRIEB_TELEFON = "0214 1234567"
 
 # Secrets (Cloudflare Dashboard → Worker → Settings → Variables, als Secret):
-# SUPABASE_URL
-# SUPABASE_SERVICE_KEY
-# ADMIN_SECRET
+# RESEND_API_KEY      — für den Mailversand, zwingend erforderlich
 # GITHUB_TOKEN        — für die wöchentliche Preisanpassung
-# RESEND_API_KEY      — für den Mailversand
+# ADMIN_SECRET        — schützt /api/prices/update
+#
+# Anfragen werden nicht in einer Datenbank gespeichert. Die Mail an
+# BETRIEB_EMAIL ist der Datensatz — siehe Kommentar in index.ts.

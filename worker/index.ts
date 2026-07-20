@@ -1,16 +1,22 @@
 import { scrapeAndUpdatePrices } from './price-scraper'
 
+// Anfragen werden bewusst nicht in einer Datenbank abgelegt. Die Mail an den
+// Betrieb ist der Datensatz — sie enthält alle Angaben, die Angebotsnummer
+// steht im Betreff, und nachgereichte Unterlagen hängen später am selben
+// Thread. Deshalb gilt: Geht diese Mail nicht raus, ist die Anfrage verloren
+// und der Kunde muss das erfahren.
+
 interface Env {
-  SUPABASE_URL: string
-  SUPABASE_SERVICE_KEY: string
   ADMIN_SECRET: string
   SITE_URL: string
   GITHUB_TOKEN: string
   RESEND_API_KEY: string
-  /** Postfach des anpassenden Akustikers. */
+  /** Postfach des anpassenden Akustikers — hier laufen die Anfragen auf. */
   BETRIEB_EMAIL: string
   /** Absenderadresse, muss bei Resend als Domain verifiziert sein. */
   ABSENDER_EMAIL: string
+  /** Telefonnummer für den Fehlerfall. */
+  BETRIEB_TELEFON: string
 }
 
 const corsHeaders = {
@@ -38,24 +44,10 @@ function angebotsnummer(): string {
   return `EO-${z.slice(0, 3).join('')}-${z.slice(3).join('')}`
 }
 
-async function supabaseRequest(path: string, env: Env, options: RequestInit = {}) {
-  const res = await fetch(`${env.SUPABASE_URL}/rest/v1${path}`, {
-    ...options,
-    headers: {
-      apikey: env.SUPABASE_SERVICE_KEY,
-      Authorization: `Bearer ${env.SUPABASE_SERVICE_KEY}`,
-      'Content-Type': 'application/json',
-      Prefer: 'return=representation',
-      ...options.headers,
-    },
-  })
-  return res.json() as Promise<any>
-}
-
 /**
  * Versendet eine Mail über Resend. Wirft nie — der Aufrufer bekommt das
- * Ergebnis als Text zurück, damit ein Fehlschlag in der Datenbank landet
- * statt still verloren zu gehen.
+ * Ergebnis als Text zurück ("ok" oder eine Fehlerbeschreibung) und
+ * entscheidet, wie schwer der Fehlschlag wiegt.
  */
 async function sendMail(
   env: Env,
@@ -106,7 +98,7 @@ const REZEPT_TEXT: Record<string, string> = {
   termin: 'HNO-Termin steht bevor',
 }
 
-function betriebsMail(nr: string, k: any, artikel: any[], summe: number, dbFehler = ''): string {
+function betriebsMail(nr: string, k: any, artikel: any[], summe: number): string {
   const zeilen = artikel
     .map(
       a =>
@@ -119,16 +111,7 @@ function betriebsMail(nr: string, k: any, artikel: any[], summe: number, dbFehle
   const feld = (label: string, wert: unknown) =>
     wert ? `<tr><td style="padding:4px 16px 4px 0;color:#666">${label}</td><td style="padding:4px 0">${escapeHtml(wert)}</td></tr>` : ''
 
-  const warnung = dbFehler
-    ? `<div style="background:#FCEBEB;border-left:4px solid #E24B4A;padding:14px 16px;margin:0 0 20px;border-radius:4px">
-         <p style="margin:0 0 6px;font-weight:600;color:#A32D2D">Diese Anfrage wurde nicht in der Datenbank gespeichert</p>
-         <p style="margin:0;font-size:13px;color:#A32D2D">Diese E-Mail ist die einzige Kopie — bitte aufbewahren.
-         Grund: ${escapeHtml(dbFehler)}</p>
-       </div>`
-    : ''
-
   return `<div style="font-family:system-ui,sans-serif;max-width:640px;color:#2C2C2A">
-    ${warnung}
     <p style="font-size:13px;color:#666;margin:0 0 4px">Neue Angebotsanfrage über easyOhr</p>
     <h1 style="font-size:22px;margin:0 0 20px">${nr}</h1>
 
@@ -229,74 +212,46 @@ async function handleAngebot(request: Request, env: Env) {
   const nr = angebotsnummer()
   const summe = artikel.reduce((s: number, a: any) => s + a.privatpreis * (a.menge || 1), 0)
 
-  // Zuerst speichern — geht der Mailversand schief, ist die Anfrage nicht verloren.
-  const gespeichert = await supabaseRequest('/angebote', env, {
-    method: 'POST',
-    body: JSON.stringify({
-      angebotsnummer: nr,
-      status: 'neu',
-      anrede: k.anrede || null,
-      vorname: k.vorname,
-      nachname: k.nachname,
-      email: k.email,
-      telefon: k.telefon,
-      strasse: k.strasse,
-      plz: k.plz,
-      ort: k.ort,
-      versicherung: k.versicherung || null,
-      krankenkasse: k.krankenkasse || null,
-      rezept_status: k.rezept || null,
-      nachricht: k.nachricht || null,
-      artikel: JSON.stringify(artikel),
-      geraetepreis: summe,
-    }),
-  }).catch(() => null)
-
-  // Supabase liefert bei Erfolg die angelegte Zeile zurück, im Fehlerfall ein
-  // Objekt mit Fehlercode. Schlägt das Speichern fehl, ist die Betriebsmail die
-  // einzige Kopie der Anfrage — dann muss sie das auch sagen.
-  const dbOk = Array.isArray(gespeichert) && gespeichert.length > 0
-  const dbFehler = dbOk ? '' : (gespeichert as any)?.message || 'unbekannter Fehler'
-
   const betrieb = env.BETRIEB_EMAIL || 'hi@hoffnungsohr.de'
 
-  const [anBetrieb, anKunde] = await Promise.all([
-    sendMail(env, {
-      to: betrieb,
-      subject: `${dbOk ? '' : '[NICHT GESPEICHERT] '}Neue Anfrage ${nr} — ${k.vorname} ${k.nachname}`,
-      html: betriebsMail(nr, k, artikel, summe, dbFehler),
-      replyTo: k.email,
-    }),
-    sendMail(env, {
-      to: k.email,
-      subject: `Ihre Anfrage bei easyOhr — ${nr}`,
-      html: kundenMail(nr, k, artikel, env),
-      replyTo: betrieb,
-    }),
-  ])
+  // Diese Mail zuerst und allein: Sie ist der Datensatz. Erst wenn sie
+  // zugestellt ist, gilt die Anfrage als angenommen.
+  const anBetrieb = await sendMail(env, {
+    to: betrieb,
+    subject: `Neue Anfrage ${nr} — ${k.vorname} ${k.nachname}`,
+    html: betriebsMail(nr, k, artikel, summe),
+    replyTo: k.email,
+  })
 
-  // Ergebnis nachtragen. Steht hier etwas anderes als "ok", wurde die Anfrage
-  // gespeichert, aber niemand benachrichtigt — im Table Editor sofort sichtbar.
-  const mailStatus =
-    anBetrieb === 'ok' && anKunde === 'ok'
-      ? 'ok'
-      : `Betrieb: ${anBetrieb} | Kunde: ${anKunde}`
-
-  if (dbOk) {
-    await supabaseRequest(`/angebote?angebotsnummer=eq.${nr}`, env, {
-      method: 'PATCH',
-      body: JSON.stringify({ mail_status: mailStatus }),
-    }).catch(() => null)
+  if (anBetrieb !== 'ok') {
+    // Ohne Datenbank gäbe es hier keine zweite Kopie. Dem Kunden einen Erfolg
+    // vorzuspielen, hiesse ihn auf eine Antwort warten zu lassen, die nie kommt.
+    console.error(`Anfrage ${nr} nicht zustellbar: ${anBetrieb}`)
+    return json(
+      {
+        error:
+          `Ihre Anfrage konnte technisch nicht übermittelt werden. ` +
+          `Bitte rufen Sie uns kurz an: ${env.BETRIEB_TELEFON || '0214 1234567'}. ` +
+          `Wir nehmen Ihre Anfrage dann direkt auf.`,
+      },
+      502
+    )
   }
 
-  return json({ angebotsnummer: nr })
-}
+  // Die Bestätigung an den Kunden ist Komfort, kein Datensatz. Scheitert sie,
+  // liegt die Anfrage trotzdem beim Betrieb — der Kunde wird angerufen.
+  const anKunde = await sendMail(env, {
+    to: k.email,
+    subject: `Ihre Anfrage bei easyOhr — ${nr}`,
+    html: kundenMail(nr, k, artikel, env),
+    replyTo: betrieb,
+  })
 
-async function handleGetAngebote(request: Request, env: Env) {
-  if (request.headers.get('Authorization') !== `Bearer ${env.ADMIN_SECRET}`) {
-    return json({ error: 'Unauthorized' }, 401)
+  if (anKunde !== 'ok') {
+    console.error(`Bestätigung für ${nr} nicht zustellbar: ${anKunde}`)
   }
-  return json(await supabaseRequest('/angebote?order=created_at.desc', env))
+
+  return json({ angebotsnummer: nr, bestaetigungGesendet: anKunde === 'ok' })
 }
 
 export default {
@@ -311,14 +266,11 @@ export default {
       if (path === '/api/angebot' && request.method === 'POST') {
         return await handleAngebot(request, env)
       }
-      if (path === '/api/angebote' && request.method === 'GET') {
-        return await handleGetAngebote(request, env)
-      }
       if (path === '/api/prices/update' && request.method === 'POST') {
         if (request.headers.get('Authorization') !== `Bearer ${env.ADMIN_SECRET}`) {
           return json({ error: 'Unauthorized' }, 401)
         }
-        return json({ log: await scrapeAndUpdatePrices(env as any) })
+        return json({ log: await scrapeAndUpdatePrices(env) })
       }
 
       return json({ error: 'Not found' }, 404)
@@ -328,6 +280,6 @@ export default {
   },
 
   async scheduled(_event: ScheduledEvent, env: Env, ctx: ExecutionContext) {
-    ctx.waitUntil(scrapeAndUpdatePrices(env as any))
+    ctx.waitUntil(scrapeAndUpdatePrices(env))
   },
 }

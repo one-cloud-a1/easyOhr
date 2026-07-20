@@ -1,7 +1,4 @@
 interface Env {
-  MOLLIE_API_KEY: string
-  SUPABASE_URL: string
-  SUPABASE_SERVICE_KEY: string
   ADMIN_SECRET: string
   SITE_URL: string
   GITHUB_TOKEN: string
