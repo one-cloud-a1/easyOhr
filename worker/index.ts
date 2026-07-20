@@ -11,7 +11,11 @@ interface Env {
   SITE_URL: string
   GITHUB_TOKEN: string
   RESEND_API_KEY: string
-  /** Postfach des anpassenden Akustikers — hier laufen die Anfragen auf. */
+  /**
+   * Adresse unter easyOhr-Domain, an die Anfragen gehen und unter der der
+   * Kunde antwortet. Die Weiterleitung an den Partnerbetrieb passiert beim
+   * Mailanbieter — der Kunde bekommt die Partneradresse nie zu sehen.
+   */
   BETRIEB_EMAIL: string
   /** Absenderadresse, muss bei Resend als Domain verifiziert sein. */
   ABSENDER_EMAIL: string
@@ -182,9 +186,14 @@ function kundenMail(nr: string, k: any, artikel: any[], env: Env): string {
       Bitte notieren Sie <strong>${nr}</strong> auf dem Umschlag.</li>
     </ul>
 
+    <p style="font-weight:600;margin:28px 0 6px">Wer Ihre Anfrage bearbeitet</p>
+    <p style="margin-top:0">Angebot, Anpassung und die Abrechnung mit Ihrer Krankenkasse übernimmt ein
+    Hörakustik-Fachbetrieb, mit dem wir zusammenarbeiten. Dorthin leiten wir Ihre Angaben weiter.
+    Ihre Ansprechpartner bleiben wir — Sie können jederzeit auf diese E-Mail antworten.</p>
+
     <p style="font-size:13px;color:#666;margin-top:28px;padding-top:16px;border-top:1px solid #eee">
       Dies ist ein unverbindliches Angebot. Es entsteht kein Kaufvertrag und keine Zahlungspflicht.
-      Bei Fragen erreichen Sie uns unter ${escapeHtml(env.BETRIEB_EMAIL || 'hi@hoffnungsohr.de')}.
+      Bei Fragen erreichen Sie uns unter ${escapeHtml(env.BETRIEB_EMAIL || 'anfrage@easyohr.de')}.
     </p>
   </div>`
 }
@@ -212,7 +221,7 @@ async function handleAngebot(request: Request, env: Env) {
   const nr = angebotsnummer()
   const summe = artikel.reduce((s: number, a: any) => s + a.privatpreis * (a.menge || 1), 0)
 
-  const betrieb = env.BETRIEB_EMAIL || 'hi@hoffnungsohr.de'
+  const betrieb = env.BETRIEB_EMAIL || 'anfrage@easyohr.de'
 
   // Diese Mail zuerst und allein: Sie ist der Datensatz. Erst wenn sie
   // zugestellt ist, gilt die Anfrage als angenommen.

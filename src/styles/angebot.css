@@ -318,6 +318,15 @@
   color: var(--color-text-light);
 }
 
+.ang-partner {
+  font-size: 0.825rem;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-border-light);
+}
+
 @media (max-width: 600px) {
   .ang-row { flex-direction: column; gap: 0; }
   .ang-field-anrede,

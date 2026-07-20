@@ -122,6 +122,10 @@ export default function AngebotForm() {
             <li>Für die Abrechnung mit der Krankenkasse brauchen wir die Verordnung Ihres HNO-Arztes. Wie Sie uns diese zukommen lassen, steht in der E-Mail.</li>
             <li>Danach senden wir Ihnen das Hörgerät zum 30-tägigen Testen zu.</li>
           </ol>
+          <p className="ang-partner">
+            Angebot, Anpassung und Kassenabrechnung übernimmt ein Hörakustik-Fachbetrieb, mit dem
+            wir zusammenarbeiten — dorthin leiten wir Ihre Angaben weiter.
+          </p>
         </div>
 
         <a href={`${BASE}hoergeraete/`} className="ang-btn-ghost">Weitere Hörgeräte ansehen</a>
