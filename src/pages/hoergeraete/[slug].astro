@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro'
 import AddToCart from '../../components/AddToCart.tsx'
+import ServiceBand from '../../components/ServiceBand.astro'
 import products from '../../data/products.json'
 import { url } from '../../lib/links'
 
@@ -167,30 +168,6 @@ const bauformLang = product.typ === 'CIC'
         </p>
       </div>
 
-      <div class="detail-trust">
-        <div class="trust-card">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          <div>
-            <strong>30 Tage testen</strong>
-            <span>Kostenlos testen, bei Nichtgefallen zurücksenden</span>
-          </div>
-        </div>
-        <div class="trust-card">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="1.5"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-          <div>
-            <strong>Erst zahlen bei Gefallen</strong>
-            <span>Kein Geld wird bei der Bestellung abgebucht</span>
-          </div>
-        </div>
-        <div class="trust-card">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="1.5"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-          <div>
-            <strong>Kostenloser Versand</strong>
-            <span>Hin- und Rückversand gratis</span>
-          </div>
-        </div>
-      </div>
-
       {related.length > 0 && (
         <div class="related-section">
           <h2>Weitere {product.hersteller} Hörgeräte</h2>
@@ -214,6 +191,8 @@ const bauformLang = product.typ === 'CIC'
       )}
     </div>
   </section>
+
+  <ServiceBand />
 </BaseLayout>
 
 <style>
@@ -431,38 +410,6 @@ const bauformLang = product.typ === 'CIC'
     white-space: nowrap;
   }
 
-  .detail-trust {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-    padding: 3rem 0;
-    border-top: 1px solid var(--color-border-light);
-  }
-
-  .trust-card {
-    display: flex;
-    gap: 1rem;
-    padding: 1.25rem;
-    background: var(--color-secondary);
-    border-radius: var(--radius-lg);
-  }
-
-  .trust-card svg {
-    flex-shrink: 0;
-    margin-top: 2px;
-  }
-
-  .trust-card strong {
-    display: block;
-    font-size: 0.9rem;
-    margin-bottom: 0.25rem;
-  }
-
-  .trust-card span {
-    font-size: 0.8rem;
-    color: var(--color-text-light);
-  }
-
   .related-section {
     padding: 3rem 0;
     border-top: 1px solid var(--color-border-light);
@@ -521,10 +468,6 @@ const bauformLang = product.typ === 'CIC'
 
     .features-grid {
       grid-template-columns: 1fr 1fr;
-    }
-
-    .detail-trust {
-      grid-template-columns: 1fr;
     }
 
     .related-grid {

@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro'
 import HeroSection from '../components/HeroSection.astro'
 import TrustBar from '../components/TrustBar.astro'
 import ProcessSteps from '../components/ProcessSteps.astro'
+import ServiceBand from '../components/ServiceBand.astro'
 import ProductCard from '../components/ProductCard.astro'
 import products from '../data/products.json'
 import company from '../data/company.json'
@@ -65,6 +66,8 @@ const topProducts = products.filter(p => p.technologie === 'Premium').slice(0, 3
   </section>
 
   <ProcessSteps />
+
+  <ServiceBand />
 
   <section class="section">
     <div class="container">
