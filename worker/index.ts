@@ -106,7 +106,7 @@ const REZEPT_TEXT: Record<string, string> = {
   termin: 'HNO-Termin steht bevor',
 }
 
-function betriebsMail(nr: string, k: any, artikel: any[], summe: number): string {
+function betriebsMail(nr: string, k: any, artikel: any[], summe: number, dbFehler = ''): string {
   const zeilen = artikel
     .map(
       a =>
@@ -119,7 +119,16 @@ function betriebsMail(nr: string, k: any, artikel: any[], summe: number): string
   const feld = (label: string, wert: unknown) =>
     wert ? `<tr><td style="padding:4px 16px 4px 0;color:#666">${label}</td><td style="padding:4px 0">${escapeHtml(wert)}</td></tr>` : ''
 
+  const warnung = dbFehler
+    ? `<div style="background:#FCEBEB;border-left:4px solid #E24B4A;padding:14px 16px;margin:0 0 20px;border-radius:4px">
+         <p style="margin:0 0 6px;font-weight:600;color:#A32D2D">Diese Anfrage wurde nicht in der Datenbank gespeichert</p>
+         <p style="margin:0;font-size:13px;color:#A32D2D">Diese E-Mail ist die einzige Kopie — bitte aufbewahren.
+         Grund: ${escapeHtml(dbFehler)}</p>
+       </div>`
+    : ''
+
   return `<div style="font-family:system-ui,sans-serif;max-width:640px;color:#2C2C2A">
+    ${warnung}
     <p style="font-size:13px;color:#666;margin:0 0 4px">Neue Angebotsanfrage über easyOhr</p>
     <h1 style="font-size:22px;margin:0 0 20px">${nr}</h1>
 
@@ -221,7 +230,7 @@ async function handleAngebot(request: Request, env: Env) {
   const summe = artikel.reduce((s: number, a: any) => s + a.privatpreis * (a.menge || 1), 0)
 
   // Zuerst speichern — geht der Mailversand schief, ist die Anfrage nicht verloren.
-  await supabaseRequest('/angebote', env, {
+  const gespeichert = await supabaseRequest('/angebote', env, {
     method: 'POST',
     body: JSON.stringify({
       angebotsnummer: nr,
@@ -243,13 +252,19 @@ async function handleAngebot(request: Request, env: Env) {
     }),
   }).catch(() => null)
 
+  // Supabase liefert bei Erfolg die angelegte Zeile zurück, im Fehlerfall ein
+  // Objekt mit Fehlercode. Schlägt das Speichern fehl, ist die Betriebsmail die
+  // einzige Kopie der Anfrage — dann muss sie das auch sagen.
+  const dbOk = Array.isArray(gespeichert) && gespeichert.length > 0
+  const dbFehler = dbOk ? '' : (gespeichert as any)?.message || 'unbekannter Fehler'
+
   const betrieb = env.BETRIEB_EMAIL || 'hi@hoffnungsohr.de'
 
   const [anBetrieb, anKunde] = await Promise.all([
     sendMail(env, {
       to: betrieb,
-      subject: `Neue Anfrage ${nr} — ${k.vorname} ${k.nachname}`,
-      html: betriebsMail(nr, k, artikel, summe),
+      subject: `${dbOk ? '' : '[NICHT GESPEICHERT] '}Neue Anfrage ${nr} — ${k.vorname} ${k.nachname}`,
+      html: betriebsMail(nr, k, artikel, summe, dbFehler),
       replyTo: k.email,
     }),
     sendMail(env, {
@@ -267,10 +282,12 @@ async function handleAngebot(request: Request, env: Env) {
       ? 'ok'
       : `Betrieb: ${anBetrieb} | Kunde: ${anKunde}`
 
-  await supabaseRequest(`/angebote?angebotsnummer=eq.${nr}`, env, {
-    method: 'PATCH',
-    body: JSON.stringify({ mail_status: mailStatus }),
-  }).catch(() => null)
+  if (dbOk) {
+    await supabaseRequest(`/angebote?angebotsnummer=eq.${nr}`, env, {
+      method: 'PATCH',
+      body: JSON.stringify({ mail_status: mailStatus }),
+    }).catch(() => null)
+  }
 
   return json({ angebotsnummer: nr })
 }

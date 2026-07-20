@@ -52,6 +52,7 @@ create index if not exists idx_angebote_email on angebote(email);
 -- Table Editor im Dashboard kommen an die Daten.
 alter table angebote enable row level security;
 
+drop policy if exists "Nur Service Role" on angebote;
 create policy "Nur Service Role"
   on angebote for all
   using (auth.role() = 'service_role');
@@ -73,3 +74,7 @@ create trigger angebote_updated_at
 -- Nachträglich ergänzte Spalten. Gefahrlos wiederholt ausführbar, damit eine
 -- bereits angelegte Tabelle mit diesem Skript aktualisiert werden kann.
 alter table angebote add column if not exists mail_status text;
+
+-- Die Tabelle "orders" stammt aus dem Mollie-Checkout und wird nicht mehr
+-- verwendet. Erst löschen, wenn dort nichts Wichtiges mehr steht:
+-- drop table if exists orders;
