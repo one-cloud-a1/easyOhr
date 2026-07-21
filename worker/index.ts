@@ -262,6 +262,126 @@ async function handleAngebot(request: Request, env: Env) {
   return json({ angebotsnummer: nr, bestaetigungGesendet: anKunde === 'ok' })
 }
 
+const EUR = (n: number) => n.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €'
+
+function bestellNummer(): string {
+  const bytes = new Uint8Array(6)
+  crypto.getRandomValues(bytes)
+  const z = [...bytes].map(b => ALPHABET[b % ALPHABET.length])
+  return `EZ-${z.slice(0, 3).join('')}-${z.slice(3).join('')}`
+}
+
+function bestellungBetriebMail(nr: string, k: any, artikel: any[], zwischensumme: number, versand: number, gesamt: number): string {
+  const zeilen = artikel.map(a =>
+    `<tr><td style="padding:6px 12px 6px 0">${escapeHtml(a.name)}<br>
+     <span style="color:#666;font-size:13px">${escapeHtml(a.variante)} · ${a.menge} ×</span></td>
+     <td style="padding:6px 0;text-align:right;white-space:nowrap">${EUR(a.einzelpreis * a.menge)}</td></tr>`).join('')
+
+  const feld = (l: string, w: unknown) => w ? `<tr><td style="padding:4px 16px 4px 0;color:#666">${l}</td><td style="padding:4px 0">${escapeHtml(w)}</td></tr>` : ''
+
+  return `<div style="font-family:system-ui,sans-serif;max-width:640px;color:#2C2C2A">
+    <p style="font-size:13px;color:#666;margin:0 0 4px">Neue Zubehörbestellung über easyOhr</p>
+    <h1 style="font-size:22px;margin:0 0 20px">${nr}</h1>
+
+    <h2 style="font-size:15px;margin:24px 0 8px">Lieferadresse</h2>
+    <table style="font-size:14px;border-collapse:collapse">
+      ${feld('Name', `${k.vorname} ${k.nachname}`)}
+      ${feld('E-Mail', k.email)}
+      ${feld('Telefon', k.telefon)}
+      ${feld('Adresse', `${k.strasse}, ${k.plz} ${k.ort}`)}
+    </table>
+
+    <h2 style="font-size:15px;margin:24px 0 8px">Bestellung</h2>
+    <table style="font-size:14px;border-collapse:collapse;width:100%">
+      ${zeilen}
+      <tr><td style="padding:8px 12px 0 0">Zwischensumme</td><td style="padding:8px 0 0;text-align:right">${EUR(zwischensumme)}</td></tr>
+      <tr><td style="padding:2px 12px 0 0">Versand</td><td style="padding:2px 0 0;text-align:right">${versand === 0 ? 'kostenlos' : EUR(versand)}</td></tr>
+      <tr><td style="padding:8px 12px 0 0;border-top:1px solid #ddd;font-weight:600">Gesamt</td>
+      <td style="padding:8px 0 0;border-top:1px solid #ddd;text-align:right;font-weight:600">${EUR(gesamt)}</td></tr>
+    </table>
+
+    ${k.nachricht ? `<p style="font-size:14px;background:#F5F3EF;padding:12px;border-radius:8px;margin-top:20px;white-space:pre-wrap">${escapeHtml(k.nachricht)}</p>` : ''}
+
+    <p style="font-size:13px;color:#666;margin-top:28px;padding-top:16px;border-top:1px solid #eee">
+      Rechnung an ${escapeHtml(k.email)} senden. Diese E-Mail kann direkt beantwortet werden.
+    </p>
+  </div>`
+}
+
+function bestellungKundeMail(nr: string, k: any, artikel: any[], zwischensumme: number, versand: number, gesamt: number): string {
+  const zeilen = artikel.map(a =>
+    `<tr><td style="padding:5px 12px 5px 0">${escapeHtml(a.name)} <span style="color:#666">(${escapeHtml(a.variante)}, ${a.menge} ×)</span></td>
+     <td style="padding:5px 0;text-align:right;white-space:nowrap">${EUR(a.einzelpreis * a.menge)}</td></tr>`).join('')
+
+  return `<div style="font-family:system-ui,sans-serif;max-width:600px;color:#2C2C2A;line-height:1.6">
+    <p style="font-size:20px;font-weight:600;margin:0 0 16px"><span style="color:#2C2C2A">easy</span><span style="color:#0F6E56">Ohr</span></p>
+    <p>Guten Tag ${escapeHtml(k.vorname)},</p>
+    <p>vielen Dank für Ihre Bestellung. Wir versenden Ihre Artikel und schicken Ihnen die Rechnung
+    per E-Mail. Es fallen keine Vorabkosten an.</p>
+
+    <div style="background:#F5F3EF;border-radius:12px;padding:20px;margin:24px 0;text-align:center">
+      <p style="font-size:12px;color:#666;text-transform:uppercase;letter-spacing:1px;margin:0 0 6px">Ihre Bestellnummer</p>
+      <p style="font-size:26px;font-weight:700;letter-spacing:2px;color:#0F6E56;margin:0">${nr}</p>
+    </div>
+
+    <table style="font-size:14px;border-collapse:collapse;width:100%">
+      ${zeilen}
+      <tr><td style="padding:8px 12px 0 0">Versand</td><td style="padding:8px 0 0;text-align:right">${versand === 0 ? 'kostenlos' : EUR(versand)}</td></tr>
+      <tr><td style="padding:8px 12px 0 0;border-top:1px solid #ddd;font-weight:600">Gesamt</td>
+      <td style="padding:8px 0 0;border-top:1px solid #ddd;text-align:right;font-weight:600">${EUR(gesamt)}</td></tr>
+    </table>
+
+    <p style="font-size:13px;color:#666;margin-top:28px;padding-top:16px;border-top:1px solid #eee">
+      Lieferung an: ${escapeHtml(`${k.strasse}, ${k.plz} ${k.ort}`)}. Bei Fragen antworten Sie einfach auf diese E-Mail.
+    </p>
+  </div>`
+}
+
+async function handleBestellung(request: Request, env: Env) {
+  const body = (await request.json().catch(() => null)) as any
+  const k = body?.kunde
+  const artikel = body?.artikel
+
+  if (!k?.email || !k?.vorname || !k?.nachname || !k?.telefon || !k?.strasse || !k?.plz || !k?.ort) {
+    return json({ error: 'Bitte füllen Sie alle Pflichtfelder aus.' }, 400)
+  }
+  if (!k?.datenschutz) {
+    return json({ error: 'Bitte stimmen Sie der Datenschutzerklärung zu.' }, 400)
+  }
+  if (!Array.isArray(artikel) || artikel.length === 0) {
+    return json({ error: 'Ihr Warenkorb ist leer.' }, 400)
+  }
+
+  // Beträge serverseitig nachrechnen — dem Client nicht blind vertrauen.
+  const zwischensumme = artikel.reduce((s: number, a: any) => s + Number(a.einzelpreis) * Number(a.menge), 0)
+  const versand = zwischensumme > 0 && zwischensumme < 49 ? 5.9 : 0
+  const gesamt = zwischensumme + versand
+
+  const nr = bestellNummer()
+  const betrieb = env.BETRIEB_EMAIL || 'info@easyohr.de'
+
+  const anBetrieb = await sendMail(env, {
+    to: betrieb,
+    subject: `Zubehörbestellung ${nr} — ${k.vorname} ${k.nachname}`,
+    html: bestellungBetriebMail(nr, k, artikel, zwischensumme, versand, gesamt),
+    replyTo: k.email,
+  })
+
+  if (anBetrieb !== 'ok') {
+    console.error(`Bestellung ${nr} nicht zustellbar: ${anBetrieb}`)
+    return json({ error: `Ihre Bestellung konnte technisch nicht übermittelt werden. Bitte schreiben Sie uns an ${betrieb}.` }, 502)
+  }
+
+  await sendMail(env, {
+    to: k.email,
+    subject: `Ihre Bestellung bei easyOhr — ${nr}`,
+    html: bestellungKundeMail(nr, k, artikel, zwischensumme, versand, gesamt),
+    replyTo: betrieb,
+  })
+
+  return json({ bestellnummer: nr })
+}
+
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     if (request.method === 'OPTIONS') {
@@ -273,6 +393,9 @@ export default {
     try {
       if (path === '/api/angebot' && request.method === 'POST') {
         return await handleAngebot(request, env)
+      }
+      if (path === '/api/bestellung' && request.method === 'POST') {
+        return await handleBestellung(request, env)
       }
       if (path === '/api/prices/update' && request.method === 'POST') {
         if (request.headers.get('Authorization') !== `Bearer ${env.ADMIN_SECRET}`) {
