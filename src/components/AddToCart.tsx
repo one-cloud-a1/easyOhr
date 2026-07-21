@@ -152,6 +152,16 @@ export default function AddToCart({ slug, name, hersteller, privatpreis, kassenp
       </div>
 
       {gesetzlich && (
+        <p className="atc-zuzahlung">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="10" /><line x1="12" y1="16" x2="12" y2="12" /><line x1="12" y1="8" x2="12.01" y2="8" />
+          </svg>
+          Die gesetzliche Zuzahlung beträgt immer {euro(ZUZAHLUNG_PRO_GERAET)} pro Gerät (§ 33 SGB V) — bei
+          zwei Geräten also {euro(ZUZAHLUNG_PRO_GERAET * 2)}. Wer von der Zuzahlung befreit ist, zahlt sie nicht.
+        </p>
+      )}
+
+      {gesetzlich && (
         <div className="atc-vorbehalt">
           <p>{HINWEIS_MITTEL}</p>
           <a href={`${BASE}kassenrechner/`}>Eigenanteil genauer berechnen</a>

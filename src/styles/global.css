@@ -163,31 +163,71 @@ h4 { font-size: 1.25rem; }
   }
 }
 
-/* Forms */
-input[type="text"],
-input[type="email"],
-input[type="tel"],
-input[type="password"],
-input[type="number"],
+/* Forms
+   Selektor erfasst bewusst auch Inputs ohne type-Attribut (:not([type])),
+   sonst fallen <input name="..."> ohne type durchs Raster und zeigen das
+   nackte Browser-Default — genau das liess die Felder ungleich aussehen. */
+input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]),
 select,
 textarea {
   font-family: var(--font-sans);
-  font-size: 0.95rem;
-  padding: 0.75rem 1rem;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
+  font-size: 1rem;
+  height: 3rem;
+  padding: 0 1rem;
+  border: 1.5px solid var(--color-border-light);
+  border-radius: var(--radius-md);
   width: 100%;
-  transition: border-color 0.2s;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
   color: var(--color-text);
-  background: white;
+  background: var(--color-secondary);
+  appearance: none;
+  -webkit-appearance: none;
 }
 
-input:focus,
+textarea {
+  height: auto;
+  min-height: 6.5rem;
+  padding: 0.75rem 1rem;
+  line-height: 1.6;
+  resize: vertical;
+}
+
+input:not([type="checkbox"]):not([type="radio"])::placeholder,
+textarea::placeholder {
+  color: var(--color-text-muted);
+  opacity: 1;
+}
+
+input:not([type="checkbox"]):not([type="radio"]):hover,
+select:hover,
+textarea:hover {
+  border-color: var(--color-border);
+}
+
+input:not([type="checkbox"]):not([type="radio"]):focus,
 select:focus,
 textarea:focus {
   outline: none;
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(15, 110, 86, 0.1);
+  background: white;
+  box-shadow: 0 0 0 3px rgba(15, 110, 86, 0.12);
+}
+
+/* Eigener Pfeil für Selects, da appearance entfernt wurde */
+select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%235F5E5A' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  padding-right: 2.75rem;
+  cursor: pointer;
+}
+
+label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text);
+  display: block;
+  margin-bottom: 0.5rem;
 }
 
 label {
@@ -452,6 +492,22 @@ label {
   background: var(--color-secondary);
   border-radius: var(--radius-md);
   padding: 1rem 1.25rem;
+}
+
+.atc-zuzahlung {
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+  font-size: 0.8rem;
+  line-height: 1.55;
+  color: var(--color-text-light);
+  margin-top: -0.5rem;
+}
+
+.atc-zuzahlung svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--color-text-muted);
 }
 
 .atc-price-row {

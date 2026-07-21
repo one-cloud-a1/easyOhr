@@ -155,9 +155,12 @@
 }
 
 .ang-check input {
-  width: auto;
-  margin-top: 3px;
+  width: 1.15rem;
+  height: 1.15rem;
+  margin-top: 2px;
   flex-shrink: 0;
+  accent-color: var(--color-primary);
+  cursor: pointer;
 }
 
 .ang-check a {
