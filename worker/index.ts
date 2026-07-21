@@ -12,9 +12,8 @@ interface Env {
   GITHUB_TOKEN: string
   RESEND_API_KEY: string
   /**
-   * Adresse unter easyOhr-Domain, an die Anfragen gehen und unter der der
-   * Kunde antwortet. Die Weiterleitung an den Partnerbetrieb passiert beim
-   * Mailanbieter — der Kunde bekommt die Partneradresse nie zu sehen.
+   * Zentrales easyOhr-Postfach: Empfänger der Anfrage und Antwortadresse für
+   * den Kunden. Der Kunde bekommt keine Partneradresse zu sehen.
    */
   BETRIEB_EMAIL: string
   /** Absenderadresse, muss bei Resend als Domain verifiziert sein. */
@@ -193,7 +192,7 @@ function kundenMail(nr: string, k: any, artikel: any[], env: Env): string {
 
     <p style="font-size:13px;color:#666;margin-top:28px;padding-top:16px;border-top:1px solid #eee">
       Dies ist ein unverbindliches Angebot. Es entsteht kein Kaufvertrag und keine Zahlungspflicht.
-      Bei Fragen erreichen Sie uns unter ${escapeHtml(env.BETRIEB_EMAIL || 'anfrage@easyohr.de')}.
+      Bei Fragen erreichen Sie uns unter ${escapeHtml(env.BETRIEB_EMAIL || 'info@easyohr.de')}.
     </p>
   </div>`
 }
@@ -221,7 +220,7 @@ async function handleAngebot(request: Request, env: Env) {
   const nr = angebotsnummer()
   const summe = artikel.reduce((s: number, a: any) => s + a.privatpreis * (a.menge || 1), 0)
 
-  const betrieb = env.BETRIEB_EMAIL || 'anfrage@easyohr.de'
+  const betrieb = env.BETRIEB_EMAIL || 'info@easyohr.de'
 
   // Diese Mail zuerst und allein: Sie ist der Datensatz. Erst wenn sie
   // zugestellt ist, gilt die Anfrage als angenommen.

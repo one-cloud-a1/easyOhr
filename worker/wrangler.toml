@@ -7,10 +7,9 @@ crons = ["0 6 * * 1"]
 
 [vars]
 SITE_URL = "https://one-cloud-a1.github.io/easyOhr"
-# Anfragen laufen unter easyOhr-Adresse auf. Die Weiterleitung an den
-# Partnerbetrieb liegt beim Mailanbieter, nicht im Code — so bleibt die
-# Marke nach aussen einheitlich, auch wenn der Betrieb wechselt.
-BETRIEB_EMAIL = "anfrage@easyohr.de"
+# Zentrales easyOhr-Postfach: hier laufen die Anfragen auf und von hier wird
+# geantwortet. Der Kunde sieht durchgehend easyOhr.
+BETRIEB_EMAIL = "info@easyohr.de"
 ABSENDER_EMAIL = "easyOhr <noreply@easyohr.de>"
 BETRIEB_TELEFON = "0156 78669304"
 
