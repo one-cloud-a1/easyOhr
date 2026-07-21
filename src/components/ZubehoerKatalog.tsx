@@ -1,92 +1,76 @@
 import { useState, useEffect } from 'react'
 import {
   getZubehoer, addZubehoer, setMenge, clearZubehoer, onZubehoerUpdate,
-  zwischensumme, versandkosten, euro, VERSAND_FREI_AB, VERSAND_PAUSCHALE,
+  zwischensumme, versandkosten, euro, VERSAND_FREI_AB,
   type ZubehoerItem,
 } from '../lib/zubehoer-cart'
 
-interface Filter {
-  id: string; name: string; marke: string; preis: number; packung: string; fuer: string
+interface Produkt {
+  slug: string
+  kategorie: 'filter' | 'batterie'
+  name: string
+  marke?: string
+  typ?: string
+  farbeHex?: string
+  packung: string
+  preis: number
+  evolution?: boolean
 }
-interface Packung { groesse: string; preis: number }
-interface Batterie {
-  id: string; name: string; typ: string; farbe: string; farbeHex: string
-  packungen: Packung[]; evolutionAufpreis: number
-}
 
-function BatterieKarte({ b }: { b: Batterie }) {
-  const pack = b.packungen[0]
-  const [evolution, setEvolution] = useState(false)
-  const [added, setAdded] = useState(false)
+const BASE = import.meta.env.BASE_URL
 
-  const preis = pack.preis + (evolution ? b.evolutionAufpreis : 0)
-
-  const add = () => {
-    addZubehoer({
-      key: `${b.id}|${evolution ? 'evolution' : 'standard'}`,
-      name: b.name,
-      variante: `${pack.groesse}${evolution ? ' · Evolution' : ''}`,
-      einzelpreis: preis,
-    })
-    setAdded(true)
-    setTimeout(() => setAdded(false), 1800)
+function Bild({ p }: { p: Produkt }) {
+  if (p.kategorie === 'batterie') {
+    return (
+      <svg viewBox="0 0 64 64" fill="none" aria-hidden="true" className="zk-bild-svg">
+        <circle cx="32" cy="28" r="17" fill={p.farbeHex} opacity="0.18" />
+        <circle cx="32" cy="28" r="12" fill={p.farbeHex} opacity="0.9" />
+        <rect x="26" y="22" width="12" height="4" rx="2" fill="#fff" opacity="0.85" />
+      </svg>
+    )
   }
-
   return (
-    <div className="zk-karte">
-      <div className="zk-karte-kopf">
-        <span className="zk-swatch" style={{ background: b.farbeHex }} aria-hidden="true" />
-        <div>
-          <h3>{b.name}</h3>
-          <span className="zk-sub">{b.typ} · Zink-Luft</span>
-        </div>
-      </div>
-
-      <span className="zk-packung">{pack.groesse}</span>
-
-      <label className="zk-check">
-        <input type="checkbox" checked={evolution} onChange={e => setEvolution(e.target.checked)} />
-        <span>Power One Evolution <em>(längere Laufzeit, +{euro(b.evolutionAufpreis)})</em></span>
-      </label>
-
-      <div className="zk-karte-fuss">
-        <span className="zk-preis">{euro(preis)}</span>
-        <button type="button" className={`zk-add ${added ? 'zk-add-ok' : ''}`} onClick={add}>
-          {added ? 'Hinzugefügt' : 'In den Warenkorb'}
-        </button>
-      </div>
-    </div>
+    <svg viewBox="0 0 64 64" fill="none" stroke="#0F6E56" strokeWidth="2.2" aria-hidden="true" className="zk-bild-svg">
+      <circle cx="32" cy="32" r="16" opacity="0.9" />
+      <circle cx="32" cy="32" r="8" opacity="0.55" />
+      <circle cx="32" cy="32" r="2.5" fill="#0F6E56" stroke="none" />
+    </svg>
   )
 }
 
-function FilterKarte({ f }: { f: Filter }) {
+function Karte({ p }: { p: Produkt }) {
   const [added, setAdded] = useState(false)
+  const detail = `${BASE}zubehoer/${p.slug}/`
   const add = () => {
-    addZubehoer({ key: `filter-${f.id}`, name: f.name, variante: f.packung, einzelpreis: f.preis })
+    addZubehoer({ key: p.slug, name: p.name, variante: p.packung, einzelpreis: p.preis })
     setAdded(true)
     setTimeout(() => setAdded(false), 1800)
   }
   return (
     <div className="zk-karte">
-      <div className="zk-karte-kopf">
-        <div>
-          <span className="zk-marke">{f.marke}</span>
-          <h3>{f.name}</h3>
+      <a href={detail} className="zk-karte-bild">
+        <Bild p={p} />
+        {p.evolution && <span className="zk-evo-badge">Evolution</span>}
+      </a>
+      <div className="zk-karte-body">
+        <span className="zk-marke">{p.marke ?? p.typ}</span>
+        <a href={detail} className="zk-karte-name"><h3>{p.name}</h3></a>
+        <span className="zk-packung">{p.packung}</span>
+        <div className="zk-karte-fuss">
+          <span className="zk-preis">{euro(p.preis)}</span>
+          <button type="button" className={`zk-add ${added ? 'zk-add-ok' : ''}`} onClick={add}>
+            {added ? 'Hinzugefügt' : 'In den Warenkorb'}
+          </button>
         </div>
-      </div>
-      <p className="zk-fuer">{f.fuer}</p>
-      <span className="zk-packung">{f.packung} pro Packung</span>
-      <div className="zk-karte-fuss">
-        <span className="zk-preis">{euro(f.preis)}</span>
-        <button type="button" className={`zk-add ${added ? 'zk-add-ok' : ''}`} onClick={add}>
-          {added ? 'Hinzugefügt' : 'In den Warenkorb'}
-        </button>
       </div>
     </div>
   )
 }
 
-export default function ZubehoerKatalog({ filter, batterien }: { filter: Filter[]; batterien: Batterie[] }) {
+export default function ZubehoerKatalog({ produkte }: { produkte: Produkt[] }) {
+  const filter = produkte.filter(p => p.kategorie === 'filter')
+  const batterien = produkte.filter(p => p.kategorie === 'batterie')
+
   const [cart, setCart] = useState<ZubehoerItem[]>([])
   const [zeigeForm, setZeigeForm] = useState(false)
   const [erfolg, setErfolg] = useState<string | null>(null)
@@ -155,17 +139,17 @@ export default function ZubehoerKatalog({ filter, batterien }: { filter: Filter[
         <h2 className="zk-gruppe-titel">Cerumenfilter</h2>
         <p className="zk-gruppe-info">Schützen den Hörer Ihres Hörgeräts. Empfohlener Wechsel alle 4 bis 6 Wochen.</p>
         <div className="zk-grid">
-          {filter.map(f => <FilterKarte key={f.id} f={f} />)}
+          {filter.map(p => <Karte key={p.slug} p={p} />)}
         </div>
 
         <h2 className="zk-gruppe-titel">Batterien</h2>
         <p className="zk-gruppe-info">Zink-Luft-Batterien für Hörgeräte mit Batteriebetrieb — nur im 10er-Paket mit 60 Batterien. Die Farbe steht für die Größe.</p>
         <div className="zk-grid">
-          {batterien.map(b => <BatterieKarte key={b.id} b={b} />)}
+          {batterien.map(p => <Karte key={p.slug} p={p} />)}
         </div>
       </div>
 
-      <aside className="zk-cart">
+      <aside className="zk-cart" id="warenkorb">
         <h2>Warenkorb</h2>
         {cart.length === 0 ? (
           <p className="zk-cart-leer">Noch keine Artikel ausgewählt.</p>
@@ -190,10 +174,7 @@ export default function ZubehoerKatalog({ filter, batterien }: { filter: Filter[
 
             <div className="zk-cart-summe">
               <div><span>Zwischensumme</span><span>{euro(summe)}</span></div>
-              <div>
-                <span>Versand</span>
-                <span>{versand === 0 ? 'kostenlos' : euro(versand)}</span>
-              </div>
+              <div><span>Versand</span><span>{versand === 0 ? 'kostenlos' : euro(versand)}</span></div>
               {versand > 0 && (
                 <p className="zk-versand-hint">Noch {euro(VERSAND_FREI_AB - summe)} bis zum kostenlosen Versand.</p>
               )}
@@ -217,7 +198,7 @@ export default function ZubehoerKatalog({ filter, batterien }: { filter: Filter[
                 </div>
                 <label className="zk-check zk-check-dsgvo">
                   <input type="checkbox" name="datenschutz" required checked={daten.datenschutz} onChange={setFeld} />
-                  <span>Ich habe die <a href={`${import.meta.env.BASE_URL}datenschutz/`} target="_blank" rel="noopener">Datenschutzerklärung</a> gelesen. *</span>
+                  <span>Ich habe die <a href={`${BASE}datenschutz/`} target="_blank" rel="noopener">Datenschutzerklärung</a> gelesen. *</span>
                 </label>
                 {fehler && <div className="zk-fehler">{fehler}</div>}
                 <button type="submit" className="zk-bestellen" disabled={loading}>

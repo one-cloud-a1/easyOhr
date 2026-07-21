@@ -1,102 +1,151 @@
 {
-  "filter": [
+  "produkte": [
     {
-      "id": "oticon-prowax-minifit",
+      "slug": "oticon-prowax-minifit",
+      "kategorie": "filter",
       "name": "Oticon ProWax miniFit",
       "marke": "Oticon",
-      "preis": 7.9,
       "packung": "6 Filter",
-      "fuer": "Oticon Hörgeräte mit miniFit-Hörer (u. a. Intent, Jet PX)"
+      "preis": 7.90,
+      "fuer": "Oticon Hörgeräte mit miniFit-Hörer (u. a. Intent, Jet PX)",
+      "beschreibung": "Cerumenfilter für Oticon-Hörgeräte mit miniFit-Hörer, wie sie unter anderem in den Familien Intent und Jet PX verbaut sind. Der Filter sitzt vor der Hörermembran und hält Ohrenschmalz sowie Feuchtigkeit fern. Ein Paket enthält 6 Filter; empfohlen wird ein Wechsel etwa alle vier Wochen oder sobald der Klang nachlässt."
     },
     {
-      "id": "oticon-prowax",
+      "slug": "oticon-prowax",
+      "kategorie": "filter",
       "name": "Oticon ProWax",
       "marke": "Oticon",
-      "preis": 7.9,
       "packung": "6 Filter",
-      "fuer": "Oticon Hörgeräte mit klassischem ProWax-Filter"
+      "preis": 7.90,
+      "fuer": "Oticon Hörgeräte mit klassischem ProWax-Filter",
+      "beschreibung": "Cerumenfilter für Oticon-Hörgeräte, die bisher den NoWax-Filter genutzt haben. Die feuchtigkeitsabweisende Beschichtung schützt Ohrstücke und In-Ear-Geräte vor Ohrenschmalz. Ein Paket enthält 6 Filter; wechseln Sie etwa einmal im Monat, bei starker Verschmutzung häufiger."
     },
     {
-      "id": "phonak-cerustop",
+      "slug": "phonak-cerustop",
+      "kategorie": "filter",
       "name": "Phonak CeruStop",
       "marke": "Phonak",
-      "preis": 7.9,
       "packung": "8 Filter",
-      "fuer": "Phonak Hörgeräte (u. a. Audéo Infinio, Terra+)"
+      "preis": 7.90,
+      "fuer": "Phonak Hörgeräte (u. a. Audéo Infinio, Terra+)",
+      "beschreibung": "Cerumenfilter für Phonak-Hörgeräte, unter anderem der Familien Audéo Infinio und Terra+. Der kleine Filter verhindert, dass Hautschuppen und Schmutzpartikel in die Hörermembran gelangen. Ein Paket enthält 8 Filter; empfohlen wird ein Wechsel etwa alle vier Wochen."
     },
     {
-      "id": "starkey-hearclear",
+      "slug": "starkey-hearclear",
+      "kategorie": "filter",
       "name": "Starkey HearClear",
       "marke": "Starkey",
-      "preis": 7.9,
       "packung": "8 Filter",
-      "fuer": "Starkey Hörgeräte (u. a. Genesis AI)"
+      "preis": 7.90,
+      "fuer": "Starkey Hörgeräte (u. a. Genesis AI)",
+      "beschreibung": "Cerumenfilter für Starkey-Hörgeräte, unter anderem der Familie Genesis AI. Er schützt den Hörer zuverlässig vor Ohrenschmalz und Verschmutzung. Ein Paket enthält 8 Filter; empfohlen wird ein Wechsel alle vier bis sechs Wochen."
     },
     {
-      "id": "audio-service-waxguards",
+      "slug": "audio-service-wax-guards",
+      "kategorie": "filter",
       "name": "Audio Service Wax Guards",
       "marke": "Audio Service",
-      "preis": 7.9,
-      "packung": "6 Filter",
-      "fuer": "Audio Service Hörgeräte"
-    }
-  ],
-  "batterien": [
+      "packung": "16 Filter",
+      "preis": 7.90,
+      "fuer": "Audio Service, Signia und Hansaton Hörgeräte",
+      "beschreibung": "Cerumenfilter (HF3/HF4) für Hörgeräte von Audio Service sowie kompatible Modelle von Signia und Hansaton. Er sitzt direkt vor dem Hörerausgang und hält Staub und Feuchtigkeit von der Membran fern. Ein Paket enthält 16 Filter; ein Wechsel ist fällig, sobald der Klang leiser wird."
+    },
+
     {
-      "id": "p312",
+      "slug": "power-one-p312",
+      "kategorie": "batterie",
       "name": "Power One P312",
       "typ": "Typ 312",
       "farbe": "Braun",
       "farbeHex": "#8a5a2b",
-      "packungen": [
-        {
-          "groesse": "10er Paket (60 Batterien)",
-          "preis": 26.9
-        }
-      ],
-      "evolutionAufpreis": 2
+      "evolution": false,
+      "packung": "10er Paket (60 Batterien)",
+      "preis": 22.90,
+      "beschreibung": "Zink-Luft-Batterie der Größe 312 (Farbcode Braun) für Hörgeräte mit Batteriebetrieb. Quecksilberfrei und zuverlässig im Alltag. Geliefert wird ein 10er-Paket mit insgesamt 60 Batterien."
     },
     {
-      "id": "p13",
+      "slug": "power-one-p312-evolution",
+      "kategorie": "batterie",
+      "name": "Power One P312 Evolution",
+      "typ": "Typ 312",
+      "farbe": "Braun",
+      "farbeHex": "#8a5a2b",
+      "evolution": true,
+      "packung": "10er Paket (60 Batterien)",
+      "preis": 33.90,
+      "beschreibung": "Die Premium-Batterie von Power One in Größe 312 (Farbcode Braun). Die Evolution-Reihe bietet eine längere Laufzeit und liefert auch bei hohem Strombedarf — etwa beim Bluetooth-Streaming — stabile Leistung. Quecksilberfrei. Geliefert wird ein 10er-Paket mit insgesamt 60 Batterien."
+    },
+    {
+      "slug": "power-one-p13",
+      "kategorie": "batterie",
       "name": "Power One P13",
       "typ": "Typ 13",
       "farbe": "Orange",
       "farbeHex": "#e8730c",
-      "packungen": [
-        {
-          "groesse": "10er Paket (60 Batterien)",
-          "preis": 26.9
-        }
-      ],
-      "evolutionAufpreis": 2
+      "evolution": false,
+      "packung": "10er Paket (60 Batterien)",
+      "preis": 22.90,
+      "beschreibung": "Zink-Luft-Batterie der Größe 13 (Farbcode Orange) für Hörgeräte mit Batteriebetrieb. Quecksilberfrei und zuverlässig im Alltag. Geliefert wird ein 10er-Paket mit insgesamt 60 Batterien."
     },
     {
-      "id": "p10",
+      "slug": "power-one-p13-evolution",
+      "kategorie": "batterie",
+      "name": "Power One P13 Evolution",
+      "typ": "Typ 13",
+      "farbe": "Orange",
+      "farbeHex": "#e8730c",
+      "evolution": true,
+      "packung": "10er Paket (60 Batterien)",
+      "preis": 33.90,
+      "beschreibung": "Die Premium-Batterie von Power One in Größe 13 (Farbcode Orange). Die Evolution-Reihe bietet eine längere Laufzeit und liefert auch bei hohem Strombedarf — etwa beim Bluetooth-Streaming — stabile Leistung. Quecksilberfrei. Geliefert wird ein 10er-Paket mit insgesamt 60 Batterien."
+    },
+    {
+      "slug": "power-one-p10",
+      "kategorie": "batterie",
       "name": "Power One P10",
       "typ": "Typ 10",
       "farbe": "Gelb",
       "farbeHex": "#e8b70c",
-      "packungen": [
-        {
-          "groesse": "10er Paket (60 Batterien)",
-          "preis": 26.9
-        }
-      ],
-      "evolutionAufpreis": 2
+      "evolution": false,
+      "packung": "10er Paket (60 Batterien)",
+      "preis": 22.90,
+      "beschreibung": "Zink-Luft-Batterie der Größe 10 (Farbcode Gelb) für Hörgeräte mit Batteriebetrieb. Quecksilberfrei und zuverlässig im Alltag. Geliefert wird ein 10er-Paket mit insgesamt 60 Batterien."
     },
     {
-      "id": "p675",
+      "slug": "power-one-p10-evolution",
+      "kategorie": "batterie",
+      "name": "Power One P10 Evolution",
+      "typ": "Typ 10",
+      "farbe": "Gelb",
+      "farbeHex": "#e8b70c",
+      "evolution": true,
+      "packung": "10er Paket (60 Batterien)",
+      "preis": 33.90,
+      "beschreibung": "Die Premium-Batterie von Power One in Größe 10 (Farbcode Gelb). Die Evolution-Reihe bietet eine längere Laufzeit und liefert auch bei hohem Strombedarf — etwa beim Bluetooth-Streaming — stabile Leistung. Quecksilberfrei. Geliefert wird ein 10er-Paket mit insgesamt 60 Batterien."
+    },
+    {
+      "slug": "power-one-p675",
+      "kategorie": "batterie",
       "name": "Power One P675",
       "typ": "Typ 675",
       "farbe": "Blau",
       "farbeHex": "#1a6fc4",
-      "packungen": [
-        {
-          "groesse": "10er Paket (60 Batterien)",
-          "preis": 26.9
-        }
-      ],
-      "evolutionAufpreis": 2
+      "evolution": false,
+      "packung": "10er Paket (60 Batterien)",
+      "preis": 22.90,
+      "beschreibung": "Zink-Luft-Batterie der Größe 675 (Farbcode Blau) für Hörgeräte mit Batteriebetrieb. Quecksilberfrei und zuverlässig im Alltag. Geliefert wird ein 10er-Paket mit insgesamt 60 Batterien."
+    },
+    {
+      "slug": "power-one-p675-evolution",
+      "kategorie": "batterie",
+      "name": "Power One P675 Evolution",
+      "typ": "Typ 675",
+      "farbe": "Blau",
+      "farbeHex": "#1a6fc4",
+      "evolution": true,
+      "packung": "10er Paket (60 Batterien)",
+      "preis": 33.90,
+      "beschreibung": "Die Premium-Batterie von Power One in Größe 675 (Farbcode Blau). Die Evolution-Reihe bietet eine längere Laufzeit und liefert auch bei hohem Strombedarf — etwa beim Bluetooth-Streaming — stabile Leistung. Quecksilberfrei. Geliefert wird ein 10er-Paket mit insgesamt 60 Batterien."
     }
   ]
 }

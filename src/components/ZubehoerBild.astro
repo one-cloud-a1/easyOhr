@@ -1,0 +1,26 @@
+---
+// Illustration für Zubehör — bewusst als schematische Grafik, kein Fake-Foto.
+// Batterien zeigen den Farbcode, Filter ein Hörer-/Filtersymbol.
+interface Props {
+  kategorie: string
+  farbeHex?: string
+  gross?: boolean
+}
+const { kategorie, farbeHex = '#888780', gross = false } = Astro.props
+const s = gross ? 120 : 72
+---
+{kategorie === 'batterie' ? (
+  <svg width={s} height={s} viewBox="0 0 64 64" fill="none" aria-hidden="true">
+    <circle cx="32" cy="26" r="17" fill={farbeHex} opacity="0.18" />
+    <circle cx="32" cy="26" r="12" fill={farbeHex} opacity="0.9" />
+    <rect x="26" y="20" width="12" height="4" rx="2" fill="#fff" opacity="0.85" />
+    <text x="32" y="52" text-anchor="middle" font-family="Inter, sans-serif" font-size="9" font-weight="700" fill="#5F5E5A">60 Stück</text>
+  </svg>
+) : (
+  <svg width={s} height={s} viewBox="0 0 64 64" fill="none" stroke="#0F6E56" stroke-width="2.2" aria-hidden="true">
+    <circle cx="32" cy="30" r="16" opacity="0.9" />
+    <circle cx="32" cy="30" r="8" opacity="0.55" />
+    <circle cx="32" cy="30" r="2.5" fill="#0F6E56" stroke="none" />
+    <text x="32" y="56" text-anchor="middle" font-family="Inter, sans-serif" font-size="8.5" font-weight="600" fill="#5F5E5A" stroke="none">Cerumenfilter</text>
+  </svg>
+)}
