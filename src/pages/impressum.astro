@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
+import Versandkosten from '../components/Versandkosten.astro'
 import company from '../data/company.json'
 ---
 <BaseLayout title="Impressum">
@@ -57,6 +58,9 @@ import company from '../data/company.json'
 
       <h2>Urheberrecht</h2>
       <p>Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Produktbilder und Markenzeichen der dargestellten Hersteller sind Eigentum der jeweiligen Rechteinhaber.</p>
+
+      <h2>Versand</h2>
+      <Versandkosten />
     </div>
   </section>
 </BaseLayout>

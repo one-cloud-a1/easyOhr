@@ -1,5 +1,23 @@
 [
   {
+    "slug": "phonak-terra-plus",
+    "name": "Phonak Terra+",
+    "hersteller": "Phonak",
+    "familie": "Terra",
+    "technologie": "Basis",
+    "typ": "RIC",
+    "batterietyp": "Typ 312",
+    "privatpreis": 799,
+    "kassenpreis": 99,
+    "features": ["Bluetooth", "Batterie (Typ 312)", "Made for iPhone", "Made for Android", "Telefonieren", "AutoSense OS"],
+    "beschreibung": "Unser günstigstes Modell: Das Phonak Terra+ bringt zuverlässige Hörtechnik und Bluetooth-Konnektivität zum Einstiegspreis. Es verbindet sich direkt mit Smartphone und Fernseher und deckt die wichtigsten Alltagssituationen sicher ab. Betrieb über handelsübliche 312er-Batterien.",
+    "farben": ["Beige", "Sand Beige", "Sandelholz", "Silbergrau", "Samt Schwarz"],
+    "akkuLaufzeit": "Batterie Typ 312",
+    "schutzklasse": "IP68",
+    "gewicht": "2,4g",
+    "bild": "/images/products/phonak-terra-plus.png"
+  },
+  {
     "slug": "phonak-audeo-infinio-90",
     "name": "Phonak Audéo Infinio 90",
     "hersteller": "Phonak",

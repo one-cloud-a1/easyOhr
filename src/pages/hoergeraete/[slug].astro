@@ -22,6 +22,11 @@ const bauform = product.typ === 'CIC' ? 'CIC / Im-Ohr' : 'RIC / Ex-Hörer'
 const bauformLang = product.typ === 'CIC'
   ? 'Kompaktes Im-Ohr-Hörgerät — nahezu unsichtbar im Gehörgang'
   : 'Hinter-dem-Ohr mit externem Hörer — diskret und leistungsstark'
+
+// Batterie-Geräte tragen ein "batterietyp"-Feld; alle anderen sind Akku-Geräte.
+const batterie = 'batterietyp' in product && Boolean((product as any).batterietyp)
+const stromLabel = batterie ? 'Batterie' : 'Akku'
+const stromZeile = batterie ? `Batterie ${(product as any).batterietyp}` : `${product.akkuLaufzeit} Akkulaufzeit`
 ---
 <BaseLayout title={product.name} description={`${product.name} — ${product.beschreibung.slice(0, 150)}`}>
   <section class="product-detail">
@@ -57,7 +62,7 @@ const bauformLang = product.typ === 'CIC'
             </div>
             <div class="detail-image-info-item">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2"><rect x="1" y="6" width="18" height="12" rx="2"/><line x1="23" y1="13" x2="23" y2="11"/></svg>
-              <span>{product.akkuLaufzeit} Akkulaufzeit</span>
+              <span>{stromZeile}</span>
             </div>
             <div class="detail-image-info-item">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg>
@@ -74,8 +79,8 @@ const bauformLang = product.typ === 'CIC'
 
           <div class="detail-quick-specs">
             <div class="quick-spec">
-              <span class="quick-spec-val">{product.akkuLaufzeit}</span>
-              <span class="quick-spec-label">Akku</span>
+              <span class="quick-spec-val">{batterie ? (product as any).batterietyp : product.akkuLaufzeit}</span>
+              <span class="quick-spec-label">{stromLabel}</span>
             </div>
             <div class="quick-spec">
               <span class="quick-spec-val">{product.schutzklasse}</span>
@@ -137,8 +142,8 @@ const bauformLang = product.typ === 'CIC'
             <span class="spec-value">{product.technologie}</span>
           </div>
           <div class="spec-row">
-            <span class="spec-label">Akkulaufzeit</span>
-            <span class="spec-value">{product.akkuLaufzeit}</span>
+            <span class="spec-label">{batterie ? 'Stromversorgung' : 'Akkulaufzeit'}</span>
+            <span class="spec-value">{batterie ? `Batterie ${(product as any).batterietyp}` : product.akkuLaufzeit}</span>
           </div>
           <div class="spec-row">
             <span class="spec-label">Schutzklasse</span>

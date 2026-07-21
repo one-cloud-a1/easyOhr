@@ -1,0 +1,41 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import Versandkosten from '../components/Versandkosten.astro'
+import { url } from '../lib/links'
+---
+<BaseLayout
+  title="Versand & Lieferung"
+  description="Versandkosten und Lieferzeiten bei easyOhr. Hörgeräte werden kostenlos verschickt. Alle Informationen zu Versand und Rücksendung."
+>
+  <section class="section legal-page">
+    <div class="container legal-container">
+      <h1>Versand & Lieferung</h1>
+
+      <h2>Versandkosten Deutschland</h2>
+      <Versandkosten />
+
+      <h2>Lieferzeit</h2>
+      <p>Ihr Hörgerät erhalten Sie in der Regel innerhalb von 3 bis 5 Werktagen. Zubehör und Batterien versenden wir werktags in der Regel am nächsten Werktag.</p>
+
+      <h2>Liefergebiet</h2>
+      <p>Wir liefern innerhalb Deutschlands. Für Lieferungen in andere Länder kontaktieren Sie uns bitte vorab.</p>
+
+      <h2>Kostenloser Rückversand bei Hörgeräten</h2>
+      <p>Ihr Hörgerät testen Sie 30 Tage lang kostenlos. Möchten Sie es zurücksenden, übernehmen wir die Kosten der Rücksendung — es entstehen Ihnen keine Kosten.</p>
+
+      <h2>Rücksendung bei Zubehör</h2>
+      <p>Bei Zubehörbestellungen tragen Sie im Falle eines Widerrufs die unmittelbaren Kosten der Rücksendung selbst, vorbehaltlich der gesetzlichen Vorschriften. Einzelheiten zu Ihrem Widerrufsrecht finden Sie in unserer <a href={url('/widerruf/')}>Widerrufsbelehrung</a>.</p>
+
+      <h2>Fragen zu Ihrer Lieferung?</h2>
+      <p>Bei Fragen zum Versand erreichen Sie uns jederzeit per E-Mail. Bitte halten Sie Ihre Angebots- oder Bestellnummer bereit.</p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .legal-page h1 { margin-bottom: 2rem; }
+  .legal-container { max-width: 720px; }
+  .legal-page h2 { font-size: 1.25rem; margin: 2rem 0 0.75rem; }
+  .legal-page p { color: var(--color-text-light); line-height: 1.8; margin-bottom: 0.5rem; }
+  .legal-page a { color: var(--color-primary); }
+</style>
