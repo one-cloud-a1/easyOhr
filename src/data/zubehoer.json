@@ -4,7 +4,7 @@
       "id": "oticon-prowax-minifit",
       "name": "Oticon ProWax miniFit",
       "marke": "Oticon",
-      "preis": 7.90,
+      "preis": 7.9,
       "packung": "6 Filter",
       "fuer": "Oticon Hörgeräte mit miniFit-Hörer (u. a. Intent, Jet PX)"
     },
@@ -12,7 +12,7 @@
       "id": "oticon-prowax",
       "name": "Oticon ProWax",
       "marke": "Oticon",
-      "preis": 7.90,
+      "preis": 7.9,
       "packung": "6 Filter",
       "fuer": "Oticon Hörgeräte mit klassischem ProWax-Filter"
     },
@@ -20,7 +20,7 @@
       "id": "phonak-cerustop",
       "name": "Phonak CeruStop",
       "marke": "Phonak",
-      "preis": 7.90,
+      "preis": 7.9,
       "packung": "8 Filter",
       "fuer": "Phonak Hörgeräte (u. a. Audéo Infinio, Terra+)"
     },
@@ -28,7 +28,7 @@
       "id": "starkey-hearclear",
       "name": "Starkey HearClear",
       "marke": "Starkey",
-      "preis": 7.90,
+      "preis": 7.9,
       "packung": "8 Filter",
       "fuer": "Starkey Hörgeräte (u. a. Genesis AI)"
     },
@@ -36,7 +36,7 @@
       "id": "audio-service-waxguards",
       "name": "Audio Service Wax Guards",
       "marke": "Audio Service",
-      "preis": 7.90,
+      "preis": 7.9,
       "packung": "6 Filter",
       "fuer": "Audio Service Hörgeräte"
     }
@@ -49,8 +49,10 @@
       "farbe": "Braun",
       "farbeHex": "#8a5a2b",
       "packungen": [
-        { "groesse": "6 Stück", "preis": 2.79 },
-        { "groesse": "60 Stück", "preis": 26.90 }
+        {
+          "groesse": "10er Paket (60 Batterien)",
+          "preis": 26.9
+        }
       ],
       "evolutionAufpreis": 2
     },
@@ -61,8 +63,10 @@
       "farbe": "Orange",
       "farbeHex": "#e8730c",
       "packungen": [
-        { "groesse": "6 Stück", "preis": 2.79 },
-        { "groesse": "60 Stück", "preis": 26.90 }
+        {
+          "groesse": "10er Paket (60 Batterien)",
+          "preis": 26.9
+        }
       ],
       "evolutionAufpreis": 2
     },
@@ -73,8 +77,10 @@
       "farbe": "Gelb",
       "farbeHex": "#e8b70c",
       "packungen": [
-        { "groesse": "6 Stück", "preis": 2.79 },
-        { "groesse": "60 Stück", "preis": 26.90 }
+        {
+          "groesse": "10er Paket (60 Batterien)",
+          "preis": 26.9
+        }
       ],
       "evolutionAufpreis": 2
     },
@@ -85,8 +91,10 @@
       "farbe": "Blau",
       "farbeHex": "#1a6fc4",
       "packungen": [
-        { "groesse": "6 Stück", "preis": 2.79 },
-        { "groesse": "60 Stück", "preis": 26.90 }
+        {
+          "groesse": "10er Paket (60 Batterien)",
+          "preis": 26.9
+        }
       ],
       "evolutionAufpreis": 2
     }

@@ -15,19 +15,21 @@ interface Batterie {
 }
 
 function BatterieKarte({ b }: { b: Batterie }) {
-  const [pack, setPack] = useState(b.packungen[b.packungen.length - 1].groesse)
+  const pack = b.packungen[0]
   const [evolution, setEvolution] = useState(false)
+  const [added, setAdded] = useState(false)
 
-  const gewaehlt = b.packungen.find(p => p.groesse === pack)!
-  const preis = gewaehlt.preis + (evolution ? b.evolutionAufpreis : 0)
+  const preis = pack.preis + (evolution ? b.evolutionAufpreis : 0)
 
   const add = () => {
     addZubehoer({
-      key: `${b.id}|${pack}|${evolution ? 'evolution' : 'standard'}`,
+      key: `${b.id}|${evolution ? 'evolution' : 'standard'}`,
       name: b.name,
-      variante: `${pack}${evolution ? ' · Evolution' : ''}`,
+      variante: `${pack.groesse}${evolution ? ' · Evolution' : ''}`,
       einzelpreis: preis,
     })
+    setAdded(true)
+    setTimeout(() => setAdded(false), 1800)
   }
 
   return (
@@ -40,14 +42,7 @@ function BatterieKarte({ b }: { b: Batterie }) {
         </div>
       </div>
 
-      <label className="zk-feld">
-        <span>Packungsgröße</span>
-        <select value={pack} onChange={e => setPack(e.target.value)}>
-          {b.packungen.map(p => (
-            <option key={p.groesse} value={p.groesse}>{p.groesse} — {euro(p.preis)}</option>
-          ))}
-        </select>
-      </label>
+      <span className="zk-packung">{pack.groesse}</span>
 
       <label className="zk-check">
         <input type="checkbox" checked={evolution} onChange={e => setEvolution(e.target.checked)} />
@@ -56,7 +51,9 @@ function BatterieKarte({ b }: { b: Batterie }) {
 
       <div className="zk-karte-fuss">
         <span className="zk-preis">{euro(preis)}</span>
-        <button type="button" className="zk-add" onClick={add}>In den Warenkorb</button>
+        <button type="button" className={`zk-add ${added ? 'zk-add-ok' : ''}`} onClick={add}>
+          {added ? 'Hinzugefügt' : 'In den Warenkorb'}
+        </button>
       </div>
     </div>
   )
@@ -162,7 +159,7 @@ export default function ZubehoerKatalog({ filter, batterien }: { filter: Filter[
         </div>
 
         <h2 className="zk-gruppe-titel">Batterien</h2>
-        <p className="zk-gruppe-info">Zink-Luft-Batterien für Hörgeräte mit Batteriebetrieb. Die Farbe steht für die Größe.</p>
+        <p className="zk-gruppe-info">Zink-Luft-Batterien für Hörgeräte mit Batteriebetrieb — nur im 10er-Paket mit 60 Batterien. Die Farbe steht für die Größe.</p>
         <div className="zk-grid">
           {batterien.map(b => <BatterieKarte key={b.id} b={b} />)}
         </div>
