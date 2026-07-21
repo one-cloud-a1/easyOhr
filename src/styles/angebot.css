@@ -95,6 +95,14 @@
   color: var(--color-text-muted);
 }
 
+.ang-schaetzung-zuzahlung {
+  margin: 0.625rem 0;
+  padding: 0.625rem 0.75rem;
+  background: var(--color-secondary);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-light) !important;
+}
+
 .ang-add-more {
   display: inline-block;
   margin-top: 1rem;

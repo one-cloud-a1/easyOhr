@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { getCart, removeFromCart, onCartUpdate, clearCart, MAX_GERAETE, type CartItem } from '../lib/cart'
 import { BASE } from '../lib/base-url'
-import { berechne, euroRund } from '../lib/kasse'
+import { berechne, euro, euroRund, ZUZAHLUNG_PRO_GERAET } from '../lib/kasse'
 import { HINWEIS_MITTEL } from '../lib/kasse-hinweis'
 
 type Versicherung = 'gesetzlich' | 'privat'
@@ -182,6 +182,11 @@ export default function AngebotForm() {
               <span>Ihr voraussichtlicher Eigenanteil</span>
               <strong>ca. {euroRund(schaetzung.gesamt)}</strong>
             </div>
+            <p className="ang-schaetzung-zuzahlung">
+              Enthält die gesetzliche Zuzahlung von immer {euro(ZUZAHLUNG_PRO_GERAET)} pro Gerät
+              ({anzahl === 2 ? `${euro(ZUZAHLUNG_PRO_GERAET * 2)} für beide Geräte` : euro(ZUZAHLUNG_PRO_GERAET)}, § 33 SGB V).
+              Wer von der Zuzahlung befreit ist, zahlt sie nicht.
+            </p>
             <p>{HINWEIS_MITTEL}</p>
           </div>
         )}
