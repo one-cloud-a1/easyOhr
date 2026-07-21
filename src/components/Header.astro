@@ -30,8 +30,11 @@ import company from '../data/company.json'
       </div>
       <div class="header-actions">
         <a href={url('/anfrage/')} class="header-icon cart-icon" aria-label="Ihre Anfrage">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-          <CartBadge client:load />
+          <span class="cart-icon-wrap">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            <CartBadge client:load />
+          </span>
+          <span class="cart-label">Warenkorb</span>
         </a>
       </div>
     </div>
@@ -120,11 +123,24 @@ import company from '../data/company.json'
   .header-icon {
     color: var(--color-text);
     transition: color 0.2s;
-    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
   }
 
   .header-icon:hover {
     color: var(--color-primary);
+  }
+
+  .cart-icon-wrap {
+    position: relative;
+    display: inline-flex;
+  }
+
+  .cart-label {
+    font-size: 0.95rem;
+    font-weight: 500;
   }
 
   .cart-badge {
@@ -141,6 +157,12 @@ import company from '../data/company.json'
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+  @media (max-width: 480px) {
+    .cart-label {
+      display: none;
+    }
   }
 
   .mobile-toggle {
