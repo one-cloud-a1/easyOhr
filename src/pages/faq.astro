@@ -1,26 +1,72 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
-import FAQAccordion from '../components/FAQAccordion.tsx'
 import faqData from '../data/faq.json'
 import company from '../data/company.json'
 import { url } from '../lib/links'
+
+// Alle Fragen flach für das FAQPage-Schema — Google zeigt daraus Rich Results.
+const alleFragen = faqData.flatMap(k => k.fragen)
 ---
-<BaseLayout title="Häufige Fragen" description="Antworten auf die häufigsten Fragen zu Bestellung, Testphase, Zahlung und Rückgabe bei easyOhr.">
+<BaseLayout
+  title="Häufige Fragen"
+  description="Ratgeber zu Hörgeräten: Kosten und Krankenkasse, Bauformen, Technik, Pflege und die Bestellung bei easyOhr. Verständlich beantwortet."
+>
+  <script type="application/ld+json" set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: alleFragen.map(f => ({
+      '@type': 'Question',
+      name: f.frage,
+      acceptedAnswer: { '@type': 'Answer', text: f.antwort },
+    })),
+  })} />
+
   <section class="page-header">
     <div class="container">
-      <h1>Häufige Fragen</h1>
-      <p>Alles was Sie über easyOhr wissen müssen</p>
+      <h1>Hörgeräte-Ratgeber & häufige Fragen</h1>
+      <p>Alles Wichtige rund um Hörgeräte, Kosten und Ihre Bestellung — verständlich erklärt.</p>
     </div>
   </section>
 
-  <section class="section" style="padding-top: 2rem;">
+  <section class="section" style="padding-top: 2.5rem;">
     <div class="container faq-container">
-      <FAQAccordion client:load items={faqData} />
+      <nav class="faq-toc" aria-label="Themen">
+        {faqData.map(k => (
+          <a href={`#${k.id}`}>{k.kategorie}</a>
+        ))}
+      </nav>
+
+      {faqData.map(k => (
+        <div class="faq-block" id={k.id}>
+          <h2>{k.kategorie}</h2>
+          <div class="faq-list">
+            {k.fragen.map(f => (
+              <details class="faq-item">
+                <summary>{f.frage}</summary>
+                <div class="faq-answer"><p>{f.antwort}</p></div>
+              </details>
+            ))}
+          </div>
+
+          {k.id === 'kosten' && (
+            <a href={url('/kassenrechner/')} class="faq-inline-cta">
+              <span>
+                <strong>Ihren Eigenanteil berechnen</strong>
+                Was zahlt Ihre Kasse, was bleibt für Sie? In 30 Sekunden.
+              </span>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          )}
+        </div>
+      ))}
+
       <div class="faq-contact">
         <h3>Ihre Frage nicht dabei?</h3>
         <p>Schreiben Sie uns — wir antworten in der Regel noch am selben Tag.</p>
-        <a href={`mailto:${company.email}`} class="btn btn-primary">E-Mail schreiben</a>
-        <a href={url('/anfrage/')} class="btn btn-outline">Angebot anfordern</a>
+        <div class="faq-contact-actions">
+          <a href={`mailto:${company.email}`} class="btn btn-primary">E-Mail schreiben</a>
+          <a href={url('/anfrage/')} class="btn btn-outline">Angebot anfordern</a>
+        </div>
       </div>
     </div>
   </section>
@@ -37,10 +83,141 @@ import { url } from '../lib/links'
     color: var(--color-text-light);
     font-size: 1.1rem;
     margin-top: 0.75rem;
+    max-width: 620px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .faq-container {
-    max-width: 720px;
+    max-width: 760px;
+  }
+
+  .faq-toc {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .faq-toc a {
+    font-size: 0.875rem;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--color-border-light);
+    border-radius: 100px;
+    color: var(--color-text-light);
+    transition: all 0.15s ease;
+  }
+
+  .faq-toc a:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+  }
+
+  .faq-block {
+    margin-bottom: 3rem;
+    scroll-margin-top: calc(var(--header-height) + 1rem);
+  }
+
+  .faq-block h2 {
+    font-size: 1.4rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .faq-item {
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: white;
+    transition: border-color 0.15s ease;
+  }
+
+  .faq-item[open] {
+    border-color: var(--color-primary);
+  }
+
+  .faq-item summary {
+    padding: 1.125rem 1.25rem;
+    font-size: 1.02rem;
+    font-weight: 600;
+    color: var(--color-text);
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-item summary::after {
+    content: '';
+    width: 9px;
+    height: 9px;
+    border-right: 2px solid var(--color-text-muted);
+    border-bottom: 2px solid var(--color-text-muted);
+    transform: rotate(45deg);
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+  }
+
+  .faq-item[open] summary::after {
+    transform: rotate(-135deg);
+  }
+
+  .faq-item summary:hover {
+    color: var(--color-primary);
+  }
+
+  .faq-answer {
+    padding: 0 1.25rem 1.25rem;
+  }
+
+  .faq-answer p {
+    color: var(--color-text-light);
+    line-height: 1.75;
+  }
+
+  .faq-inline-cta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 1.25rem;
+    padding: 1.25rem 1.5rem;
+    background: var(--color-primary-light);
+    border-radius: var(--radius-md);
+    color: var(--color-primary-dark);
+    transition: transform 0.15s ease;
+  }
+
+  .faq-inline-cta:hover {
+    transform: translateY(-1px);
+    color: var(--color-primary-dark);
+  }
+
+  .faq-inline-cta strong {
+    display: block;
+    font-size: 1rem;
+    margin-bottom: 0.125rem;
+  }
+
+  .faq-inline-cta span {
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+
+  .faq-inline-cta svg {
+    flex-shrink: 0;
   }
 
   .faq-contact {
@@ -48,7 +225,7 @@ import { url } from '../lib/links'
     padding: 3rem 2rem;
     background: var(--color-secondary);
     border-radius: var(--radius-lg);
-    margin-top: 3rem;
+    margin-top: 3.5rem;
   }
 
   .faq-contact h3 {
@@ -60,55 +237,10 @@ import { url } from '../lib/links'
     margin-bottom: 1.5rem;
   }
 
-  .faq-contact .btn {
-    margin: 0 0.5rem;
-  }
-</style>
-
-<style is:global>
-  .faq-list {
+  .faq-contact-actions {
     display: flex;
-    flex-direction: column;
     gap: 0.75rem;
-  }
-
-  .faq-item {
-    border: 1px solid var(--color-border-light);
-    border-radius: var(--radius-md);
-    overflow: hidden;
-    transition: border-color 0.2s;
-  }
-
-  .faq-item.faq-open {
-    border-color: var(--color-primary);
-  }
-
-  .faq-question {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.125rem 1.25rem;
-    background: none;
-    border: none;
-    font-size: 1rem;
-    font-weight: 600;
-    text-align: left;
-    color: var(--color-text);
-    cursor: pointer;
-    gap: 1rem;
-  }
-
-  .faq-question:hover {
-    color: var(--color-primary);
-  }
-
-  .faq-answer {
-    padding: 0 1.25rem 1.25rem;
-  }
-
-  .faq-answer p {
-    color: var(--color-text-light);
-    line-height: 1.7;
+    justify-content: center;
+    flex-wrap: wrap;
   }
 </style>

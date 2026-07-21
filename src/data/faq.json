@@ -1,42 +1,156 @@
 [
   {
-    "frage": "Wie funktioniert die 30-Tage-Testphase?",
-    "antwort": "Sie bestellen Ihr Wunsch-Hörgerät ganz einfach online. Wir senden es Ihnen kostenlos zu und Sie testen es 30 Tage lang in Ihrem Alltag. Erst wenn Sie zufrieden sind, wird die Zahlung eingezogen. Gefällt Ihnen das Gerät nicht, senden Sie es kostenlos zurück."
+    "kategorie": "Hörverlust erkennen",
+    "id": "hoerverlust",
+    "fragen": [
+      {
+        "frage": "Woran merke ich, dass ich schlechter höre?",
+        "antwort": "Typische Anzeichen sind: Sie fragen häufiger nach, verstehen in Gruppen oder lauter Umgebung schlecht, empfinden andere als undeutlich und stellen den Fernseher lauter als früher. Oft bemerken Angehörige den Hörverlust zuerst. Ein Hörverlust entwickelt sich meist langsam über Jahre — deshalb fällt er im Alltag lange nicht auf."
+      },
+      {
+        "frage": "Ab welchem Alter sind Hörgeräte sinnvoll?",
+        "antwort": "Es gibt keine feste Altersgrenze. Altersbedingter Hörverlust beginnt häufig ab etwa 50 Jahren, kann aber früher oder später auftreten. Entscheidend ist nicht das Alter, sondern ob Sie im Alltag schlechter verstehen. Je früher ein Hörverlust versorgt wird, desto leichter fällt die Eingewöhnung."
+      },
+      {
+        "frage": "Was passiert, wenn ich einen Hörverlust nicht behandeln lasse?",
+        "antwort": "Bleibt ein Hörverlust unversorgt, verlernt das Gehirn nach und nach, Sprache zu verarbeiten — das erschwert die spätere Eingewöhnung an Hörgeräte. Studien zeigen zudem einen Zusammenhang zwischen unbehandeltem Hörverlust und einem erhöhten Risiko für sozialen Rückzug und geistigen Abbau. Eine frühzeitige Versorgung wirkt dem entgegen."
+      },
+      {
+        "frage": "Brauche ich einen Hörtest, bevor ich ein Hörgerät bestelle?",
+        "antwort": "Für die Kostenübernahme durch die Krankenkasse benötigen Sie eine Verordnung Ihres HNO-Arztes, die auf einem Hörtest beruht. Für ein unverbindliches Angebot bei easyOhr brauchen Sie noch kein Rezept — die genaue Anpassung erfolgt später gemeinsam mit unserem Hörakustiker."
+      }
+    ]
   },
   {
-    "frage": "Wann muss ich bezahlen?",
-    "antwort": "Bei der Bestellung geben Sie Ihre Zahlungsdaten an, es wird jedoch kein Geld abgebucht. Die Zahlung wird erst eingezogen, wenn Sie nach der Testphase bestätigen, dass Sie das Hörgerät behalten möchten."
+    "kategorie": "Hörgeräte-Typen und Technik",
+    "id": "typen",
+    "fragen": [
+      {
+        "frage": "Was bedeutet RIC oder Ex-Hörer?",
+        "antwort": "RIC steht für „Receiver-in-Canal“ — der Lautsprecher (Hörer) sitzt direkt im Gehörgang, während die Technik in einem kleinen Gehäuse hinter dem Ohr liegt. Diese Bauform ist besonders diskret, leistungsstark und für die meisten Hörverluste geeignet. Deshalb konzentriert sich easyOhr auf RIC- beziehungsweise Ex-Hörer-Modelle."
+      },
+      {
+        "frage": "Was ist besser: hinter dem Ohr oder im Ohr?",
+        "antwort": "Beide Bauformen haben Vorteile. Hinter-dem-Ohr-Geräte (RIC) sind robust, bieten mehr Funktionen und eine längere Akkulaufzeit. Im-Ohr-Geräte sitzen komplett im Gehörgang und sind dadurch nahezu unsichtbar. Welche Form passt, hängt von Ihrem Hörverlust, der Form Ihres Gehörgangs und Ihren Vorlieben ab. Bei easyOhr finden Sie überwiegend RIC-Geräte sowie das Oticon Zeal als Im-Ohr-Variante."
+      },
+      {
+        "frage": "Welche Nachteile haben Im-Ohr-Hörgeräte?",
+        "antwort": "Im-Ohr-Geräte sind bei starkem Hörverlust weniger leistungsfähig, haben eine kürzere Akkulaufzeit und weniger Platz für Zusatzfunktionen. Der enge Sitz im Gehörgang kann bei empfindlichen Ohren oder starker Ohrenschmalzbildung unpraktisch sein. Für viele Menschen überwiegt jedoch der Vorteil der Unauffälligkeit."
+      },
+      {
+        "frage": "Akku oder Batterie — was ist besser?",
+        "antwort": "Akku-Geräte laden Sie über Nacht in einer Ladestation und kommen ohne Batteriewechsel aus — praktisch, gerade bei eingeschränkter Feinmotorik. Ein voller Akku hält bei modernen Geräten einen ganzen Tag. Alle bei easyOhr angebotenen Modelle sind Akku-Geräte."
+      },
+      {
+        "frage": "Kann ich mit dem Hörgerät telefonieren und Musik streamen?",
+        "antwort": "Ja. Alle unsere Modelle verfügen über Bluetooth und verbinden sich direkt mit Smartphone, Tablet oder Fernseher. Anrufe und Musik landen dann unmittelbar in Ihren Ohren, ohne Zwischengerät. Je nach Modell funktioniert das mit iPhone und Android."
+      },
+      {
+        "frage": "Was bedeuten die Technologiestufen Premium, Advanced und Standard?",
+        "antwort": "Innerhalb einer Gerätefamilie unterscheiden die Hersteller mehrere Leistungsklassen. Premium-Geräte trennen Sprache und Störgeräusche am besten und eignen sich für anspruchsvolle Hörsituationen wie Restaurants oder Gruppen. Standard- und Basis-Modelle decken ruhigere Alltagssituationen zuverlässig ab und sind günstiger. Die Bauform und der Klang bleiben gleich — es geht um die automatische Verarbeitung."
+      },
+      {
+        "frage": "Welche Marken bietet easyOhr an?",
+        "antwort": "Wir führen ausschließlich Geräte der drei führenden Hersteller Phonak, Oticon und Starkey — jeweils die aktuellen Premium-Familien in mehreren Leistungsstufen. So haben Sie eine überschaubare, aber hochwertige Auswahl statt einer unübersichtlichen Liste."
+      },
+      {
+        "frage": "Was ist das beste Hörgerät?",
+        "antwort": "Es gibt kein pauschal „bestes“ Hörgerät. Entscheidend ist, wie gut ein Gerät zu Ihrem Hörverlust, Ihrem Alltag und Ihren Ohren passt — und vor allem, wie präzise es angepasst wird. Ein sorgfältig eingestelltes Mittelklasse-Gerät hört sich oft besser an als ein schlecht angepasstes Premium-Modell."
+      }
+    ]
   },
   {
-    "frage": "Übernimmt meine Krankenkasse die Kosten?",
-    "antwort": "Ja, gesetzliche Krankenkassen bezuschussen Hörgeräte mit einem Festbetrag. Den Kassenanteil rechnen wir direkt ab — Sie zahlen nur die Differenz (Eigenanteil). Die genaue Höhe hängt von Ihrer Krankenkasse und dem gewählten Gerät ab."
+    "kategorie": "Kosten und Krankenkasse",
+    "id": "kosten",
+    "fragen": [
+      {
+        "frage": "Was zahlt die gesetzliche Krankenkasse für ein Hörgerät?",
+        "antwort": "Die gesetzlichen Krankenkassen zahlen einen bundeseinheitlichen Festbetrag von rund 785 € für das erste und rund 628 € für das zweite Gerät. Dieser Betrag ist bei allen gesetzlichen Kassen gleich. Den Rest tragen Sie als Eigenanteil — bei easyOhr ist dieser vorab einsehbar, kein Termin nötig."
+      },
+      {
+        "frage": "Wie hoch ist die gesetzliche Zuzahlung?",
+        "antwort": "Die gesetzliche Zuzahlung beträgt immer 10 € pro Hörgerät (§ 33 SGB V) — bei zwei Geräten also 20 €. Dieser Betrag ist unabhängig vom Gerät. Wer von Zuzahlungen befreit ist, muss ihn nicht leisten."
+      },
+      {
+        "frage": "Brauche ich ein Rezept vom HNO-Arzt?",
+        "antwort": "Für die Kostenübernahme durch die gesetzliche Krankenkasse benötigen Sie eine Verordnung (Rezept) Ihres HNO-Arztes. Ohne Rezept können Sie das Hörgerät als Selbstzahler bestellen — dann entfällt der Kassenanteil. Für ein Angebot brauchen Sie das Rezept noch nicht."
+      },
+      {
+        "frage": "Wann habe ich wieder Anspruch auf ein neues Hörgerät?",
+        "antwort": "Gesetzlich Versicherte haben in der Regel alle sechs Jahre erneut Anspruch auf den Kassen-Festbetrag. Ist diese Wiederbeschaffungsfrist seit Ihrer letzten Versorgung noch nicht abgelaufen, kann die Kasse die erneute Kostenübernahme ablehnen. Privatversicherte haben je nach Tarif oft schon früher Anspruch."
+      },
+      {
+        "frage": "Wie berechne ich meinen genauen Eigenanteil?",
+        "antwort": "Mit unserem Kassenrechner ermitteln Sie in 30 Sekunden Ihren voraussichtlichen Eigenanteil — versicherungsart, ein oder beide Ohren und Wunschgerät auswählen, fertig. Wir rechnen den Kassenanteil bewusst vorsichtig, sodass Ihr tatsächlicher Eigenanteil nach Genehmigung eher sinkt als steigt."
+      },
+      {
+        "frage": "Gibt es Hörgeräte ganz ohne Eigenanteil?",
+        "antwort": "Jeder Akustiker muss mindestens ein zuzahlungsfreies Kassengerät anbieten, das vollständig durch den Festbetrag gedeckt ist — abgesehen von der 10-€-Zuzahlung. Diese Geräte erfüllen den Grundbedarf, verzichten aber meist auf Bluetooth, Akku und automatische Programme. Die Modelle bei easyOhr liegen darüber; den Mehrwert zahlen Sie als Eigenanteil."
+      },
+      {
+        "frage": "Was gilt für privat Versicherte?",
+        "antwort": "Private Krankenversicherungen erstatten Hörgeräte je nach Tarif — häufig einen deutlich höheren Betrag als die gesetzlichen Kassen, teils die vollen Kosten. Als Privatversicherter oder Selbstzahler reichen Sie unsere Rechnung einfach bei Ihrer Versicherung ein."
+      }
+    ]
   },
   {
-    "frage": "Wie wird das Hörgerät an mich angepasst?",
-    "antwort": "Nach der Bestellung erhalten Sie eine professionelle Fernanpassung durch unseren Hörakustiker. Per Video-Termin wird das Hörgerät optimal auf Ihr Hörvermögen eingestellt. Bei Bedarf sind Nachjustierungen jederzeit möglich."
+    "kategorie": "Bestellung und Testphase",
+    "id": "bestellung",
+    "fragen": [
+      {
+        "frage": "Wie läuft die Bestellung bei easyOhr ab?",
+        "antwort": "Sie wählen Ihr Wunschgerät aus, fordern ein kostenloses Angebot an und geben dabei Ihre Kontaktdaten an. Wir melden uns innerhalb von 24 Stunden mit Ihrem persönlichen Angebot. Nach Ihrer Zusage senden wir Ihnen das Hörgerät zum 30-tägigen Testen nach Hause."
+      },
+      {
+        "frage": "Warum zahle ich erst nach der Testphase?",
+        "antwort": "Weil ein Hörgerät zu Ihnen passen muss, bevor Sie dafür zahlen. Sie testen es 30 Tage in Ihrem Alltag. Erst wenn Sie es behalten möchten, wird die Zahlung fällig. Gefällt es Ihnen nicht, senden Sie es kostenlos zurück — ohne Kosten."
+      },
+      {
+        "frage": "Wie funktioniert die Fernanpassung?",
+        "antwort": "Unser Hörakustiker stellt Ihr Hörgerät per Video-Termin genau auf Ihr Hörvermögen ein — bequem von zu Hause. Nachjustierungen sind während der Testphase jederzeit möglich und im Preis enthalten. So erhalten Sie die fachliche Betreuung eines Akustikers, ohne ins Geschäft fahren zu müssen."
+      },
+      {
+        "frage": "Wie lange dauert der Versand?",
+        "antwort": "In der Regel erhalten Sie Ihr Hörgerät innerhalb von 3 bis 5 Werktagen. Der Versand ist für Sie kostenlos — ebenso der Rückversand, falls Sie das Gerät nicht behalten möchten."
+      },
+      {
+        "frage": "Was passiert, wenn das Hörgerät nicht passt?",
+        "antwort": "Kein Problem. Innerhalb der 30-tägigen Testphase senden Sie das Gerät einfach kostenlos zurück. Es entstehen keine Kosten. Gerne beraten wir Sie zu einer passenderen Alternative."
+      },
+      {
+        "frage": "Wie reiche ich mein Rezept ein?",
+        "antwort": "Nach Ihrer Anfrage erhalten Sie eine E-Mail mit Ihrer Angebotsnummer. Für die Kassenabrechnung fotografieren Sie Ihre HNO-Verordnung und antworten damit einfach auf diese E-Mail — Ihre Angebotsnummer ist dann automatisch zugeordnet. Das Original reichen Sie später per Post nach."
+      }
+    ]
   },
   {
-    "frage": "Brauche ich ein Rezept vom HNO-Arzt?",
-    "antwort": "Für die Kostenübernahme durch die Krankenkasse benötigen Sie eine Verordnung (Rezept) von Ihrem HNO-Arzt. Sie können das Hörgerät aber auch ohne Rezept als Selbstzahler bestellen."
-  },
-  {
-    "frage": "Welche Zahlungsmethoden werden akzeptiert?",
-    "antwort": "Wir akzeptieren Kreditkarte (Visa, Mastercard, American Express), PayPal, Klarna (Ratenzahlung möglich), SEPA-Lastschrift und Apple Pay / Google Pay."
-  },
-  {
-    "frage": "Wie lange dauert der Versand?",
-    "antwort": "In der Regel erhalten Sie Ihr Hörgerät innerhalb von 3-5 Werktagen. Der Versand ist für Sie kostenlos."
-  },
-  {
-    "frage": "Was passiert, wenn mir das Hörgerät nicht gefällt?",
-    "antwort": "Kein Problem! Sie senden das Gerät einfach kostenlos an uns zurück. Es werden keine Kosten berechnet. Wir beraten Sie gerne zu Alternativen."
-  },
-  {
-    "frage": "Gibt es eine Garantie?",
-    "antwort": "Ja, alle unsere Hörgeräte haben mindestens 2 Jahre Herstellergarantie. Viele Modelle bieten sogar bis zu 5 Jahre Garantie."
-  },
-  {
-    "frage": "Kann ich auch zwei Hörgeräte bestellen?",
-    "antwort": "Selbstverständlich. Die meisten Kunden bestellen ein Paar (links und rechts). Bitte legen Sie einfach zwei Geräte in den Warenkorb oder kontaktieren Sie uns für ein individuelles Angebot."
+    "kategorie": "Alltag und Pflege",
+    "id": "alltag",
+    "fragen": [
+      {
+        "frage": "Wie pflege ich mein Hörgerät richtig?",
+        "antwort": "Wischen Sie das Gerät täglich mit einem weichen, trockenen Tuch ab und entfernen Sie Ohrenschmalz vom Hörer. Bewahren Sie es nachts trocken auf, bei Akku-Geräten in der Ladestation. Wechseln Sie die Wachsfilter regelmäßig — das verhindert die häufigste Ursache für schlechten Klang."
+      },
+      {
+        "frage": "Kann ich das Hörgerät beim Sport oder im Regen tragen?",
+        "antwort": "Ja. Alle unsere Modelle sind nach Schutzklasse IP68 gegen Schweiß, Staub und Feuchtigkeit geschützt. Regen, Sport und ein Schweißausbruch sind damit kein Problem. Zum Schwimmen oder Duschen sollten Sie die Geräte dennoch ablegen."
+      },
+      {
+        "frage": "Wie viele Stunden am Tag sollte ich mein Hörgerät tragen?",
+        "antwort": "Am besten ganztägig, von morgens bis abends. Nur so gewöhnt sich Ihr Gehirn wieder an das volle Klangbild und das Sprachverstehen verbessert sich nachhaltig. In den ersten Wochen ist etwas Geduld normal — das Hören muss neu gelernt werden."
+      },
+      {
+        "frage": "Kann ein Hörgerät bei Tinnitus helfen?",
+        "antwort": "Häufig ja. Indem das Hörgerät fehlende Umgebungsgeräusche wieder hörbar macht, tritt das Ohrgeräusch in den Hintergrund. Einige Modelle bieten zusätzlich eine Tinnitus-Funktion mit beruhigenden Klängen. Ob das für Sie in Frage kommt, klären wir bei der Beratung."
+      },
+      {
+        "frage": "Wie lange hält der Akku?",
+        "antwort": "Ein voll geladener Akku hält bei unseren Modellen einen kompletten Tag — je nach Gerät rund 20 bis 24 Stunden, auch bei viel Bluetooth-Streaming. Über Nacht laden Sie das Gerät einfach in der mitgelieferten Ladestation."
+      },
+      {
+        "frage": "Was tue ich, wenn mein Hörgerät nicht mehr richtig klingt?",
+        "antwort": "Prüfen Sie zuerst Akku beziehungsweise Batterie und reinigen Sie den Hörer und den Wachsfilter — das behebt die meisten Probleme. Hilft das nicht, melden Sie sich bei uns. Kleine Korrekturen und die Nachbetreuung übernehmen wir im Rahmen unseres Service."
+      }
+    ]
   }
 ]
