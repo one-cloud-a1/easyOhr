@@ -82,12 +82,16 @@ const kategorieName = p.kategorie === 'batterie' ? 'Batterien' : 'Cerumenfilter'
         </div>
       </div>
 
-      {p.technik && p.technik.length > 0 && (
+      {((p.technik && p.technik.length > 0) || p.lieferumfang || p.hersteller) && (
         <div class="zd-technik">
-          <h2>Technische Details</h2>
-          <ul class="zd-technik-liste">
-            {p.technik.map((t: string) => <li>{t}</li>)}
-          </ul>
+          {p.technik && p.technik.length > 0 && (
+            <>
+              <h2>Technische Details</h2>
+              <ul class="zd-technik-liste">
+                {p.technik.map((t: string) => <li>{t}</li>)}
+              </ul>
+            </>
+          )}
           {p.lieferumfang && (
             <p class="zd-meta"><strong>Lieferumfang:</strong> {p.lieferumfang}</p>
           )}

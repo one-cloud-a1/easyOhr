@@ -105,9 +105,10 @@
       "farbeHex": "#8a5a2b",
       "evolution": false,
       "packung": "10er Paket (60 Batterien)",
-      "preis": 22.90,
+      "preis": 14.99,
       "bilder": ["/images/zubehoer/batterie-312.png"],
-      "beschreibung": "Zink-Luft-Batterie der Größe 312 (Farbcode Braun) für Hörgeräte mit Batteriebetrieb — SoundPerform in deutscher Markenqualität, quecksilberfrei und zuverlässig im Alltag. Geliefert wird ein 10er-Paket mit insgesamt 60 Batterien."
+      "beschreibung": "Zink-Luft-Batterie der Größe 312 (Farbcode Braun) für Hörgeräte mit Batteriebetrieb — SoundPerform in deutscher Markenqualität, quecksilberfrei und zuverlässig im Alltag. Geliefert wird ein 10er-Paket mit insgesamt 60 Batterien.",
+      "hersteller": { "firma": "VARTA Microbattery GmbH", "strasse": "VARTA-Platz 1", "plzOrt": "73479 Ellwangen", "land": "Deutschland" }
     },
     {
       "slug": "power-one-p312-evolution",
@@ -118,7 +119,7 @@
       "farbeHex": "#8a5a2b",
       "evolution": true,
       "packung": "10er Paket (60 Batterien)",
-      "preis": 33.90,
+      "preis": 17.99,
       "bilder": ["/images/zubehoer/PowerOneEvolutionP312braun-10x6erBlister60erPack_5000x.webp"],
       "beschreibung": "Die Power One EVOLUTION Hörgerätebatterien sind Premium-Hörgerätebatterien der Firma Varta. Dank neuester Forschungsarbeit besitzen sie eine noch höhere Energiedichte als die bisherigen Power-One-Batterien. Die Entwicklung basiert auf der Thin Foil Technology (TFT): sehr hohe Energiedichte, mehr Kapazität und eine bis zu 15 % längere Laufzeit.",
       "technik": [
@@ -143,9 +144,10 @@
       "farbeHex": "#e8730c",
       "evolution": false,
       "packung": "10er Paket (60 Batterien)",
-      "preis": 22.90,
+      "preis": 14.99,
       "bilder": ["/images/zubehoer/batterie-13.png"],
-      "beschreibung": "Zink-Luft-Batterie der Größe 13 (Farbcode Orange) für Hörgeräte mit Batteriebetrieb — SoundPerform in deutscher Markenqualität, quecksilberfrei und zuverlässig im Alltag. Geliefert wird ein 10er-Paket mit insgesamt 60 Batterien."
+      "beschreibung": "Zink-Luft-Batterie der Größe 13 (Farbcode Orange) für Hörgeräte mit Batteriebetrieb — SoundPerform in deutscher Markenqualität, quecksilberfrei und zuverlässig im Alltag. Geliefert wird ein 10er-Paket mit insgesamt 60 Batterien.",
+      "hersteller": { "firma": "VARTA Microbattery GmbH", "strasse": "VARTA-Platz 1", "plzOrt": "73479 Ellwangen", "land": "Deutschland" }
     },
     {
       "slug": "power-one-p13-evolution",
@@ -156,7 +158,7 @@
       "farbeHex": "#e8730c",
       "evolution": true,
       "packung": "10er Paket (60 Batterien)",
-      "preis": 33.90,
+      "preis": 17.99,
       "bilder": ["/images/zubehoer/PowerOneEvolutionP13orange-10x6erBlister60erPack_5000x.webp"],
       "beschreibung": "Die Power One EVOLUTION Hörgerätebatterien sind Premium-Hörgerätebatterien der Firma Varta. Dank neuester Forschungsarbeit besitzen sie eine noch höhere Energiedichte als die bisherigen Power-One-Batterien. Die Entwicklung basiert auf der Thin Foil Technology (TFT): sehr hohe Energiedichte, mehr Kapazität und eine bis zu 15 % längere Laufzeit.",
       "technik": [
@@ -181,9 +183,10 @@
       "farbeHex": "#e8b70c",
       "evolution": false,
       "packung": "10er Paket (60 Batterien)",
-      "preis": 22.90,
+      "preis": 14.99,
       "bilder": ["/images/zubehoer/batterie-10.png"],
-      "beschreibung": "Zink-Luft-Batterie der Größe 10 (Farbcode Gelb) für Hörgeräte mit Batteriebetrieb — SoundPerform in deutscher Markenqualität, quecksilberfrei und zuverlässig im Alltag. Geliefert wird ein 10er-Paket mit insgesamt 60 Batterien."
+      "beschreibung": "Zink-Luft-Batterie der Größe 10 (Farbcode Gelb) für Hörgeräte mit Batteriebetrieb — SoundPerform in deutscher Markenqualität, quecksilberfrei und zuverlässig im Alltag. Geliefert wird ein 10er-Paket mit insgesamt 60 Batterien.",
+      "hersteller": { "firma": "VARTA Microbattery GmbH", "strasse": "VARTA-Platz 1", "plzOrt": "73479 Ellwangen", "land": "Deutschland" }
     },
     {
       "slug": "power-one-p10-evolution",
@@ -194,7 +197,7 @@
       "farbeHex": "#e8b70c",
       "evolution": true,
       "packung": "10er Paket (60 Batterien)",
-      "preis": 33.90,
+      "preis": 17.99,
       "bilder": ["/images/zubehoer/PowerOneEvolutionP10gelb-10x6erBlister60erPack_5000x.webp"],
       "beschreibung": "Die Power One EVOLUTION Hörgerätebatterien sind Premium-Hörgerätebatterien der Firma Varta. Dank neuester Forschungsarbeit besitzen sie eine noch höhere Energiedichte als die bisherigen Power-One-Batterien. Die Entwicklung basiert auf der Thin Foil Technology (TFT): sehr hohe Energiedichte, mehr Kapazität und eine bis zu 15 % längere Laufzeit.",
       "technik": [
@@ -219,9 +222,10 @@
       "farbeHex": "#1a6fc4",
       "evolution": false,
       "packung": "10er Paket (60 Batterien)",
-      "preis": 22.90,
+      "preis": 14.99,
       "bilder": ["/images/zubehoer/batterie-675.png"],
-      "beschreibung": "Zink-Luft-Batterie der Größe 675 (Farbcode Blau) für Hörgeräte mit Batteriebetrieb — SoundPerform in deutscher Markenqualität, quecksilberfrei und zuverlässig im Alltag. Geliefert wird ein 10er-Paket mit insgesamt 60 Batterien."
+      "beschreibung": "Zink-Luft-Batterie der Größe 675 (Farbcode Blau) für Hörgeräte mit Batteriebetrieb — SoundPerform in deutscher Markenqualität, quecksilberfrei und zuverlässig im Alltag. Geliefert wird ein 10er-Paket mit insgesamt 60 Batterien.",
+      "hersteller": { "firma": "VARTA Microbattery GmbH", "strasse": "VARTA-Platz 1", "plzOrt": "73479 Ellwangen", "land": "Deutschland" }
     },
     {
       "slug": "power-one-p675-evolution",
@@ -232,7 +236,7 @@
       "farbeHex": "#1a6fc4",
       "evolution": true,
       "packung": "10er Paket (60 Batterien)",
-      "preis": 33.90,
+      "preis": 17.99,
       "bilder": ["/images/zubehoer/PowerOneEvolutionP675blau-10x6erBlister60erPack_5000x.webp"],
       "beschreibung": "Die Power One EVOLUTION Hörgerätebatterien sind Premium-Hörgerätebatterien der Firma Varta. Dank neuester Forschungsarbeit besitzen sie eine noch höhere Energiedichte als die bisherigen Power-One-Batterien. Die Entwicklung basiert auf der Thin Foil Technology (TFT): sehr hohe Energiedichte, mehr Kapazität und eine bis zu 15 % längere Laufzeit.",
       "technik": [
