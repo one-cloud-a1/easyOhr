@@ -4,6 +4,7 @@ import {
   zwischensumme, versandkosten, euro, VERSAND_FREI_AB,
   type ZubehoerItem,
 } from '../lib/zubehoer-cart'
+import { BASE } from '../lib/base-url'
 
 interface Props {
   /**
@@ -26,8 +27,6 @@ export default function ZubehoerWarenkorb({ alsSektion = false }: Props) {
     vorname: '', nachname: '', email: '', telefon: '',
     strasse: '', plz: '', ort: '', nachricht: '', datenschutz: false,
   })
-
-  const BASE = import.meta.env.BASE_URL
 
   useEffect(() => {
     setCart(getZubehoer())

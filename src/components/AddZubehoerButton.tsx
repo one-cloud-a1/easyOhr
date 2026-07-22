@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { addZubehoer, euro } from '../lib/zubehoer-cart'
+import { BASE } from '../lib/base-url'
 
 interface Props {
   slug: string
@@ -10,7 +11,6 @@ interface Props {
 
 export default function AddZubehoerButton({ slug, name, variante, preis }: Props) {
   const [added, setAdded] = useState(false)
-  const base = import.meta.env.BASE_URL
 
   const add = () => {
     addZubehoer({ key: slug, name, variante, einzelpreis: preis })
@@ -34,7 +34,7 @@ export default function AddZubehoerButton({ slug, name, variante, preis }: Props
         )}
       </button>
       {added && (
-        <a href={`${base}zubehoer/#warenkorb`} className="azb-link">Zum Warenkorb & bestellen →</a>
+        <a href={`${BASE}zubehoer/#warenkorb`} className="azb-link">Zum Warenkorb & bestellen →</a>
       )}
     </div>
   )

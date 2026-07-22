@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { addZubehoer, euro } from '../lib/zubehoer-cart'
+import { BASE } from '../lib/base-url'
 import ZubehoerWarenkorb from './ZubehoerWarenkorb'
 
 interface Produkt {
@@ -13,8 +14,6 @@ interface Produkt {
   preis: number
   evolution?: boolean
 }
-
-const BASE = import.meta.env.BASE_URL
 
 function Bild({ p }: { p: Produkt }) {
   if (p.kategorie === 'batterie') {
