@@ -94,7 +94,7 @@ export default function ZubehoerKatalog({ produkte }: { produkte: Produkt[] }) {
         </div>
 
         <h2 className="zk-gruppe-titel">Batterien</h2>
-        <p className="zk-gruppe-info">Zink-Luft-Batterien für Hörgeräte mit Batteriebetrieb — nur im 10er-Paket mit 60 Batterien. Die Farbe steht für die Größe.</p>
+        <p className="zk-gruppe-info">SoundPerform Zink-Luft-Batterien in deutscher Markenqualität — nur im 10er-Paket mit 60 Batterien. Die Farbe steht für die Größe.</p>
         <div className="zk-grid">
           {batterien.map(p => <Karte key={p.slug} p={p} />)}
         </div>
