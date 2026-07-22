@@ -1,7 +1,13 @@
 import { useState } from 'react'
 import { addZubehoer, euro } from '../lib/zubehoer-cart'
 import { BASE } from '../lib/base-url'
+import { url } from '../lib/links'
 import ZubehoerWarenkorb from './ZubehoerWarenkorb'
+
+interface Staffel {
+  abMenge: number
+  preis: number
+}
 
 interface Produkt {
   slug: string
@@ -13,9 +19,14 @@ interface Produkt {
   packung: string
   preis: number
   evolution?: boolean
+  staffel?: Staffel
+  bilder?: string[]
 }
 
 function Bild({ p }: { p: Produkt }) {
+  if (p.bilder && p.bilder.length > 0) {
+    return <img src={url(p.bilder[0])} alt={p.name} className="zk-bild-foto" loading="lazy" />
+  }
   if (p.kategorie === 'batterie') {
     return (
       <svg viewBox="0 0 64 64" fill="none" aria-hidden="true" className="zk-bild-svg">
@@ -38,7 +49,10 @@ function Karte({ p }: { p: Produkt }) {
   const [added, setAdded] = useState(false)
   const detail = `${BASE}zubehoer/${p.slug}/`
   const add = () => {
-    addZubehoer({ key: p.slug, name: p.name, variante: p.packung, einzelpreis: p.preis })
+    addZubehoer({
+      key: p.slug, name: p.name, variante: p.packung, einzelpreis: p.preis,
+      staffelAbMenge: p.staffel?.abMenge, staffelPreis: p.staffel?.preis,
+    })
     setAdded(true)
     setTimeout(() => setAdded(false), 1800)
   }
@@ -52,6 +66,9 @@ function Karte({ p }: { p: Produkt }) {
         <span className="zk-marke">{p.marke ?? p.typ}</span>
         <a href={detail} className="zk-karte-name"><h3>{p.name}</h3></a>
         <span className="zk-packung">{p.packung}</span>
+        {p.staffel && (
+          <span className="zk-staffel">ab {p.staffel.abMenge} Paketen je {euro(p.staffel.preis)}</span>
+        )}
         <div className="zk-karte-fuss">
           <span className="zk-preis">{euro(p.preis)}</span>
           <button type="button" className={`zk-add ${added ? 'zk-add-ok' : ''}`} onClick={add}>

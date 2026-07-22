@@ -6,7 +6,16 @@
       "name": "Oticon ProWax miniFit",
       "marke": "Oticon",
       "packung": "6 Filter",
-      "preis": 7.90,
+      "preis": 5.99,
+      "staffel": { "abMenge": 10, "preis": 3.00 },
+      "bilder": [
+        "/images/zubehoer/ProWaxMiniFit01.png",
+        "/images/zubehoer/ProWaxMiniFit02.png",
+        "/images/zubehoer/ProWaxMiniFit03.png",
+        "/images/zubehoer/ProWaxMiniFit04.png",
+        "/images/zubehoer/ProWaxMiniFit05.png",
+        "/images/zubehoer/ProWaxMiniFit06.png"
+      ],
       "fuer": "Oticon Hörgeräte mit miniFit-Hörer (u. a. Intent, Jet PX)",
       "beschreibung": "Cerumenfilter für Oticon-Hörgeräte mit miniFit-Hörer, wie sie unter anderem in den Familien Intent und Jet PX verbaut sind. Der Filter sitzt vor der Hörermembran und hält Ohrenschmalz sowie Feuchtigkeit fern. Ein Paket enthält 6 Filter; empfohlen wird ein Wechsel etwa alle vier Wochen oder sobald der Klang nachlässt."
     },
@@ -16,7 +25,16 @@
       "name": "Oticon ProWax",
       "marke": "Oticon",
       "packung": "6 Filter",
-      "preis": 7.90,
+      "preis": 5.99,
+      "staffel": { "abMenge": 10, "preis": 3.00 },
+      "bilder": [
+        "/images/zubehoer/ProWax01.png",
+        "/images/zubehoer/ProWax02.png",
+        "/images/zubehoer/ProWax03.png",
+        "/images/zubehoer/ProWax04.png",
+        "/images/zubehoer/ProWax05.png",
+        "/images/zubehoer/ProWax06.png"
+      ],
       "fuer": "Oticon Hörgeräte mit klassischem ProWax-Filter",
       "beschreibung": "Cerumenfilter für Oticon-Hörgeräte, die bisher den NoWax-Filter genutzt haben. Die feuchtigkeitsabweisende Beschichtung schützt Ohrstücke und In-Ear-Geräte vor Ohrenschmalz. Ein Paket enthält 6 Filter; wechseln Sie etwa einmal im Monat, bei starker Verschmutzung häufiger."
     },
@@ -26,7 +44,16 @@
       "name": "Phonak CeruStop",
       "marke": "Phonak",
       "packung": "8 Filter",
-      "preis": 7.90,
+      "preis": 5.99,
+      "staffel": { "abMenge": 10, "preis": 3.00 },
+      "bilder": [
+        "/images/zubehoer/Cerustop01.png",
+        "/images/zubehoer/Cerustop02.png",
+        "/images/zubehoer/Cerustop03.png",
+        "/images/zubehoer/Cerustop04.png",
+        "/images/zubehoer/Cerustop05.png",
+        "/images/zubehoer/Cerustop06.png"
+      ],
       "fuer": "Phonak Hörgeräte (u. a. Audéo Infinio, Terra+)",
       "beschreibung": "Cerumenfilter für Phonak-Hörgeräte, unter anderem der Familien Audéo Infinio und Terra+. Der kleine Filter verhindert, dass Hautschuppen und Schmutzpartikel in die Hörermembran gelangen. Ein Paket enthält 8 Filter; empfohlen wird ein Wechsel etwa alle vier Wochen."
     },
@@ -36,7 +63,16 @@
       "name": "Starkey HearClear",
       "marke": "Starkey",
       "packung": "8 Filter",
-      "preis": 7.90,
+      "preis": 5.99,
+      "staffel": { "abMenge": 10, "preis": 3.00 },
+      "bilder": [
+        "/images/zubehoer/Hearclear01.png",
+        "/images/zubehoer/Hearclear02.png",
+        "/images/zubehoer/Hearclear03.png",
+        "/images/zubehoer/Hearclear04.png",
+        "/images/zubehoer/Hearclear05.png",
+        "/images/zubehoer/Hearclear06.png"
+      ],
       "fuer": "Starkey Hörgeräte (u. a. Genesis AI)",
       "beschreibung": "Cerumenfilter für Starkey-Hörgeräte, unter anderem der Familie Genesis AI. Er schützt den Hörer zuverlässig vor Ohrenschmalz und Verschmutzung. Ein Paket enthält 8 Filter; empfohlen wird ein Wechsel alle vier bis sechs Wochen."
     },
@@ -46,7 +82,16 @@
       "name": "Audio Service Wax Guards",
       "marke": "Audio Service",
       "packung": "16 Filter",
-      "preis": 7.90,
+      "preis": 5.99,
+      "staffel": { "abMenge": 10, "preis": 3.00 },
+      "bilder": [
+        "/images/zubehoer/HF401.png",
+        "/images/zubehoer/HF402.png",
+        "/images/zubehoer/HF403.png",
+        "/images/zubehoer/HF404.png",
+        "/images/zubehoer/HF405.png",
+        "/images/zubehoer/HF406.png"
+      ],
       "fuer": "Audio Service, Signia und Hansaton Hörgeräte",
       "beschreibung": "Cerumenfilter (HF3/HF4) für Hörgeräte von Audio Service sowie kompatible Modelle von Signia und Hansaton. Er sitzt direkt vor dem Hörerausgang und hält Staub und Feuchtigkeit von der Membran fern. Ein Paket enthält 16 Filter; ein Wechsel ist fällig, sobald der Klang leiser wird."
     },

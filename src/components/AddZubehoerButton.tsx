@@ -7,13 +7,15 @@ interface Props {
   name: string
   variante: string
   preis: number
+  staffelAbMenge?: number
+  staffelPreis?: number
 }
 
-export default function AddZubehoerButton({ slug, name, variante, preis }: Props) {
+export default function AddZubehoerButton({ slug, name, variante, preis, staffelAbMenge, staffelPreis }: Props) {
   const [added, setAdded] = useState(false)
 
   const add = () => {
-    addZubehoer({ key: slug, name, variante, einzelpreis: preis })
+    addZubehoer({ key: slug, name, variante, einzelpreis: preis, staffelAbMenge, staffelPreis })
     setAdded(true)
     setTimeout(() => setAdded(false), 2500)
   }

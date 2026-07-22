@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import {
   getZubehoer, setMenge, clearZubehoer, onZubehoerUpdate,
-  zwischensumme, versandkosten, euro, VERSAND_FREI_AB,
+  zwischensumme, versandkosten, euro, stueckpreis, VERSAND_FREI_AB,
   type ZubehoerItem,
 } from '../lib/zubehoer-cart'
 import { BASE } from '../lib/base-url'
@@ -98,13 +98,20 @@ export default function ZubehoerWarenkorb({ alsSektion = false }: Props) {
                 <div className="zk-cart-info">
                   <strong>{i.name}</strong>
                   <span>{i.variante}</span>
+                  {i.staffelAbMenge && i.staffelPreis != null && (
+                    <span className={`zk-cart-staffel ${i.menge >= i.staffelAbMenge ? 'zk-cart-staffel-aktiv' : ''}`}>
+                      {i.menge >= i.staffelAbMenge
+                        ? `Mengenrabatt: je ${euro(i.staffelPreis)}`
+                        : `ab ${i.staffelAbMenge} je ${euro(i.staffelPreis)}`}
+                    </span>
+                  )}
                 </div>
                 <div className="zk-cart-menge">
                   <button type="button" onClick={() => setMenge(i.key, i.menge - 1)} aria-label="Weniger">−</button>
                   <span>{i.menge}</span>
                   <button type="button" onClick={() => setMenge(i.key, i.menge + 1)} aria-label="Mehr">+</button>
                 </div>
-                <span className="zk-cart-preis">{euro(i.einzelpreis * i.menge)}</span>
+                <span className="zk-cart-preis">{euro(stueckpreis(i) * i.menge)}</span>
               </li>
             ))}
           </ul>

@@ -28,10 +28,27 @@ const kategorieName = p.kategorie === 'batterie' ? 'Batterien' : 'Cerumenfilter'
       </nav>
 
       <div class="zd-grid">
-        <div class="zd-bild">
-          <ZubehoerBild kategorie={p.kategorie} farbeHex={p.farbeHex} gross={true} />
-          {p.evolution && <span class="zd-evo">Evolution</span>}
-        </div>
+        {p.bilder && p.bilder.length > 0 ? (
+          <div class="zd-galerie">
+            <div class="zd-galerie-haupt">
+              <img id="zd-haupt" src={url(p.bilder[0])} alt={p.name} />
+            </div>
+            {p.bilder.length > 1 && (
+              <div class="zd-galerie-thumbs">
+                {p.bilder.map((b: string, i: number) => (
+                  <button type="button" class:list={['zd-thumb', { aktiv: i === 0 }]} data-src={url(b)} aria-label={`Bild ${i + 1} anzeigen`}>
+                    <img src={url(b)} alt="" loading="lazy" />
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        ) : (
+          <div class="zd-bild">
+            <ZubehoerBild kategorie={p.kategorie} farbeHex={p.farbeHex} gross={true} />
+            {p.evolution && <span class="zd-evo">Evolution</span>}
+          </div>
+        )}
 
         <div class="zd-info">
           <span class="zd-marke">{p.marke ?? `${p.typ} · Zink-Luft`}</span>
@@ -50,7 +67,13 @@ const kategorieName = p.kategorie === 'batterie' ? 'Batterien' : 'Cerumenfilter'
             <span class="zd-preis-hint">inkl. MwSt.</span>
           </div>
 
-          <AddZubehoerButton client:load slug={p.slug} name={p.name} variante={p.packung} preis={p.preis} />
+          {p.staffel && (
+            <p class="zd-staffel">
+              <strong>Mengenrabatt:</strong> ab {p.staffel.abMenge} Paketen je {p.staffel.preis.toLocaleString('de-DE', { minimumFractionDigits: 2 })} €
+            </p>
+          )}
+
+          <AddZubehoerButton client:load slug={p.slug} name={p.name} variante={p.packung} preis={p.preis} staffelAbMenge={p.staffel?.abMenge} staffelPreis={p.staffel?.preis} />
 
           <p class="zd-versand">
             Versandkostenfrei ab 49 € — sonst 5,90 €.
@@ -102,6 +125,32 @@ const kategorieName = p.kategorie === 'batterie' ? 'Batterien' : 'Cerumenfilter'
     font-size: 0.75rem; font-weight: 600;
     background: var(--color-accent-light); color: var(--color-accent);
     padding: 0.3rem 0.875rem; border-radius: 100px;
+  }
+
+  /* Foto-Galerie (Hauptbild + Thumbnails) */
+  .zd-galerie { display: flex; flex-direction: column; gap: 0.75rem; }
+  .zd-galerie-haupt {
+    background: var(--color-secondary);
+    border-radius: var(--radius-xl);
+    display: flex; align-items: center; justify-content: center;
+    aspect-ratio: 1 / 1; overflow: hidden;
+  }
+  .zd-galerie-haupt img { width: 100%; height: 100%; object-fit: contain; }
+  .zd-galerie-thumbs { display: grid; grid-template-columns: repeat(6, 1fr); gap: 0.5rem; }
+  .zd-thumb {
+    border: 2px solid var(--color-border-light); border-radius: var(--radius-sm);
+    background: var(--color-secondary); padding: 0; cursor: pointer;
+    overflow: hidden; aspect-ratio: 1 / 1; transition: border-color 0.15s ease;
+  }
+  .zd-thumb:hover { border-color: var(--color-primary); }
+  .zd-thumb.aktiv { border-color: var(--color-primary); }
+  .zd-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  .zd-staffel {
+    font-size: 0.9rem; color: var(--color-accent);
+    background: var(--color-accent-light);
+    padding: 0.5rem 0.875rem; border-radius: var(--radius-sm);
+    margin-bottom: 1.25rem;
   }
 
   .zd-marke {
@@ -166,4 +215,21 @@ const kategorieName = p.kategorie === 'batterie' ? 'Batterien' : 'Cerumenfilter'
     display: block; text-align: center; margin-top: 0.75rem;
     font-size: 0.9rem; font-weight: 600; color: var(--color-primary);
   }
+
+  @media (max-width: 768px) {
+    .zd-galerie-thumbs { grid-template-columns: repeat(6, 1fr); }
+  }
 </style>
+
+<script>
+  // Galerie: Thumbnail anklicken tauscht das Hauptbild.
+  const haupt = document.getElementById('zd-haupt') as HTMLImageElement | null
+  document.querySelectorAll<HTMLButtonElement>('.zd-thumb').forEach(thumb => {
+    thumb.addEventListener('click', () => {
+      const src = thumb.getAttribute('data-src')
+      if (src && haupt) haupt.src = src
+      document.querySelectorAll('.zd-thumb').forEach(t => t.classList.remove('aktiv'))
+      thumb.classList.add('aktiv')
+    })
+  })
+</script>

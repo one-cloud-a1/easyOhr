@@ -8,6 +8,21 @@ export interface ZubehoerItem {
   variante: string
   einzelpreis: number
   menge: number
+  /** Ab dieser Menge gilt {@link staffelPreis} als Stückpreis (Mengenrabatt). */
+  staffelAbMenge?: number
+  /** Rabattierter Stückpreis ab {@link staffelAbMenge} Stück. */
+  staffelPreis?: number
+}
+
+/**
+ * Gültiger Stückpreis für eine Position — berücksichtigt den Mengenrabatt:
+ * ab `staffelAbMenge` Stück gilt `staffelPreis`, sonst der normale Einzelpreis.
+ */
+export function stueckpreis(item: ZubehoerItem): number {
+  if (item.staffelAbMenge && item.staffelPreis != null && item.menge >= item.staffelAbMenge) {
+    return item.staffelPreis
+  }
+  return item.einzelpreis
 }
 
 const KEY = 'easyohr-zubehoer'
@@ -58,7 +73,7 @@ export function clearZubehoer() {
 }
 
 export function zwischensumme(items: ZubehoerItem[]): number {
-  return items.reduce((s, i) => s + i.einzelpreis * i.menge, 0)
+  return items.reduce((s, i) => s + stueckpreis(i) * i.menge, 0)
 }
 
 export function versandkosten(zwischensumme: number): number {
