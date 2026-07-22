@@ -112,14 +112,27 @@
     {
       "slug": "power-one-p312-evolution",
       "kategorie": "batterie",
-      "name": "SoundPerform 312 Evolution",
+      "name": "Power One EVOLUTION 312",
       "typ": "Typ 312",
       "farbe": "Braun",
       "farbeHex": "#8a5a2b",
       "evolution": true,
       "packung": "10er Paket (60 Batterien)",
       "preis": 33.90,
-      "beschreibung": "Die Premium-Batterie von SoundPerform in Größe 312 (Farbcode Braun) — deutsche Markenqualität. Die Evolution-Reihe bietet eine längere Laufzeit und liefert auch bei hohem Strombedarf — etwa beim Bluetooth-Streaming — stabile Leistung. Quecksilberfrei. Geliefert wird ein 10er-Paket mit insgesamt 60 Batterien."
+      "bilder": ["/images/zubehoer/PowerOneEvolutionP312braun-10x6erBlister60erPack_5000x.webp"],
+      "beschreibung": "Die Power One EVOLUTION Hörgerätebatterien sind Premium-Hörgerätebatterien der Firma Varta. Dank neuester Forschungsarbeit besitzen sie eine noch höhere Energiedichte als die bisherigen Power-One-Batterien. Die Entwicklung basiert auf der Thin Foil Technology (TFT): sehr hohe Energiedichte, mehr Kapazität und eine bis zu 15 % längere Laufzeit.",
+      "technik": [
+        "Spannung: 1,45 Volt",
+        "Kennziffer: 312 / PR312 / PR41 / ZA312 / ZL3",
+        "Kapazität: 180 mAh",
+        "Höhe: 3,6 mm",
+        "Durchmesser: 7,9 mm",
+        "Quecksilberfrei",
+        "Konstante, extrem hohe Leistungsfähigkeit"
+      ],
+      "lieferumfang": "10 Packungen zu je 6 Hörgerätebatterien (60 Stück).",
+      "hinweis": "Aktuelles Produktdesign kann von den Fotos abweichen.",
+      "hersteller": { "firma": "VARTA Microbattery GmbH", "strasse": "VARTA-Platz 1", "plzOrt": "73479 Ellwangen", "land": "Deutschland" }
     },
     {
       "slug": "power-one-p13",
@@ -137,14 +150,27 @@
     {
       "slug": "power-one-p13-evolution",
       "kategorie": "batterie",
-      "name": "SoundPerform 13 Evolution",
+      "name": "Power One EVOLUTION 13",
       "typ": "Typ 13",
       "farbe": "Orange",
       "farbeHex": "#e8730c",
       "evolution": true,
       "packung": "10er Paket (60 Batterien)",
       "preis": 33.90,
-      "beschreibung": "Die Premium-Batterie von SoundPerform in Größe 13 (Farbcode Orange) — deutsche Markenqualität. Die Evolution-Reihe bietet eine längere Laufzeit und liefert auch bei hohem Strombedarf — etwa beim Bluetooth-Streaming — stabile Leistung. Quecksilberfrei. Geliefert wird ein 10er-Paket mit insgesamt 60 Batterien."
+      "bilder": ["/images/zubehoer/PowerOneEvolutionP13orange-10x6erBlister60erPack_5000x.webp"],
+      "beschreibung": "Die Power One EVOLUTION Hörgerätebatterien sind Premium-Hörgerätebatterien der Firma Varta. Dank neuester Forschungsarbeit besitzen sie eine noch höhere Energiedichte als die bisherigen Power-One-Batterien. Die Entwicklung basiert auf der Thin Foil Technology (TFT): sehr hohe Energiedichte, mehr Kapazität und eine bis zu 15 % längere Laufzeit.",
+      "technik": [
+        "Spannung: 1,45 Volt",
+        "Kennziffer: 13 / PR48 / PR754 / ZA13 / ZL2",
+        "Kapazität: 310 mAh",
+        "Höhe: 5,4 mm",
+        "Durchmesser: 7,9 mm",
+        "Quecksilberfrei",
+        "Konstante, extrem hohe Leistungsfähigkeit"
+      ],
+      "lieferumfang": "10 Packungen zu je 6 Hörgerätebatterien (60 Stück).",
+      "hinweis": "Aktuelles Produktdesign kann von den Fotos abweichen.",
+      "hersteller": { "firma": "VARTA Microbattery GmbH", "strasse": "VARTA-Platz 1", "plzOrt": "73479 Ellwangen", "land": "Deutschland" }
     },
     {
       "slug": "power-one-p10",
@@ -162,14 +188,27 @@
     {
       "slug": "power-one-p10-evolution",
       "kategorie": "batterie",
-      "name": "SoundPerform 10 Evolution",
+      "name": "Power One EVOLUTION 10",
       "typ": "Typ 10",
       "farbe": "Gelb",
       "farbeHex": "#e8b70c",
       "evolution": true,
       "packung": "10er Paket (60 Batterien)",
       "preis": 33.90,
-      "beschreibung": "Die Premium-Batterie von SoundPerform in Größe 10 (Farbcode Gelb) — deutsche Markenqualität. Die Evolution-Reihe bietet eine längere Laufzeit und liefert auch bei hohem Strombedarf — etwa beim Bluetooth-Streaming — stabile Leistung. Quecksilberfrei. Geliefert wird ein 10er-Paket mit insgesamt 60 Batterien."
+      "bilder": ["/images/zubehoer/PowerOneEvolutionP10gelb-10x6erBlister60erPack_5000x.webp"],
+      "beschreibung": "Die Power One EVOLUTION Hörgerätebatterien sind Premium-Hörgerätebatterien der Firma Varta. Dank neuester Forschungsarbeit besitzen sie eine noch höhere Energiedichte als die bisherigen Power-One-Batterien. Die Entwicklung basiert auf der Thin Foil Technology (TFT): sehr hohe Energiedichte, mehr Kapazität und eine bis zu 15 % längere Laufzeit.",
+      "technik": [
+        "Spannung: 1,45 Volt",
+        "Kennziffer: 10 / PR70 / PR536 / ZA10 / ZL1",
+        "Kapazität: 100 mAh",
+        "Höhe: 3,6 mm",
+        "Durchmesser: 5,8 mm",
+        "Quecksilberfrei",
+        "Konstante, extrem hohe Leistungsfähigkeit"
+      ],
+      "lieferumfang": "10 Packungen zu je 6 Hörgerätebatterien (60 Stück).",
+      "hinweis": "Aktuelles Produktdesign kann von den Fotos abweichen.",
+      "hersteller": { "firma": "VARTA Microbattery GmbH", "strasse": "VARTA-Platz 1", "plzOrt": "73479 Ellwangen", "land": "Deutschland" }
     },
     {
       "slug": "power-one-p675",
@@ -187,14 +226,27 @@
     {
       "slug": "power-one-p675-evolution",
       "kategorie": "batterie",
-      "name": "SoundPerform 675 Evolution",
+      "name": "Power One EVOLUTION 675",
       "typ": "Typ 675",
       "farbe": "Blau",
       "farbeHex": "#1a6fc4",
       "evolution": true,
       "packung": "10er Paket (60 Batterien)",
       "preis": 33.90,
-      "beschreibung": "Die Premium-Batterie von SoundPerform in Größe 675 (Farbcode Blau) — deutsche Markenqualität. Die Evolution-Reihe bietet eine längere Laufzeit und liefert auch bei hohem Strombedarf — etwa beim Bluetooth-Streaming — stabile Leistung. Quecksilberfrei. Geliefert wird ein 10er-Paket mit insgesamt 60 Batterien."
+      "bilder": ["/images/zubehoer/PowerOneEvolutionP675blau-10x6erBlister60erPack_5000x.webp"],
+      "beschreibung": "Die Power One EVOLUTION Hörgerätebatterien sind Premium-Hörgerätebatterien der Firma Varta. Dank neuester Forschungsarbeit besitzen sie eine noch höhere Energiedichte als die bisherigen Power-One-Batterien. Die Entwicklung basiert auf der Thin Foil Technology (TFT): sehr hohe Energiedichte, mehr Kapazität und eine bis zu 15 % längere Laufzeit.",
+      "technik": [
+        "Spannung: 1,45 Volt",
+        "Kennziffer: 675 / PR44 / PR1154 / ZA675 / ZL4",
+        "Kapazität: 600 mAh",
+        "Höhe: 5,4 mm",
+        "Durchmesser: 11,6 mm",
+        "Quecksilberfrei",
+        "Konstante, extrem hohe Leistungsfähigkeit"
+      ],
+      "lieferumfang": "10 Packungen zu je 6 Hörgerätebatterien (60 Stück).",
+      "hinweis": "Aktuelles Produktdesign kann von den Fotos abweichen.",
+      "hersteller": { "firma": "VARTA Microbattery GmbH", "strasse": "VARTA-Platz 1", "plzOrt": "73479 Ellwangen", "land": "Deutschland" }
     }
   ]
 }

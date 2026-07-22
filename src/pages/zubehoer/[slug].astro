@@ -82,6 +82,30 @@ const kategorieName = p.kategorie === 'batterie' ? 'Batterien' : 'Cerumenfilter'
         </div>
       </div>
 
+      {p.technik && p.technik.length > 0 && (
+        <div class="zd-technik">
+          <h2>Technische Details</h2>
+          <ul class="zd-technik-liste">
+            {p.technik.map((t: string) => <li>{t}</li>)}
+          </ul>
+          {p.lieferumfang && (
+            <p class="zd-meta"><strong>Lieferumfang:</strong> {p.lieferumfang}</p>
+          )}
+          {p.hinweis && <p class="zd-hinweis-klein">{p.hinweis}</p>}
+          {p.hersteller && (
+            <div class="zd-hersteller">
+              <h3>Hersteller</h3>
+              <address>
+                {p.hersteller.firma}<br />
+                {p.hersteller.strasse}<br />
+                {p.hersteller.plzOrt}<br />
+                {p.hersteller.land}
+              </address>
+            </div>
+          )}
+        </div>
+      )}
+
       {verwandt.length > 0 && (
         <div class="zd-verwandt">
           <h2>Weitere {kategorieName}</h2>
@@ -155,6 +179,35 @@ const kategorieName = p.kategorie === 'batterie' ? 'Batterien' : 'Cerumenfilter'
     background: var(--color-accent-light);
     padding: 0.5rem 0.875rem; border-radius: var(--radius-sm);
     margin-bottom: 1.25rem;
+  }
+
+  /* Technische Details / Hersteller (v. a. Power One EVOLUTION) */
+  .zd-technik {
+    padding: 2.5rem 0;
+    border-top: 1px solid var(--color-border-light);
+  }
+  .zd-technik h2 { margin-bottom: 1.25rem; }
+  .zd-technik-liste {
+    list-style: none; padding: 0; max-width: 560px;
+    display: flex; flex-direction: column; gap: 0;
+  }
+  .zd-technik-liste li {
+    display: flex; align-items: baseline; gap: 0.75rem;
+    padding: 0.6rem 0; font-size: 0.92rem;
+    border-bottom: 1px solid var(--color-border-light);
+  }
+  .zd-technik-liste li::before {
+    content: ''; flex: 0 0 6px; width: 6px; height: 6px;
+    border-radius: 50%; background: var(--color-primary);
+    transform: translateY(-1px);
+  }
+  .zd-meta { font-size: 0.92rem; margin-top: 1.25rem; }
+  .zd-hinweis-klein { font-size: 0.8rem; color: var(--color-text-muted); margin-top: 0.5rem; font-style: italic; }
+  .zd-hersteller { margin-top: 1.75rem; }
+  .zd-hersteller h3 { font-size: 1rem; margin-bottom: 0.5rem; }
+  .zd-hersteller address {
+    font-style: normal; font-size: 0.9rem; line-height: 1.6;
+    color: var(--color-text-light);
   }
 
   .zd-marke {
