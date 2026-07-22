@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
 import AngebotForm from '../components/AngebotForm.tsx'
+import ZubehoerWarenkorb from '../components/ZubehoerWarenkorb.tsx'
 import '../styles/angebot.css'
 ---
 <BaseLayout
@@ -15,6 +16,9 @@ import '../styles/angebot.css'
         mit Ihrem genauen Eigenanteil.
       </p>
       <AngebotForm client:load />
+      <div class="ang-zubehoer">
+        <ZubehoerWarenkorb client:load alsSektion={true} />
+      </div>
     </div>
   </section>
 </BaseLayout>
@@ -30,5 +34,12 @@ import '../styles/angebot.css'
     line-height: 1.7;
     margin-bottom: 2.5rem;
     max-width: 560px;
+  }
+
+  /* Zubehör-Warenkorb als eigener Abschnitt unter der Hörgeräte-Anfrage.
+     Die innere Karte rendert nur, wenn Zubehör im Korb liegt — dann greift
+     der Abstand. Ist der Korb leer, bleibt der Bereich unsichtbar. */
+  .ang-zubehoer :global(.zk-cart) {
+    margin-top: 3rem;
   }
 </style>

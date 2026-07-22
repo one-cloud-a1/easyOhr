@@ -1,12 +1,18 @@
 import { useState, useEffect } from 'react'
 import { getCartCount, onCartUpdate } from '../lib/cart'
+import { getZubehoer, anzahlStueck, onZubehoerUpdate } from '../lib/zubehoer-cart'
 
 export default function CartBadge() {
   const [count, setCount] = useState(0)
 
+  // Zeigt Hörgeräte + Zubehör zusammen — beide sind über die Anfrage-Seite
+  // im selben Warenkorb erreichbar.
   useEffect(() => {
-    setCount(getCartCount())
-    return onCartUpdate(() => setCount(getCartCount()))
+    const aktualisiere = () => setCount(getCartCount() + anzahlStueck(getZubehoer()))
+    aktualisiere()
+    const abHoergeraete = onCartUpdate(aktualisiere)
+    const abZubehoer = onZubehoerUpdate(aktualisiere)
+    return () => { abHoergeraete(); abZubehoer() }
   }, [])
 
   if (count === 0) return null
